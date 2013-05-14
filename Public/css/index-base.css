@@ -1,0 +1,346 @@
+body, html,#master-box, #allmap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin:0;
+}
+
+.clearfix{
+	clear: both;
+}
+
+#masthead {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    
+}
+
+#main-nav {
+    height: 35px;
+    line-height: 30px;
+    padding: 10px;
+    background: url(../img/bg/header.png) repeat-x;
+    margin: 1px solid #51504f;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#main-nav-shadow{
+    width: 100%;
+    height: 13px;
+    background: url(../img/bg/header-shadow.png) repeat-x;
+}
+
+#logo {
+    float: left;
+    margin-left: 14px;
+    width: 97px;
+    height: 36px;
+    background: url(../img/ngo-logo.png) no-repeat;
+    display: block;
+    text-indent: -9999px;
+}
+
+
+/* main-nav-filters and controls */
+
+#main-nav-filters{
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    margin-left: 34px;
+    margin-top: 7px;
+}
+
+#main-nav-filters li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+a.filter-menu-button{
+    display: block;
+    width: 76px;
+    height: 28px;
+    background: url(../img/sprites-all.png) no-repeat 71px -28px;
+    float: left;
+    margin-top: 1px;
+    margin-left: 6px;
+    padding-left: 8px;
+    font-size: 14px;
+    color: #3f3f3f;
+    text-decoration: none;
+}
+
+a.filter-menu-button:hover{
+    background-color: #f7f7f7;
+    border: 1px solid #b9b9b9;
+    margin-left: 5px;
+    width: 75px;
+    margin-top: 0;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    cursor: pointer;
+}
+
+li.main-nav-filter.expanded a.filter-menu-button {
+    background-color: #f7f7f7;
+    border: 1px solid #b9b9b9;
+    border-bottom: 0;
+    margin-left: 5px;
+    width: 75px;
+    margin-top: 0;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
+.main-nav-filter-list {
+    top: 26px;
+    margin: 0;
+    padding: 8px;
+    background-color: #f7f7f7;
+    width: 67px;
+    margin-left: 5px;
+    text-align: center;
+    border: 1px solid #b9b9b9;
+    border-top: 0;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
+.main-nav-filter-list li {
+    height: 23px;
+    line-height: 23px;
+}
+
+.main-nav-filter-list a {
+    font-size: 12px;
+    color: #32ab23;
+    text-decoration: none;
+}
+
+ul.main-nav-filter-list{
+    display: none;
+}
+
+.main-nav-filter.expanded ul.main-nav-filter-list {
+    display: block;
+}
+
+
+ul.main-nav-filter-list{
+    position: absolute;
+}
+
+#main-nav-controls {
+    width: 340px;
+    float: right;
+}
+
+#main-nav-controls div {
+    float: left;
+}
+
+#search-box{
+    position: relative;
+}
+
+#search-box input{
+    margin-top: 8px;
+    width: 147px;
+    height: 23px;
+    border: 1px solid #b9b9b9;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background: #f0f0f0 url(../img/sprites-all.png) no-repeat 7px -155px;
+    box-shadow:inset 1px 2px 3px #b9b9b9;
+}
+
+#search-box i{
+    width: 15px;
+    height: 15px;
+    background: url(../img/sprites-all.png) no-repeat 0px -35px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 16px;
+    cursor: pointer;
+}
+
+#register-buttons{
+    font-size: 14px;
+    background-color: #18944b;
+    padding: 9px 11px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+#register-buttons a{
+    color: white;
+    text-decoration: none;
+    display: block;
+    float: left;
+    height: 14px;
+    line-height: 14px;
+}
+
+#login-button{
+    padding-right: 10px;
+    border-right: 1px solid #2b7706;
+}
+
+#register-button{
+    padding-left: 10px;
+}
+
+/* google translate */
+
+#language-box{
+    margin-left: 17px;
+    padding-right: 10px;
+    height: 30px;
+    background: url(../img/sprites-all.png) no-repeat 55px -19px;
+}
+
+div.skiptranslate, div.goog-te-gadget-simple{
+    margin: 0;
+    border: 0;
+    background: none;
+}
+
+div.goog-te-gadget-simple img,
+.goog-te-menu-value span{
+    display: none;
+}
+
+.goog-te-menu-value span:first-child{
+    display: block;
+    height: 20px;
+    color: #b9b9b9;
+    margin: 0;
+    padding: 0;
+    margin-top: 7px;
+}
+
+.goog-te-menu-frame{
+    top: 50px;
+}
+
+/* story board zone */
+
+#story-zone{
+    position: absolute;
+    top: 95%;
+    width: 100%;
+}
+
+#story-board {
+    width: 100%;
+    height: 800px;
+    background-color: #e3e3e3;
+    overflow: auto;
+    z-index: 1000;
+}
+
+#story-zone-handle{
+    width: 100%;
+    background: url(../img/bg/story-bar.png) repeat-x;
+    height: 34px;
+    position: relative;
+    border-bottom: 1px solid #909090;
+    z-index: 1002;
+}
+
+#about-us-link{
+    color: #999999;
+    font-size: 14px;
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    text-decoration: none;
+    text-decoration: none;
+}
+
+#story-board-button{
+    padding-left: 25px;
+    font-size: 14px;
+    color: #18944b;
+    display: block;
+    background: url(../img/sprites-all.png) no-repeat 0px -120px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 50px;
+    margin-left: -33px;
+    cursor: pointer;
+    text-decoration: none;
+    text-decoration: none;
+}
+
+.down-arrow{
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -8px;
+    width: 16px;
+    height: 7px;
+    bottom: -7px;
+    background: url(../img/sprites-all.png) no-repeat 0px -281px;
+}
+
+#story-zone-bottom{
+    height: 15px;
+    width: 100%;
+    background: #cecece;
+    bottom: 0px;
+    position: absolute;
+    z-index: 1001;
+}
+
+#story-list {
+    height: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    list-style: none;
+}
+
+#story-list li.board-story {
+    display: block;
+    list-style: none;
+    width: 383px;
+    height: 383px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    background-color: white;
+}
+
+.down-triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #d9d9d9;
+    position: absolute;
+    bottom: -20px;
+    left: 45%;
+}
+
+.image-mask{
+	background-image: url(avatar-mask.gif);
+}

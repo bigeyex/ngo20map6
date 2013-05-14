@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <title>公益地图</title>
+
+    {:css('index-base')}
+</head>
+<body>
+	<div id="master-box">
+		<div id="masthead">
+			<div id="main-nav">
+				<div id="logo">公益地图</div>
+				<ul id="main-nav-filters">
+					<li id="fields-filter" class="main-nav-filter">
+						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
+						<ul id="field-list" class="main-nav-filter-list">
+							<?php foreach(C('ORG_FIELDS') as $field): ?>
+								<li>
+									<a href="javascript:void(0);">{$field}</a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</li>
+					<li id="region-filter" class="main-nav-filter">
+						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a></li>
+				</ul>
+				<div id="main-nav-controls">
+					<div id="search-box"><input type="text"/><i></i></div>
+					<div id="language-box"></div>
+					<div id="register-buttons">
+						<a href="javascript:void(0);" id="login-button">登录</a>
+						<a href="javascript:void(0);" id="register-button">注册</a>
+					</div>
+				</div>
+			</div>
+            <div id="main-nav-shadow"></div>
+		</div> <!-- masthead -->
+		<div id="allmap">
+		</div>
+		<div id="story-zone-bottom"></div>
+		<div id="story-zone">
+			
+			<div id="story-zone-handle">
+				<a id="about-us-link" href="javascript:void(0);">关于我们</a>
+				<a id="story-board-button" href="javascript:void(0);">照片墙</a>
+				<i class="down-arrow"></i>
+			</div>
+			<div id="story-board">
+				<ul id="story-list">
+					<li class="board-story">
+						<img src="__APP__/Public/img/demo-img/img-1.jpg" width="383"/>
+						<h3>云南普洱宣德“根生博爱小学”援建</h3>
+					</li>
+					<li class="board-story">
+						<img src="__APP__/Public/img/demo-img/img-1.jpg" width="383"/>
+						<h3>云南普洱宣德“根生博爱小学”援建</h3>
+					</li>
+					
+
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div> <!-- master-box -->
+</body>
+</html>
+{:js('jquery-1.9.1')}
+<script type="text/javascript">
+
+
+app_path='__APP__';
+
+
+var map = new BMap.Map("allmap");            // 创建Map实例
+var point = new BMap.Point(105.537953, 39.075737);    // 创建点坐标
+map.centerAndZoom(point,5);                     // 初始化地图,设置中心点坐标和地图级别。
+map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+
+
+var story_board_default_top = $(window).height() - 50;
+var story_board_extended_top = 120;
+var story_board_expanded = false;
+//$('#story-board').css('height', $(window).height()-story_board_extended_top);
+$('#story-zone').css('top', story_board_default_top);
+
+$(window).resize(function(){
+	//$('#story-board').css('height', $(window).height()-story_board_extended_top);
+	story_board_default_top = $(window).height() - 50;
+	$('#story-zone').css('top', story_board_default_top);
+});
+
+
+
+$('#story-zone').mouseenter(function(){
+	if(!story_board_expanded){
+		$('#story-zone').clearQueue().animate({
+			top: story_board_default_top-5
+		});
+	}
+});
+
+$('#story-zone').mouseleave(function(){
+	if(!story_board_expanded){
+		$('#story-zone').clearQueue().animate({
+			top: story_board_default_top
+		});
+	}
+});
+
+$('#story-zone-handle').click(function(e){
+	if(story_board_expanded){
+		$('#story-zone').animate({
+			top: story_board_default_top
+		});
+		story_board_expanded = false;
+	}
+	else{
+		$('#story-zone').animate({
+			top: story_board_extended_top
+		});
+		story_board_expanded = true;
+	}
+	e.stopPropagation();
+	
+});
+
+var allLayer = new BMap.TileLayer({transparentPng:true});
+allLayer.getTilesUrl = function(tileCoord, zoom) {
+  var x = tileCoord.x;
+  var y = tileCoord.y;
+  return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-.gif';
+}
+map.addTileLayer(allLayer);
+
+function HTMLOverlay(lon, lat, px, py, html){
+	this._center = new BMap.Point(lon, lat);
+	this._px = px;
+	this._py = py;
+	this._html = html;
+}
+
+HTMLOverlay.prototype = new BMap.Overlay();    
+
+HTMLOverlay.prototype.initialize = function(map){    
+ this._map = map;        
+ var div = $(this._html)[0];    
+ div.style.position = "absolute";        
+ map.getPanes().markerPane.appendChild(div);      
+ this._div = div;       
+ return div;    
+}  
+
+HTMLOverlay.prototype.draw = function(){    
+// 根据地理坐标转换为像素坐标，并设置给容器    
+ var position = this._map.pointToOverlayPixel(this._center);    
+ this._div.style.left = position.x - this._px + "px";    
+ this._div.style.top = position.y - this._py + "px";    
+}  
+
+var overlay = null;
+
+// window.setInterval(function(){
+// 	var lon = 85.551967 + Math.random() * (115.944302 - 85.551967);
+// 	var lat = 25.677614 + Math.random() * (43.38271 - 25.677614);
+// 	if(overlay != null){
+// 		var prev_overlay = overlay;
+// 		$(overlay._div).fadeOut(function(){
+// 			map.removeOverlay(prev_overlay);
+// 		});
+		
+		
+// 	}
+// 	overlay = new HTMLOverlay(lon, lat, 40, 40, '<div style="width:80px;height:80px;background:#d9d9d9;position:relative;display:none;"><img src="avatar.jpeg"/><div class="image-mask"></div></div>');
+// 	map.addOverlay(overlay); 
+// 	$(overlay._div).fadeIn();
+// }, 2000);
+
+//overlay = new HTMLOverlay(105.537953, 35.075737, 40, 40, '<div style="width:80px;height:80px;background:#d9d9d9;position:relative;"><img class="avatar-img" src="avatar.jpeg"/><div class="image-mask"></div></div>');
+//map.addOverlay(overlay); 
+</script>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'language-box');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
