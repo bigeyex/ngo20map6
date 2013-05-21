@@ -28,7 +28,7 @@
 	
 		//3. get weibo of this user
 		$screen_name = $user['weibo'];
-		$json = file_get_contents("https://api.weibo.com/2/statuses/user_timeline.json?access_token=$access_token&screen_name=$screen_name&feature=1&trim_user=1");
+		$json = file_get_contents("https://api.weibo.com/2/statuses/user_timeline.json?access_token=$access_token&screen_name=$screen_name&feature=1");
 		$arr = json_decode($json, true);
 		
 		if(!isset($arr['statuses'])){	// if exceed weibo api quota
@@ -38,7 +38,7 @@
 		
 		//4. store into database	
 		foreach($arr['statuses'] as $status){
-			if($status['uid'] == 1998038407){
+			if($status['uid'] == 1998038407 || $status['user']['screen_name']=='乌宇'){
 				//echo 'bad user';
 				break;
 			}
@@ -49,10 +49,10 @@
 				break;
 			}
 			
-			$sql = "insert into weibo (user_id, mid, provider, content, lon, lat, image, retweet_count, comment_count, post_time, source) values (".$user['id']. ",'" . $status['mid'] . "'" .
+			$sql = "insert into weibo (user_id, mid, provider, content, lon, lat, image, retweet_count, comment_count, post_time, avatar_img, weibo_name) values (".$user['id']. ",'" . $status['mid'] . "'" .
 					",'weibo','".x($status['text'])."','".$status['geo']['coordinates'][1]."','".$status['geo']['coordinates'][0]."','".$status['bmiddle_pic']."',".
 					$status['reposts_count'].",".$status['comments_count'].",'" . date('Y-m-d H:i:s',strtotime($status['created_at'])). 
-					"','" . json_encode($status) . "')";
+					"','" . $status['user']['profile_image_url'] . "','".$status['user']['screen_name']."')";
 			query($sql);
 		}
 	
@@ -67,7 +67,7 @@
 		
 		$record = query("select v from settings where k='$key'");
 	
-		if($value == null){	//to get a value
+		if($value === null){	//to get a value
 			if(count($record)>0){
 				return $record[0]['v'];
 			}

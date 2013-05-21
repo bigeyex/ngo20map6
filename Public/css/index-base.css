@@ -14,7 +14,7 @@ body, html,#master-box, #allmap {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 1012;
     
 }
 
@@ -32,6 +32,9 @@ body, html,#master-box, #allmap {
     width: 100%;
     height: 13px;
     background: url(../img/bg/header-shadow.png) repeat-x;
+    position: absolute;
+    top: 55px;
+    z-index: 999;
 }
 
 #logo {
@@ -53,7 +56,7 @@ body, html,#master-box, #allmap {
     padding: 0;
     width: 280px;
     margin-left: 34px;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 #main-nav-filters li{
@@ -141,7 +144,7 @@ ul.main-nav-filter-list{
 }
 
 #main-nav-controls {
-    width: 340px;
+    width: 352px;
     float: right;
 }
 
@@ -154,7 +157,7 @@ ul.main-nav-filter-list{
 }
 
 #search-box input{
-    margin-top: 8px;
+    margin-top: 5px;
     width: 147px;
     height: 23px;
     border: 1px solid #b9b9b9;
@@ -172,7 +175,7 @@ ul.main-nav-filter-list{
     display: block;
     position: absolute;
     right: 0;
-    top: 16px;
+    top: 13px;
     cursor: pointer;
 }
 
@@ -180,11 +183,13 @@ ul.main-nav-filter-list{
     font-size: 14px;
     background-color: #18944b;
     padding: 9px 11px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     margin-top: 2px;
-    margin-left: 10px;
+    margin-left: 20px;
+    border: 1px solid #0d6833;
+    box-shadow: inset 0 1px 0 0px #6dbb8d;
 }
 
 #register-buttons a{
@@ -211,7 +216,7 @@ ul.main-nav-filter-list{
     margin-left: 17px;
     padding-right: 10px;
     height: 30px;
-    background: url(../img/sprites-all.png) no-repeat 55px -19px;
+    background: url(../img/sprites-all.png) no-repeat 56px -24px;
 }
 
 div.skiptranslate, div.goog-te-gadget-simple{
@@ -231,11 +236,158 @@ div.goog-te-gadget-simple img,
     color: #b9b9b9;
     margin: 0;
     padding: 0;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 .goog-te-menu-frame{
     top: 50px;
+}
+
+/* weibo related */
+
+.weibo-marker-bg img{
+    position: absolute;
+    top: 6px;
+    left: 6px;
+}
+
+.weibo-marker-bg{
+    background: url(../img/markers/square-bg.png) no-repeat;
+    height: 49px;
+    width: 43px;
+    position: relative;
+    top: -10px;
+}
+
+.weibo-marker-shadow{
+    background: url(../img/markers/square-shadow.png) no-repeat;
+    width: 35px;
+    height: 13px;
+    position: absolute;
+    top: 37px;
+    left: 3px;
+}
+
+#weibo-box{
+    position: absolute;
+    right: 6px;
+    top: 63px;
+    padding: 9px;
+    width: 230px;
+    -webkit-border-radius: 4px/5px;
+    -moz-border-radius: 4px/5px;
+    border-radius: 4px/5px;
+    background-color: rgba(255,255,255,0.95);
+    -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    border: solid 1px #a9a9a9;
+}
+
+h4.weibo-user-name{
+    margin: 0;
+    padding: 3px 0 9px;
+    color: #1e1e1e;
+    font-size: 14px;
+}
+
+p.weibo-content{
+    margin: 0;
+    color: :#4a4a4a;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+img.weibo-img{
+    margin-top: 10px;
+}
+
+/* list section */
+
+#map-list{
+    position: absolute;
+    top: 55px;
+    left: 0px;
+    z-index: 999;
+}
+
+.map-list-section{
+    width: 240px;
+    background: white;
+
+}
+
+.map-list-section h4{  
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#map-list ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 135px;
+    overflow: hidden;
+}
+
+#map-list li{
+    margin: 0 14px;
+    padding: 16px 10px 16px 32px;
+    font-size: 12px;
+    color: #535353;
+    text-align: left;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.list-more{
+    position: relative;
+}
+
+.list-more-link{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    font-size: 12px;
+    color: #535353;
+    padding: 12px 0;
+}
+
+.total-count{
+    position: absolute;
+    right: 18px;
+    top: 11px;
+    color: #adadad;
+    font-size: 12px;
+}
+
+#ngo-list-section h4{
+    background: #18944b;
+}
+
+#ngo-list-section li{
+    background: url(../img/markers/markers-green.png) no-repeat 0 7px;
+}
+
+#csr-list-section h4{
+    background: #2aa7d6;
+}
+
+#csr-list-section li{
+    background: url(../img/markers/markers-blue.png) no-repeat 0 7px;
+}
+
+#case-list-section h4{
+    background: #e54e27;
+}
+
+#case-list-section li{
+    background: url(../img/markers/markers-red.png) no-repeat 0 7px;
 }
 
 /* story board zone */
@@ -251,7 +403,8 @@ div.goog-te-gadget-simple img,
     height: 800px;
     background-color: #e3e3e3;
     overflow: auto;
-    z-index: 1000;
+    z-index: 999;
+    position: relative;
 }
 
 #story-zone-handle{
@@ -260,7 +413,8 @@ div.goog-te-gadget-simple img,
     height: 34px;
     position: relative;
     border-bottom: 1px solid #909090;
-    z-index: 1002;
+    z-index: 1004;
+    border-top: 1px solid #b0b0b0;
 }
 
 #about-us-link{
@@ -298,6 +452,7 @@ div.goog-te-gadget-simple img,
     height: 7px;
     bottom: -7px;
     background: url(../img/sprites-all.png) no-repeat 0px -281px;
+    z-index: 1004;
 }
 
 #story-zone-bottom{

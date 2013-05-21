@@ -2,6 +2,11 @@
 // 本类由系统自动生成，仅供测试用途
 class MapAction extends Action {
 
+    public function ajax_hotspots(){
+        $map_data_model = D('MapData');
+        $this->ajaxReturn($map_data_model->get_all_data(), 'JSON');
+    }
+
     public function tile(){
 
     	$map_data_model = D('MapData');
@@ -10,8 +15,8 @@ class MapAction extends Action {
     	$tilex = $_GET['x'];
     	$tiley = $_GET['y'];
 
-        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['province']);
-
+        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['province'], $_GET['type']);
+        
         header("content-type:image/png");  
         $img=imagecreatetruecolor(256,256);  
         //$bgcolor=ImageColorAllocate($img,0,0,0);  

@@ -6,6 +6,10 @@ class IndexAction extends Action {
         $this->display();
     }
 
+    public function load_weibo(){
+    	$weibo_model = D('Weibo');
+    	$this->ajaxReturn($weibo_model->get_recent_weibo(), 'json');
+    }
 
 }
 
