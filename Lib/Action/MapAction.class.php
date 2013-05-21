@@ -55,7 +55,7 @@ class MapAction extends Action {
         }
         imagesavealpha($img,true); 
         if(empty($_GET['key'])){
-        //Imagepng($img, "Runtime/Cache/tile-$zoom-$tilex-$tiley.png");
+        Imagepng($img, "Runtime/Cache/tile-$zoom-$tilex-$tiley.png");
         }
         Imagepng($img);  
         ImageDestroy($img);  

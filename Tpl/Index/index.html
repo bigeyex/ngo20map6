@@ -15,16 +15,28 @@
 				<ul id="main-nav-filters">
 					<li id="fields-filter" class="main-nav-filter">
 						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
-						<ul id="field-list" class="main-nav-filter-list">
-							<?php foreach(C('ORG_FIELDS') as $field): ?>
-								<li>
-									<a href="javascript:void(0);">{$field}</a>
-								</li>
-							<?php endforeach; ?>
-						</ul>
+						<div id="field-list">
+							<ul class="main-nav-filter-list">
+								<?php foreach(C('ORG_FIELDS') as $field): ?>
+									<li>
+										<a href="javascript:void(0);">{$field}</a>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
 					</li>
 					<li id="region-filter" class="main-nav-filter">
-						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a></li>
+						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a>
+						<div id="region-list">
+							<ul class="main-nav-filter-list">
+								<?php foreach(C('PROVINCES') as $field): ?>
+									<li>
+										<a href="javascript:void(0);">{$field}</a>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</li>
 				</ul>
 				<div id="main-nav-controls">
 					<div id="search-box"><input type="text"/><i></i></div>
@@ -35,18 +47,24 @@
 					</div>
 				</div>
 			</div>
-            
 		</div> <!-- masthead -->
 		<div id="main-nav-shadow"></div>
 		<div id="allmap"></div>
 		<div id="map-list">
 			<div class="map-list-section" id="ngo-list-section">
         		<h4>公益组织</h4>
-				<ul>
-					<li>广州城市外来女工参与社区发展</li>
-					<li>广碧儿童关爱中心</li>
-					<li>蓝信封留守儿童关爱中心</li>
-				</ul>
+        		<div class="map-list">
+					<ul data-bind="foreach: ngo_list">
+						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+					</ul>
+					<div class="pager">
+						<span class="prev-page">&lt;</span>
+						<div data-bind="foreach: pager">
+							<span class="pager-number" data-bind="text: $data, css:{'current': $parent.page==$data}"></span>
+						</div>
+						<span class="next-page">&gt;</span>
+					</div>
+				</div>
 				<div class="item-highlighter"></div>
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
@@ -55,12 +73,19 @@
 			</div>
 			<div class="map-list-section" id="csr-list-section">
        			<h4>企业</h4>
-				<ul>
-					<li>广州城市外来女工参与社区发展</li>
-					<li>广碧儿童关爱中心</li>
-					<li>蓝信封留守儿童关爱中心</li>
-				</ul>
-				<div class="item-highlighter"></div>
+       			<div class="map-list">
+					<ul data-bind="foreach: csr_list">
+						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+					</ul>
+					<div class="pager">
+						<span class="prev-page">&lt;</span>
+						<div data-bind="foreach: pager">
+							<span class="pager-number" data-bind="text: $data, css:{'current': $parent.page==$data}"></span>
+						</div>
+						<span class="next-page">&gt;</span>
+					</div>
+					<div class="item-highlighter"></div>
+				</div>
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
 					<span class="total-count">一共51个</span>
@@ -68,12 +93,19 @@
 			</div>
 			<div class="map-list-section" id="case-list-section">
         		<h4>对接案例</h4>
-				<ul>
-					<li>广州城市外来女工参与社区发展</li>
-					<li>广碧儿童关爱中心</li>
-					<li>蓝信封留守儿童关爱中心</li>
-				</ul>
-				<div class="item-highlighter"></div>
+        		<div class="map-list">
+					<ul data-bind="foreach: case_list">
+						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+					</ul>
+					<div class="pager">
+						<span class="prev-page">&lt;</span>
+						<div data-bind="foreach: pager">
+							<span class="pager-number" data-bind="text: $data, css:{'current': $parent.page==$data}"></span>
+						</div>
+						<span class="next-page">&gt;</span>
+					</div>
+					<div class="item-highlighter"></div>
+				</div>
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
 					<span class="total-count">一共51个</span>
@@ -116,12 +148,9 @@
 </html>
 {:js('jquery-1.9.1')}
 {:js('jsrender')}
+{:js('knockout-2.2.1')}
 <script type="text/javascript">
-
-
 app_path='__APP__';
-
-
 </script>
 {:js('index-map')}
 <script type="text/javascript">

@@ -332,8 +332,13 @@ img.weibo-img{
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 135px;
+    
+    
+}
+
+.map-list{
     overflow: hidden;
+    height: 135px;
 }
 
 #map-list li{
@@ -371,7 +376,8 @@ img.weibo-img{
 }
 
 #ngo-list-section li{
-    background: url(../img/markers/markers-green.png) no-repeat 0 7px;
+    background-image: url(../img/markers/markers-ngo.png);
+    background-repeat: no-repeat;
 }
 
 #csr-list-section h4{
@@ -379,7 +385,8 @@ img.weibo-img{
 }
 
 #csr-list-section li{
-    background: url(../img/markers/markers-blue.png) no-repeat 0 7px;
+    background-image: url(../img/markers/markers-csr.png);
+    background-repeat: no-repeat;
 }
 
 #case-list-section h4{
@@ -387,7 +394,105 @@ img.weibo-img{
 }
 
 #case-list-section li{
-    background: url(../img/markers/markers-red.png) no-repeat 0 7px;
+    background-image: url(../img/markers/markers-case.png);
+    background-repeat: no-repeat;
+}
+
+/* pager */
+
+.pager{
+    padding: 5px 12px;
+}
+
+.pager span{
+    cursor: pointer;
+    color: #808080;
+}
+
+.pager span, .pager div{
+    float: left;
+    display: block;
+    margin-top: 0;
+}
+
+.prev-page, .next-page {
+    text-indent: -9999px;
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: url(../img/sprites-all.png) no-repeat 0 -320px;
+    margin-right: 8px;
+}
+
+.next-page {
+    background-position: 0 -360px;
+    margin: 0;
+}
+
+.prev-page:hover{
+    background-position: 0 -400px;
+}
+
+.next-page:hover{
+    background-position: 0 -440px;
+}
+
+.pager-number{
+    width: 15px;
+    height: 16px;
+    line-height: 18px;
+    font-size: 12px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.pager-number.current{
+    background-color: #18944b;
+    color: white;
+}
+
+.record-1{
+    background-position: 0 7px;
+}
+
+.record-2{
+    background-position: 0 -33px;
+}
+
+.record-3{
+    background-position: 0 -73px;
+}
+
+.record-4{
+    background-position: 0 -113px;
+}
+
+.record-5{
+    background-position: 0 -153px;
+}
+
+.record-6{
+    background-position: 0 -193px;
+}
+
+.record-7{
+    background-position: 0 -233px;
+}
+
+.record-8{
+    background-position: 0 -273px;
+}
+
+.record-9{
+    background-position: 0 -313px;
+}
+
+.record-10{
+    background-position: 0 -353px;
+}
+
+.record-11{
+    background-position: 0 -393px;
 }
 
 /* story board zone */

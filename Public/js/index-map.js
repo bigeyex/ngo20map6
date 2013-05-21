@@ -109,6 +109,10 @@ var mapdata = {
 	init: function(raw){
 		this.raw_data = raw;
 		this.filter();
+		//refresh total count
+		$('#ngo-list-section .total-count').text('一共'+this.ngo_data.length+'个');
+		$('#csr-list-section .total-count').text('一共'+this.csr_data.length+'个');
+		$('#case-list-section .total-count').text('一共'+this.case_data.length+'个');
 	},
 	set_province: function(province){
 		this.province = province;
@@ -181,28 +185,129 @@ var mapdata = {
 var util = {
 	trim: function(str, num){
 		if(str.length > num){
-			return str.substring(0, num-3) + '...';
+			return str.substring(0, num-2) + '...';
 		}
 		return str;
 	}
 }
 
-var list_control = {
-	rec_per_page : 10,
+var list_control = {	//knockout.js model
+	detailed_page_size : 11,
+	page_size: 3,
 	ngo_in_view : [],
 	csr_in_view : [],
 	case_in_view : [],
+	ngo_list: ko.observableArray(),
+	csr_list: ko.observableArray(),
+	case_list: ko.observableArray(),
+	current_type: '',
+	pager: ko.observableArray([1,2,3,4,5,6,7,8]),
+	page: 1,
 	init: function(){
 		var self = this;
-		this.filter_by_view();
-		this.render_list('ngo');
-		this.render_list('csr');
-		this.render_list('case');
-		this.adjust_list_style();
+		this.change_viewport();
 		$('#ngo-list-section h4, #ngo-list-section .list-more-link').click(function(){self.zoom_in_list('ngo')});
 		$('#csr-list-section h4, #csr-list-section .list-more-link').click(function(){self.zoom_in_list('csr')});
 		$('#case-list-section h4, #case-list-section .list-more-link').click(function(){self.zoom_in_list('case')});
+		$('.prev-page').click(function(){map.clearOverlays();self.gotoPage(self.page-1)});
+		$('.next-page').click(function(){map.clearOverlays();self.gotoPage(self.page+1)});
+	},
+	change_viewport: function(){
+		this.filter_by_view();
+		map.clearOverlays();
+		if(this.current_type == ''){
+			this.gotoPage(1, 'ngo');
+			this.gotoPage(1, 'csr');
+			this.gotoPage(1, 'case');
+		}
+		else{	
+			this.gotoPage(1, this.current_type);
+		}
+	},
+	gotoPage: function(page, record_type){
+		var self = this;
 
+		if(record_type == undefined){
+			record_type = this.current_type;
+		}
+		var record_base = this[record_type+'_in_view'];
+		var records = this[record_type+'_list'];
+
+		var page_size = this.page_size;
+		var count = record_base.length;
+		var total_page = Math.floor(count/page_size)+1;
+		
+		if(page>total_page){
+			page = total_page;
+		}
+		else if(page<1){
+			page = 1;
+		}
+		records.removeAll();
+		this.page = page;
+		// this loop does 2 things:
+		// 1. update knockout observed array
+		// 2. add markers to the map
+		for(var i=0; i<page_size; i++){
+			var record_id = (page-1)*page_size+i;
+			if(record_id >= count) break;
+			var record = record_base[record_id]
+			record.class_id = 'record-' + (i+1);
+			record.t_text = util.trim(record.name, 12);
+			//put a marker on the map
+			var myIcon = new BMap.Icon(app_path+"/Public/img/markers/markers-"+record_type+".png", new BMap.Size(22, 30), {  
+				anchor: new BMap.Size(11, 30),  
+				imageOffset: new BMap.Size(0, 0 - i * 40)
+			});
+			var point = new BMap.Point(record.longitude, record.latitude);
+			var marker = new BMap.Marker(point, {icon: myIcon}); 
+			marker.data = {
+				type: record.type,
+				id: record.id,
+				lng: record.longitude,
+				lat: record.latitude
+			};
+			marker.addEventListener('click', function(){
+				//open info window
+			});
+			record.marker = marker;
+			map.addOverlay(marker);  
+			records.push(record);
+		}
+		$('#record-set li').mouseenter(function(e){
+			var i = $('#record-set li').index(e.currentTarget);
+			var marker = detailViewModel.records()[i].marker;
+			marker.old_zindex = marker.zIndex;
+			marker.setZIndex(100);
+		});
+		$('#record-set li').mouseleave(function(e){
+			var i = $('#record-set li').index(e.currentTarget);
+			var marker = detailViewModel.records()[i].marker;
+			marker.setZIndex(marker.old_zindex);
+		});
+		// refresh pager
+		var pager_place_left = 8;
+		this.pager.removeAll();
+		if(page > 3){	// case: ... 2 3 4 5 *6*
+			for(var i=page-2; i<page; i++){
+				this.pager.push(i);
+			}	
+			pager_place_left -= 2;
+		}
+		else{	// case: 1 2 3 *4*
+			for(var i=1; i<page; i++){
+				this.pager.push(i);
+				pager_place_left -= 1;
+			}
+		}
+		for(var i=page; i<total_page && pager_place_left>=1; i++, pager_place_left--){
+			this.pager.push(i);
+		}
+		$('.pager div span').click(function(e){
+			var page = e.target.innerText;
+			map.clearOverlays();
+			self.gotoPage(parseInt(page));
+		});
 	},
 	filter_by_view: function(){
 		var bounds = map.getBounds();
@@ -231,55 +336,23 @@ var list_control = {
 				this.case_in_view.push(d);
 			}
 		}
-		this.render_list('ngo');
-		// this.render_list('csr');
-		// this.render_list('case');
-	},
-	render_list: function(list_name, page){
-		if(page == undefined)page=1;
-		var list_data = this[list_name+'_in_view'];
-		$('#'+list_name+'-list-section ul').html('');
-		var list_length = list_data.length;
-		for(var i=this.rec_per_page*(page-1);i<list_length;i++){
-			var d = list_data[i];
-			$('#'+list_name+'-list-section ul').append('<li data-id="'+d.id+'">'+util.trim(d.name,14)+'</li>');
-		}
-	},
-	render_pager: function(){
-
-	},
-	_fill_list: function(arr, container, num){
-		var bounds = map.getBounds();
-		var minlat = bounds.getSouthWest().lat;
-		var minlon = bounds.getSouthWest().lng;
-		var maxlat = bounds.getNorthEast().lat;
-		var maxlon = bounds.getNorthEast().lng;
-		for(var di in arr){
-			if(num <= 0)break;
-			d = arr[di];
-			if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-				$('#'+container+'-list-section ul').append('<li data-id="'+d.id+'">'+util.trim(d.name,14)+'</li>');
-				num--;
-			}
-		}
-	},
-	adjust_list_style : function(){
-		$('#ngo-list-section li').each(function(i){$(this).css('background-position', '0px '+(-40*i+7)+'px')});
-		$('#csr-list-section li').each(function(i){$(this).css('background-position', '0px '+(-40*i+7)+'px')});
-		$('#case-list-section li').each(function(i){$(this).css('background-position', '0px '+(-40*i+7)+'px')});
 	},
 	zoom_in_list: function(list_name){
 		//slide list sections
+		
 		$('.list-more').slideUp();
 		$('.item-highlighter').hide();
 		var other_lists = $('.map-list-section').not('#'+list_name+'-list-section');
-		other_lists.find('ul').slideUp();
-		$('#'+list_name+'-list-section ul').slideDown().animate({height:$(window).height()-169}, function(){
-			$('#map-list ul').css('overflow', 'auto');
+		other_lists.find('.map-list').slideUp();
+		$('#'+list_name+'-list-section .map-list').slideDown().animate({height:$(window).height()-162}, function(){
+			$('.map-list').css('overflow', 'auto');
 		});
 
 		//refresh map markers
 		mapdata.set_type(list_name);
+		this.page_size = this.detailed_page_size;
+		this.current_type = list_name;
+		this.change_viewport();
 
 		//design pager
 	}
@@ -299,7 +372,7 @@ var map_control = {
 			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.province+'-'+mapdata.rec_field+'-'+mapdata.type+'.gif';
 		};
 		map.addTileLayer(this.tileLayer);
-	},
+	}
 };
 
 map_control.refresh_tilelayer();
@@ -311,12 +384,13 @@ $.get(app_path+'/Map/ajax_hotspots', function(result){
 
 	//init the list - 3 for each
 	list_control.init();
+	ko.applyBindings(list_control);
 
 	map.addEventListener('dragend', function(){
-		list_control.filter_by_view();
+		list_control.change_viewport();
 	});
 	map.addEventListener('zoomend', function(){
-		list_control.filter_by_view();
+		list_control.change_viewport();
 	});
 });
 
