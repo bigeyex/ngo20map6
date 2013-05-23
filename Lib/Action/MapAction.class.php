@@ -16,7 +16,7 @@ class MapAction extends Action {
     	$tiley = $_GET['y'];
 
         $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['province'], $_GET['type']);
-        
+
         header("content-type:image/png");  
         $img=imagecreatetruecolor(256,256);  
         //$bgcolor=ImageColorAllocate($img,0,0,0);  

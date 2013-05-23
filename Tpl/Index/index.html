@@ -14,24 +14,34 @@
 				<div id="logo">公益地图</div>
 				<ul id="main-nav-filters">
 					<li id="fields-filter" class="main-nav-filter">
-						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
-						<div id="field-list">
+						<a class="filter-menu-button" id="field-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
+						<div id="field-list" class="filter-box">
+							<div class="masker"></div>
+							<i class="triangle"></i>
 							<ul class="main-nav-filter-list">
+									<li val="" class="selected all">
+										全部领域
+									</li>
 								<?php foreach(C('ORG_FIELDS') as $field): ?>
-									<li>
-										<a href="javascript:void(0);">{$field}</a>
+									<li val="{$field}">
+										{$field}
 									</li>
 								<?php endforeach; ?>
 							</ul>
 						</div>
 					</li>
 					<li id="region-filter" class="main-nav-filter">
-						<a class="filter-menu-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a>
-						<div id="region-list">
+						<a class="filter-menu-button" id="region-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a>
+						<div id="region-list" class="filter-box">
+							<div class="masker"></div>
+							<i class="triangle"></i>
 							<ul class="main-nav-filter-list">
+									<li val="" class="selected all">
+										全部地区
+									</li>
 								<?php foreach(C('PROVINCES') as $field): ?>
-									<li>
-										<a href="javascript:void(0);">{$field}</a>
+									<li val="{$field}">
+										{$field}
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -39,12 +49,12 @@
 					</li>
 				</ul>
 				<div id="main-nav-controls">
-					<div id="search-box"><input type="text"/><i></i></div>
-					<div id="language-box"></div>
 					<div id="register-buttons">
 						<a href="javascript:void(0);" id="login-button">登录</a>
 						<a href="javascript:void(0);" id="register-button">注册</a>
 					</div>
+					<div id="language-box"></div>
+					<div id="search-box"><input type="text"/><i></i></div>
 				</div>
 			</div>
 		</div> <!-- masthead -->
@@ -55,7 +65,7 @@
         		<h4>公益组织</h4>
         		<div class="map-list">
 					<ul data-bind="foreach: ngo_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -64,8 +74,9 @@
 						</div>
 						<span class="next-page">&gt;</span>
 					</div>
+					<div class="item-highlighter"></div>
 				</div>
-				<div class="item-highlighter"></div>
+				
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
 					<span class="total-count">一共51个</span>
@@ -75,7 +86,7 @@
        			<h4>企业</h4>
        			<div class="map-list">
 					<ul data-bind="foreach: csr_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -95,7 +106,7 @@
         		<h4>对接案例</h4>
         		<div class="map-list">
 					<ul data-bind="foreach: case_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id}, text: t_text'></li>
+						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -114,11 +125,13 @@
 		</div>
 		<div id="detail-panel"></div>
 		<div id="weibo-box">
+			<div id="weibo-user-avatar"><img src="" width="50"/></div>
 			<h4 class="weibo-user-name"></h4>
 			<p class="weibo-content">
 				
 			</p>
-			<img class="weibo-img" src="" width="120"/>
+			<div id="weibo-img-container"><img class="weibo-img" src="" width="200"/></div>
+			<span id="weibo-time-past"></span>
 		</div>
 		<div id="story-zone-bottom"></div>
 		<div id="story-zone">
@@ -142,13 +155,19 @@
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-		</div>
+		</div><!-- story-zone -->
+		<div id="l2-panel">
+			<div id="l2-content"></div>
+			<div id="l2-close-button"></div>
+		</div><!-- L2 panel -->
 	</div> <!-- master-box -->
 </body>
 </html>
 {:js('jquery-1.9.1')}
 {:js('jsrender')}
 {:js('knockout-2.2.1')}
+{:js('moment')}
+{:js('moment.zh-cn')}
 <script type="text/javascript">
 app_path='__APP__';
 </script>

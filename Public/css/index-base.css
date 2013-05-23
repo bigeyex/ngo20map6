@@ -19,10 +19,10 @@ body, html,#master-box, #allmap {
 }
 
 #main-nav {
-    height: 35px;
+    height: 31px;
     line-height: 30px;
-    padding: 10px;
-    background: url(../img/bg/header.png) repeat-x;
+    padding: 8px 0 7px;
+    background: url(../img/bg/header.jpg) repeat-x;
     margin: 1px solid #51504f;
     margin-left: 0;
     margin-right: 0;
@@ -30,10 +30,10 @@ body, html,#master-box, #allmap {
 
 #main-nav-shadow{
     width: 100%;
-    height: 13px;
+    height: 6px;
     background: url(../img/bg/header-shadow.png) repeat-x;
     position: absolute;
-    top: 55px;
+    top: 46px;
     z-index: 999;
 }
 
@@ -45,6 +45,7 @@ body, html,#master-box, #allmap {
     background: url(../img/ngo-logo.png) no-repeat;
     display: block;
     text-indent: -9999px;
+    margin-top: -4px;
 }
 
 
@@ -55,8 +56,8 @@ body, html,#master-box, #allmap {
     margin: 0;
     padding: 0;
     width: 280px;
-    margin-left: 34px;
-    margin-top: 3px;
+    margin-left: 141px;
+    margin-top: 0px;
 }
 
 #main-nav-filters li{
@@ -66,115 +67,127 @@ body, html,#master-box, #allmap {
     position: relative;
 }
 
-a.filter-menu-button{
+a.filter-menu-button, .goog-te-menu-value span:first-child{
     display: block;
     width: 76px;
     height: 28px;
     background: url(../img/sprites-all.png) no-repeat 71px -28px;
     float: left;
-    margin-top: 1px;
     margin-left: 6px;
     padding-left: 8px;
+    text-decoration: none;
     font-size: 14px;
-    color: #3f3f3f;
-    text-decoration: none;
+    color: #236c00;
+    text-shadow: 0 2px rgba(214,255,80,.75);
 }
 
-a.filter-menu-button:hover{
-    background-color: #f7f7f7;
-    border: 1px solid #b9b9b9;
-    margin-left: 5px;
-    width: 75px;
-    margin-top: 0;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    cursor: pointer;
-}
-
-li.main-nav-filter.expanded a.filter-menu-button {
-    background-color: #f7f7f7;
-    border: 1px solid #b9b9b9;
-    border-bottom: 0;
-    margin-left: 5px;
-    width: 75px;
-    margin-top: 0;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-}
-
-.main-nav-filter-list {
-    top: 26px;
-    margin: 0;
-    padding: 8px;
-    background-color: #f7f7f7;
-    width: 67px;
-    margin-left: 5px;
-    text-align: center;
-    border: 1px solid #b9b9b9;
-    border-top: 0;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-}
-
-.main-nav-filter-list li {
-    height: 23px;
-    line-height: 23px;
-}
-
-.main-nav-filter-list a {
-    font-size: 12px;
-    color: #32ab23;
-    text-decoration: none;
-}
-
-ul.main-nav-filter-list{
+#field-list, #region-list {
+    top: 48px;
+    left: 14px;
+    position: absolute;
+    width: 679px;
+    background-color: rgba(255,255,255,100);
+    -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    border: solid 1px #a9a9a9;
     display: none;
 }
 
-.main-nav-filter.expanded ul.main-nav-filter-list {
-    display: block;
+#region-list{
+    left: 102px;
 }
 
+.main-nav-filter-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
 
-ul.main-nav-filter-list{
+.main-nav-filter-list li {
+    float: left;
+    height: 27px;
+    width: 96px;
+    min-width: 96px;
+    text-align: center;
+    font-size: 12px;
+    color: #666666;
+    cursor: pointer;
+}
+
+.main-nav-filter-list li.selected {
+    background-color: #6db608;
+    color: white;
+}
+
+#field-list {
+    
+}
+
+#region-list {
+
+}
+
+.main-nav-filter i.triangle {
+    width: 15px;
+    height: 8px;
     position: absolute;
+    top: -8px;
+    background: url(../img/sprites-all.png) no-repeat 0px -480px;
+    left: 22px;
+}
+
+.filter-box .masker{
+    position: absolute;
+    top: -20px;
+    width: 679px;
+    height: 20px;   
 }
 
 #main-nav-controls {
-    width: 352px;
+    width: 552px;
     float: right;
 }
 
 #main-nav-controls div {
-    float: left;
+    float: right;
 }
 
 #search-box{
     position: relative;
 }
 
+#search-box{
+    width: 243px;
+    height: 29px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background: #f5f3ed url(../img/sprites-all.png) no-repeat 9px -151px;;
+    -webkit-box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
+    -moz-box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
+    box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
+    border: solid 1px rgba(103,98,81,.4);
+    padding: 0;
+}
+
 #search-box input{
-    margin-top: 5px;
-    width: 147px;
-    height: 23px;
-    border: 1px solid #b9b9b9;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    background: #f0f0f0 url(../img/sprites-all.png) no-repeat 7px -155px;
-    box-shadow:inset 1px 2px 3px #b9b9b9;
+    border: 0;
+    margin-left: 27px;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 4px;
+    width: 190px;
+    background: none;
 }
 
 #search-box i{
     width: 15px;
     height: 15px;
-    background: url(../img/sprites-all.png) no-repeat 0px -35px;
+    background: url(../img/sprites-all.png) no-repeat 0px -559px;
     display: block;
     position: absolute;
-    right: 0;
+    right: 4px;
     top: 13px;
     cursor: pointer;
 }
@@ -213,10 +226,11 @@ ul.main-nav-filter-list{
 /* google translate */
 
 #language-box{
-    margin-left: 17px;
-    padding-right: 10px;
+    margin-left: 30px;
+    padding-right: 23px;
     height: 30px;
-    background: url(../img/sprites-all.png) no-repeat 56px -24px;
+    background: url(../img/sprites-all.png) no-repeat right -25px;
+    margin-top: -1px;
 }
 
 div.skiptranslate, div.goog-te-gadget-simple{
@@ -233,10 +247,10 @@ div.goog-te-gadget-simple img,
 .goog-te-menu-value span:first-child{
     display: block;
     height: 20px;
-    color: #b9b9b9;
     margin: 0;
     padding: 0;
-    margin-top: 3px;
+    width: auto;
+    background: none;
 }
 
 .goog-te-menu-frame{
@@ -272,8 +286,8 @@ div.goog-te-gadget-simple img,
     position: absolute;
     right: 6px;
     top: 63px;
-    padding: 9px;
-    width: 230px;
+    padding: 8px 14px;
+    width: 200px;
     -webkit-border-radius: 4px/5px;
     -moz-border-radius: 4px/5px;
     border-radius: 4px/5px;
@@ -287,8 +301,11 @@ div.goog-te-gadget-simple img,
 h4.weibo-user-name{
     margin: 0;
     padding: 3px 0 9px;
-    color: #1e1e1e;
+    color: #18944b;
     font-size: 14px;
+    position: absolute;
+    top: 24px;
+    left: 74px;
 }
 
 p.weibo-content{
@@ -296,12 +313,33 @@ p.weibo-content{
     color: :#4a4a4a;
     font-size: 12px;
     line-height: 18px;
+    margin-top: 5px;
+}
+
+#weibo-img-container{
+    height: 135px;
+    overflow: hidden;
 }
 
 img.weibo-img{
     margin-top: 10px;
 }
 
+#weibo-time-past{
+    font-size: 12px;
+    float: right;
+    margin-top: 5px;
+    color: #999999;
+}
+
+.expand-weibo-text{
+    color: #1a8f49;
+    text-decoration: none;
+}
+
+.expand-weibo-text:hover{
+    text-decoration: underline;
+}
 /* list section */
 
 #map-list{
@@ -348,6 +386,11 @@ img.weibo-img{
     color: #535353;
     text-align: left;
     border-bottom: 1px solid #d8d8d8;
+    cursor: pointer;
+}
+
+#map-list li:hover{
+    color: #309f5d;
 }
 
 .list-more{
@@ -396,6 +439,16 @@ img.weibo-img{
 #case-list-section li{
     background-image: url(../img/markers/markers-case.png);
     background-repeat: no-repeat;
+}
+
+.item-highlighter {
+    display: none;
+    background: green;
+    width: 10px;
+    height: 20px;
+    position: absolute;
+    right: -10px;
+    background: url(../img/sprites-all.png) no-repeat 0px -80px;
 }
 
 /* pager */
@@ -603,4 +656,120 @@ img.weibo-img{
 
 .image-mask{
 	background-image: url(avatar-mask.gif);
+}
+
+/* info-window */
+.info-window{
+    z-index: 1;
+}
+
+.info-window-box{
+    width: 347px;
+    height: 126px;
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: white;
+    -webkit-box-shadow: 0 0 21px rgba(80,80,80,.08);
+    -moz-box-shadow: 0 0 21px rgba(80,80,80,.08);
+    box-shadow: 0 0 21px rgba(80,80,80,.08);
+    border: solid 1px #8c8c8c;
+    background-image: -webkit-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -moz-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -o-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -ms-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: linear-gradient(to top, #f7f7f7, #fff);
+    position: absolute;
+    top: 0px;
+}
+
+.info-window-bg{
+    background: url(../img/bg/info-window-shadow.png) no-repeat;
+    width: 445px;
+    height: 140px;
+    position: absolute;
+    top: 42px;
+}
+
+.info-window-triangle{
+    background: url(../img/bg/info-window-shadow.png) no-repeat 0 -160px;
+    width: 30px;
+    height: 15px;
+    position: absolute;
+    top: 146px;
+    left: 169px;
+}
+
+.info-window-close-button{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: url(../img/bg/info-window-shadow.png) no-repeat 0 -200px;
+    cursor: pointer;
+}
+
+#info-window-title{
+    font-size: 14px;
+    width: 320px;
+    color: #378f05;
+}
+
+#info-window-place{
+    margin-top: 9px;
+    height: 26px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+#info-window-place-label{
+    color: #378f05;
+}
+
+#info-window-place-text{
+    color: #666666;
+}
+
+#info-window-detail{
+    height: 61px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
+}
+
+.waiting-ball{
+    width: 15px;
+    height: 15px;
+    display: block;
+    background-image: url(../img/loading.gif);
+}
+
+/* l2-panel */
+#l2-panel{
+    display: none;
+    width: 663px;
+    height: 75%;
+    overflow: hidden;
+    position: absolute;
+    top: 59px;
+    background: white;
+    border: 1px solid #d0d0d0;
+    left: 253px;
+}
+
+#l2-close-button{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: url(../img/sprites-all.png) no-repeat 0px -520px;
+}
+
+#l2-content{
+    margin-left: 34px;
+    margin-top: 19px;
 }

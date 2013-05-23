@@ -6,7 +6,7 @@ class WeiboModel extends Model{
 
 		//load recent weibo group by user
 		//load top 1 most recent weibo of each user 
-		$weibo = $this->query('select w1.* from weibo w1 left join weibo w2 on (w1.user_id=w2.user_id and w1.post_time<w2.post_time) where w2.id is null order by post_time desc limit '.$count);
+		$weibo = $this->query('select * from weibo group by user_id order by post_time desc limit '.$count);
 		
 		//fetch user information using "in"
 		$user_ids = array();

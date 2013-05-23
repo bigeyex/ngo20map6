@@ -5,6 +5,41 @@ map.centerAndZoom(point,5);                     // 初始化地图,设置中心�
 map.enableScrollWheelZoom();                            //启用滚轮放大缩小
 
 
+$('.main-nav-filter').hover(function(){
+	$(this).find('.filter-box').show();
+}, function(){
+	$(this).find('.filter-box').fadeOut();
+});
+
+$('.main-nav-filter').click(function(){
+	$(this).find('.filter-box').show();
+});
+
+$('.main-nav-filter').blur(function(){
+	$(this).find('.filter-box').fadeOut();
+});
+
+
+$('#region-list li').click(function(){
+	var province = $(this).attr('val');
+	if(province!=''){
+		map.setCenter(province);
+		map.setZoom(8);
+	}
+	else{
+		var point = new BMap.Point(105.537953, 39.075737);
+		map.centerAndZoom(point,5);
+	}
+	$('#region-filter-button').text($(this).text());
+});
+
+$('#field-list li').click(function(){
+	var field = $(this).attr('val');
+	mapdata.set_field(field);
+	list_control.change_viewport();
+	$('#field-filter-button').text($(this).text());
+});
+
 var story_board_default_top = $(window).height() - 50;
 var story_board_extended_top = 120;
 var story_board_expanded = false;
@@ -62,6 +97,7 @@ function HTMLOverlay(lon, lat, px, py, html){
 HTMLOverlay.prototype = new BMap.Overlay();    
 
 HTMLOverlay.prototype.initialize = function(map){    
+ this.se = false;
  this._map = map;        
  var div = $(this._html)[0];    
  div.style.position = "absolute";        
@@ -99,7 +135,7 @@ var mapdata = {
 			r = this.raw_data[ri];
 			if(this.province != '' && r.province.indexOf(this.province) == -1)
 				continue;
-			if(this.rec_field != '' && r.rec_field.indexOf(this.rec_field) == -1)
+			if(this.rec_field != '' && (r.rec_field === null || r.rec_field.indexOf(this.rec_field) == -1))
 				continue;
 			this._accept(r);
 		}
@@ -158,7 +194,7 @@ var mapdata = {
 		for(var di in data_array){
 			d = data_array[di];
 			var hotspot = new BMap.Hotspot(new BMap.Point(d.longitude, d.latitude),
-	          {text:d.name, minZoom: 2, maxZoom: 18, userData: {'id':d.id, 'type':d.type, 'model':d.model}});
+	          {text:d.name, minZoom: 2, maxZoom: 18, userData: d});
 	     	map.addHotspot(hotspot);
 		}
 	},
@@ -183,9 +219,10 @@ var mapdata = {
 };
 
 var util = {
-	trim: function(str, num){
+	trim: function(str, num, dots){
+		if(dots == undefined)dots = '...';
 		if(str.length > num){
-			return str.substring(0, num-2) + '...';
+			return str.substring(0, num-2) + dots;
 		}
 		return str;
 	}
@@ -211,6 +248,17 @@ var list_control = {	//knockout.js model
 		$('#case-list-section h4, #case-list-section .list-more-link').click(function(){self.zoom_in_list('case')});
 		$('.prev-page').click(function(){map.clearOverlays();self.gotoPage(self.page-1)});
 		$('.next-page').click(function(){map.clearOverlays();self.gotoPage(self.page+1)});
+		$(document).on('mouseenter', '.map-list li', function(){
+			var data = ko.dataFor(this);
+			info_window.load(data);
+		});
+		$(document).on('mouseleave', '.map-list li', function(){
+			info_window.hide();
+		});
+		$(document).on('click', '.map-list li', function(){
+			$('.item-highlighter').show();
+			$('.item-highlighter').css('top', this.offsetTop+13);
+		});
 	},
 	change_viewport: function(){
 		this.filter_by_view();
@@ -236,6 +284,13 @@ var list_control = {	//knockout.js model
 		var page_size = this.page_size;
 		var count = record_base.length;
 		var total_page = Math.floor(count/page_size)+1;
+
+		if(total_page<=1){
+			$('.pager').hide();
+		}
+		else{
+			$('.pager').show();
+		}
 		
 		if(page>total_page){
 			page = total_page;
@@ -251,7 +306,7 @@ var list_control = {	//knockout.js model
 		for(var i=0; i<page_size; i++){
 			var record_id = (page-1)*page_size+i;
 			if(record_id >= count) break;
-			var record = record_base[record_id]
+			var record = record_base[record_id];
 			record.class_id = 'record-' + (i+1);
 			record.t_text = util.trim(record.name, 12);
 			//put a marker on the map
@@ -261,30 +316,16 @@ var list_control = {	//knockout.js model
 			});
 			var point = new BMap.Point(record.longitude, record.latitude);
 			var marker = new BMap.Marker(point, {icon: myIcon}); 
-			marker.data = {
-				type: record.type,
-				id: record.id,
-				lng: record.longitude,
-				lat: record.latitude
-			};
+			marker.data = record;
 			marker.addEventListener('click', function(){
 				//open info window
+				info_window.load(this.data);
 			});
 			record.marker = marker;
 			map.addOverlay(marker);  
 			records.push(record);
 		}
-		$('#record-set li').mouseenter(function(e){
-			var i = $('#record-set li').index(e.currentTarget);
-			var marker = detailViewModel.records()[i].marker;
-			marker.old_zindex = marker.zIndex;
-			marker.setZIndex(100);
-		});
-		$('#record-set li').mouseleave(function(e){
-			var i = $('#record-set li').index(e.currentTarget);
-			var marker = detailViewModel.records()[i].marker;
-			marker.setZIndex(marker.old_zindex);
-		});
+		
 		// refresh pager
 		var pager_place_left = 8;
 		this.pager.removeAll();
@@ -398,16 +439,22 @@ $.get(app_path+'/Map/ajax_hotspots', function(result){
 /* weibo variables */
 var weibo_data;
 var weibo_data_index = 0;
+var weibo_data_last_index = 0;
 var weibo_timer;
 var weibo_marker = null;
 
 /* load weibo content */
-$(function(){
-	$.get(app_path+'/Index/load_weibo', function(result){
-		weibo_data = result;
-		switch_weibo_marker();
-		weibo_timer = window.setInterval(switch_weibo_marker, 10000)
-	}, 'json');
+$.get(app_path+'/Index/load_weibo', function(result){
+	weibo_data = result;
+	switch_weibo_marker();
+	weibo_timer = window.setInterval(switch_weibo_marker, 10000);
+}, 'json');
+
+
+$('#weibo-box').hover(function(){
+	window.clearInterval(weibo_timer);
+}, function(){
+	weibo_timer = window.setInterval(switch_weibo_marker, 10000);
 });
 
 /* switch weibo marker according to weibo list */
@@ -425,7 +472,9 @@ function switch_weibo_marker(){
 	$('.weibo-marker-shadow').animate({top:40});
 	$('#weibo-box').fadeOut(function(){
 		$('.weibo-user-name').text("@"+weibo.weibo_name);
-		$('.weibo-content').text(weibo.content);
+		$('#weibo-user-avatar img').attr('src', weibo.avatar_img);
+		$('#weibo-time-past').text(moment(weibo.post_time).fromNow());
+		$('.weibo-content').html(util.trim(weibo.content, 50, '<a href="javascript:void(0)" onclick="expand_weibo_text()" class="expand-weibo-text">[展开]</a>'));
 		if(weibo.image == ''){
 			$('.weibo-img').hide();
 		}
@@ -435,8 +484,54 @@ function switch_weibo_marker(){
 		}
 		$('#weibo-box').fadeIn();
 	});
-
+	weibo_data_last_index = weibo_data_index;
 	weibo_data_index++;
 }
 
-/* process hotspot data */
+function expand_weibo_text(){
+	var weibo = weibo_data[weibo_data_last_index];
+	$('.weibo-content').text(weibo.content);
+}
+
+/* SECTION: info-window */
+
+var info_window = {
+	overlay : null,
+	show: function(longitude, latitude, content){
+		var self = this;
+		if(self.overlay !== null)map.removeOverlay(self.overlay);
+		this.overlay = new HTMLOverlay(longitude, latitude, 186, 163, '<div class="info-window"><div class="info-window-bg"></div><div class="info-window-box">'+content+'<div class="info-window-close-button"></div><div class="info-window-triangle"></div></div></div>');
+		map.addOverlay(this.overlay);
+		$('.info-window-close-button').click(function(){map.removeOverlay(self.overlay);});
+	},
+	hide: function(){
+		var self = this;
+		if(self.overlay !== null)map.removeOverlay(self.overlay);
+	},
+	load: function(data){
+		this.show(data.longitude, data.latitude, '<div id="info-window-title">'+util.trim(data.name, 20)+'</div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>');
+		if(data.model == 'events'){
+			url_part = 'Event';
+		}
+		else if(data.model == 'users'){
+			url_part = 'User';
+		}
+		$.get(app_path+'/'+url_part+'/get_detail/id/'+data.id, function(res){
+			if(!res)return;
+			$('#info-window-detail').text(util.trim(res.description, 112));
+		}, 'json');
+	}
+};
+
+map.addEventListener('hotspotclick', function(e){
+	var data = e.spots[0].getUserData();
+	info_window.load(data);
+});
+
+var l2_panel = {
+	init: function(){
+		$('#l2-panel').height($(window).height() - 111);
+	}
+};
+
+// l2_panel.init();
