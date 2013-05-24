@@ -67,7 +67,7 @@ body, html,#master-box, #allmap {
     position: relative;
 }
 
-a.filter-menu-button, .goog-te-menu-value span:first-child{
+a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a {
     display: block;
     width: 76px;
     height: 28px;
@@ -194,33 +194,30 @@ a.filter-menu-button, .goog-te-menu-value span:first-child{
 
 #register-buttons{
     font-size: 14px;
-    background-color: #18944b;
-    padding: 9px 11px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    margin-top: 2px;
-    margin-left: 20px;
-    border: 1px solid #0d6833;
-    box-shadow: inset 0 1px 0 0px #6dbb8d;
+    background: url(../img/bg/register-buttons.jpg) no-repeat;
+    width: 90px;
+    height: 15px;
+    margin-left: 5px;
+    padding: 8px 12px;
 }
 
 #register-buttons a{
-    color: white;
-    text-decoration: none;
     display: block;
     float: left;
     height: 14px;
     line-height: 14px;
+    background: none;
+    width: auto;
+    padding: 0;
+    margin: 0;
 }
 
 #login-button{
     padding-right: 10px;
-    border-right: 1px solid #2b7706;
 }
 
-#register-button{
-    padding-left: 10px;
+#register-buttons #register-button{
+    padding-left: 21px;
 }
 
 /* google translate */
@@ -344,14 +341,15 @@ img.weibo-img{
 
 #map-list{
     position: absolute;
-    top: 55px;
+    top: 46px;
     left: 0px;
     z-index: 999;
+    background: url(../img/bg/tile-left.jpg) repeat;
+    border: 1px solid #b3aa98;
 }
 
 .map-list-section{
     width: 240px;
-    background: white;
 
 }
 
@@ -364,6 +362,13 @@ img.weibo-img{
     line-height: 20px;
     color: #ffffff;
     cursor: pointer;
+    background: url(../img/bg/handle-gradient.jpg) repeat-x;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.15);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    border: 1px solid #dfdad0;
+    border-right: 0;
+    border-left: 0;
 }
 
 #map-list ul{
@@ -383,7 +388,7 @@ img.weibo-img{
     margin: 0 14px;
     padding: 16px 10px 16px 32px;
     font-size: 12px;
-    color: #535353;
+    color: #665f50;
     text-align: left;
     border-bottom: 1px solid #d8d8d8;
     cursor: pointer;
@@ -409,13 +414,13 @@ img.weibo-img{
 .total-count{
     position: absolute;
     right: 18px;
-    top: 11px;
+    top: 13px;
     color: #adadad;
     font-size: 12px;
 }
 
 #ngo-list-section h4{
-    background: #18944b;
+    color: #358a10;
 }
 
 #ngo-list-section li{
@@ -424,7 +429,7 @@ img.weibo-img{
 }
 
 #csr-list-section h4{
-    background: #2aa7d6;
+    color: #008ec6;
 }
 
 #csr-list-section li{
@@ -433,7 +438,7 @@ img.weibo-img{
 }
 
 #case-list-section h4{
-    background: #e54e27;
+    color: #e14b08;
 }
 
 #case-list-section li{
@@ -451,6 +456,25 @@ img.weibo-img{
     background: url(../img/sprites-all.png) no-repeat 0px -80px;
 }
 
+.map-list-section .gradient{
+    display: block;
+    width: 5px;
+    height: 20px;
+    position: absolute;
+    background: url(../img/bg/gradients.jpg) repeat-x;
+}
+
+#ngo-list-section .gradient{
+    background-position: 0 -20px;
+}
+
+#csr-list-section .gradient{
+    background-position: 0 -40px;
+}
+
+#case-list-section .gradient{
+    background-position: 0 -60px;
+}
 /* pager */
 
 .pager{
