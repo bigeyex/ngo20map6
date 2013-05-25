@@ -1,0 +1,57 @@
+<div id="preview">
+	<?php if (!empty($event['image'])): ?>
+		<div class="preview-avatar"><img src="{:thumb($event)}" width="150"/></div>
+	<?php endif ?>
+	<div class="preview-header  <?php if (empty($event['image'])): ?>no-img<?php endif; ?>">
+		
+		
+		<h3>{$event.name}</h3>
+		<div class="first-line">
+			<div class="work-field">
+				<span class="title">项目领域</span>
+				<span>{$event.item_field}</span>
+			</div>
+			<div class="service-area">
+				<span class="title">相关机构</span>
+				<span>{$event.host}</span>
+			</div>
+			<div class="work-address">
+				<span class="title">项目地点</span>
+				<span>{$event.province}{$event.city}{$event.county}{$event.place}</span>
+			</div>
+		</div>
+		<div class="second-line">
+			<div class="register-year">
+				<span class="title"><?php if($event['type']=='ngo'): ?>项目需求<?php else: ?>项目资源<?php endif; ?></span>
+				<span>{$event.res_tags}</span>
+			</div>
+			<!-- <div class="contact">
+				<span class="title">项目时间</span>
+				<span>{$event.begin_time|date='Y-m-d'}</span>
+			</div> -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="preview-roller">
+		<div class="description">
+			<span class="title">项目简介</span>
+			<span>{$event.description|nl2br}</span>
+		</div>
+		<div class="aim">
+			<span class="title">需求描述</span>
+			<span>{$event.req_description|nl2br}</span>
+		</div>
+		<div class="aim">
+			<span class="title">项目成果</span>
+			<span>{$event.outcome|nl2br}</span>
+		</div>
+		<div class="aim">
+			<span class="title">相关网址</span>
+			<span><a href="{$event.url}">{$event.url}</a></span>
+		</div>
+	</div>
+	
+
+
+</div>
+

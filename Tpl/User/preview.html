@@ -1,0 +1,55 @@
+<div id="preview">
+	<?php if (!empty($user['image'])): ?>
+		<div class="preview-avatar"><img src="{:thumb($user)}" width="150"/></div>
+	<?php endif ?>
+	<div class="preview-header <?php if (empty($user['image'])): ?>no-img<?php endif; ?>">
+		
+		
+		<h3>{$user.name}</h3>
+		<div class="first-line">
+			<div class="work-field">
+				<span class="title">所属领域</span>
+				<span>{$user.work_field}</span>
+			</div>
+			<div class="service-area">
+				<span class="title">服务区域</span>
+				<span>{$user.service_area}</span>
+			</div>
+			<div class="work-address">
+				<span class="title">办公地址</span>
+				<span>{$user.province}{$user.city}{$user.county}{$user.place}</span>
+			</div>
+		</div>
+		<div class="second-line">
+			<div class="register-year">
+				<span class="title">成立年份</span>
+				<span>{$user.register_year}</span>
+			</div>
+			<div class="contact">
+				<span class="title">联系方式</span>
+				<span>{$user.contact_name} (电话){:place($user['phone'])} <span class="email">{$user.public_email}</span></span>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="preview-roller">
+		<div class="description">
+			<span class="title">机构简介</span>
+			<span>{$user.introduction|nl2br}</span>
+		</div>
+		<div class="aim">
+			<span class="title">机构使命</span>
+			<span>{$user.aim|nl2br}</span>
+		</div>
+		<div class="member-count">
+			<span class="title">员工数量</span>
+			<span class="full-time">全职人数: {$user.staff_fulltime}</span>
+			<span class="part-time">兼职人数: {$user.staff_parttime}</span>
+			<span class="volunteers">志愿者人数: {$user.staff_volunteer}</span>
+		</div>
+	</div>
+	
+
+
+</div>
+

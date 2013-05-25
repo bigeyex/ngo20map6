@@ -10,6 +10,15 @@ class UserAction extends Action {
 		}
 	}
 
+	public function preview($id){
+		$user_model = new UsersModel();
+		$user = $user_model->find($id);
+		if($user){
+			$this->assign('user',$user);
+			$this->display();
+		}
+	}
+
 
 }
 

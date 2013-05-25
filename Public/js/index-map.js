@@ -40,6 +40,13 @@ $('#field-list li').click(function(){
 	$('#field-filter-button').text($(this).text());
 });
 
+$('#search-textbox').keypress(function(e){
+	if(e.which == 13){
+		mapdata.set_key($('#search-textbox').val());
+		list_control.change_viewport();
+	}
+});
+
 var story_board_default_top = $(window).height() - 50;
 var story_board_extended_top = 120;
 var story_board_expanded = false;
@@ -122,6 +129,7 @@ var mapdata = {
 	csr_data : [],
 	case_data : [],
 	province : '',
+	key: '',
 	rec_field : '',
 	type : '',
 
@@ -143,6 +151,7 @@ var mapdata = {
 		this._refresh_hotspots();
 	},
 	init: function(raw){
+		var self = this;
 		this.raw_data = raw;
 		this.filter();
 		//refresh total count
@@ -152,6 +161,10 @@ var mapdata = {
 	},
 	set_province: function(province){
 		this.province = province;
+		this.filter();
+	},
+	set_key: function(key){
+		this.key = key;
 		this.filter();
 	},
 	set_field: function(field){
@@ -256,8 +269,12 @@ var list_control = {	//knockout.js model
 			info_window.hide();
 		});
 		$(document).on('click', '.map-list li', function(){
+			var data = ko.dataFor(this);
+			$('.map-list li').removeClass('selected');
+			$(this).addClass('selected');
 			$('.item-highlighter').show();
-			$('.item-highlighter').css('top', this.offsetTop+13);
+			$('.item-highlighter').css('top', this.offsetTop+8);
+			l2_panel.open(data);
 		});
 	},
 	change_viewport: function(){
@@ -410,7 +427,7 @@ var map_control = {
 		this.tileLayer.getTilesUrl = function(tileCoord, zoom) {
 			var x = tileCoord.x;
 			var y = tileCoord.y;
-			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.province+'-'+mapdata.rec_field+'-'+mapdata.type+'.gif';
+			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'.gif';
 		};
 		map.addTileLayer(this.tileLayer);
 	}
@@ -510,6 +527,7 @@ var info_window = {
 	},
 	load: function(data){
 		this.show(data.longitude, data.latitude, '<div id="info-window-title">'+util.trim(data.name, 20)+'</div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>');
+		$('.info-window').addClass(data.type);
 		if(data.model == 'events'){
 			url_part = 'Event';
 		}
@@ -530,8 +548,29 @@ map.addEventListener('hotspotclick', function(e){
 
 var l2_panel = {
 	init: function(){
-		$('#l2-panel').height($(window).height() - 111);
+		var self = this;
+		$('#l2-close-button').click(function(){
+			self.close();
+		});
+	},
+	open: function(data){
+		$('#l2-panel').height($(window).height() - 98);
+		$('#l2-content').html('<div class="waiting-ball"></div>');
+		if(data.model == 'users'){
+			$('#l2-content').load(app_path+'/User/preview/id/'+data.id, this.calc_height);
+		}
+		else if(data.model == 'events'){
+			$('#l2-content').load(app_path+'/Event/preview/id/'+data.id, this.calc_height);
+		}
+		$('#l2-panel').show().removeClass().addClass('animated fadeInRight');;
+	},
+	calc_height: function(){
+		$('.preview-roller').height($('#l2-panel').height()-38-$('.preview-header').height()-20);
+	},
+	close: function(){
+		$('#l2-panel').hide();
 	}
+
 };
 
-// l2_panel.init();
+l2_panel.init();

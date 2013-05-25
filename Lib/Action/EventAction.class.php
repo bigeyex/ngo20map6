@@ -10,6 +10,15 @@ class EventAction extends Action {
 		}
 	}
 
+	public function preview($id){
+		$event_model = new EventsModel();
+		$event = $event_model->find_with_image($id);
+		if($event){
+			$this->assign('event',$event);
+			$this->display();
+		}
+	}
+
 
 }
 

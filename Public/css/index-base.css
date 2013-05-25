@@ -282,7 +282,7 @@ div.goog-te-gadget-simple img,
 #weibo-box{
     position: absolute;
     right: 6px;
-    top: 63px;
+    top: 51px;
     padding: 8px 14px;
     width: 200px;
     -webkit-border-radius: 4px/5px;
@@ -382,20 +382,32 @@ img.weibo-img{
 .map-list{
     overflow: hidden;
     height: 135px;
+    color: #777164;
 }
 
-#map-list li{
+#map-list li span{
     margin: 0 14px;
     padding: 16px 10px 16px 32px;
     font-size: 12px;
-    color: #665f50;
     text-align: left;
     border-bottom: 1px solid #d8d8d8;
     cursor: pointer;
+    display: block;
 }
 
 #map-list li:hover{
-    color: #309f5d;
+    background: url(../img/bg/gradients.jpg) repeat-x;
+}
+
+#ngo-list-section li:hover{
+    background-position: 0 -80px;
+    color: #fdf2ef;
+}
+
+#map-list li:hover span{
+    border: none;
+    padding-bottom: 17px;
+    background-image: url(../img/markers/markers-ngo-highlight.png);
 }
 
 .list-more{
@@ -423,8 +435,13 @@ img.weibo-img{
     color: #358a10;
 }
 
-#ngo-list-section li{
+
+#ngo-list-section li span{
     background-image: url(../img/markers/markers-ngo.png);
+    background-repeat: no-repeat;
+}
+#ngo-list-section li:hover span{
+    background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
 
@@ -432,28 +449,36 @@ img.weibo-img{
     color: #008ec6;
 }
 
-#csr-list-section li{
+#csr-list-section li span{
     background-image: url(../img/markers/markers-csr.png);
     background-repeat: no-repeat;
+}
+#csr-list-section li:hover span{
+    background-image: url(../img/markers/markers-ngo-highlight.png);
+    background-repeat: no-repeat;
+}
+
+#csr-list-section li:hover{
+    background-position: 0 -130px;
+    color: #eff8fc;
 }
 
 #case-list-section h4{
     color: #e14b08;
 }
 
-#case-list-section li{
+#case-list-section li span{
     background-image: url(../img/markers/markers-case.png);
     background-repeat: no-repeat;
 }
+#case-list-section li:hover span{
+    background-image: url(../img/markers/markers-ngo-highlight.png);
+    background-repeat: no-repeat;
+}
 
-.item-highlighter {
-    display: none;
-    background: green;
-    width: 10px;
-    height: 20px;
-    position: absolute;
-    right: -10px;
-    background: url(../img/sprites-all.png) no-repeat 0px -80px;
+#case-list-section li:hover{
+    background-position: 0 -180px;
+    color: #fcf2ef;
 }
 
 .map-list-section .gradient{
@@ -523,8 +548,18 @@ img.weibo-img{
     text-align: center;
 }
 
-.pager-number.current{
-    background-color: #18944b;
+#ngo-list-section .pager-number.current{
+    background-color: #4e820b;
+    color: white;
+}
+
+#csr-list-section .pager-number.current{
+    background-color: #0097c8;
+    color: white;
+}
+
+#case-list-section .pager-number.current{
+    background-color: #e14b08;
     color: white;
 }
 
@@ -585,25 +620,25 @@ img.weibo-img{
     height: 800px;
     background-color: #e3e3e3;
     overflow: auto;
-    z-index: 999;
+    z-index: 1001;
     position: relative;
 }
 
 #story-zone-handle{
     width: 100%;
-    background: url(../img/bg/story-bar.png) repeat-x;
+    background: url(../img/bg/story-handle-gradient.jpg) repeat-x;
     height: 34px;
     position: relative;
-    border-bottom: 1px solid #909090;
+    border-bottom: 1px solid #988e79;
     z-index: 1004;
-    border-top: 1px solid #b0b0b0;
+    border-top: 1px solid #988e79;
 }
 
 #about-us-link{
     color: #999999;
     font-size: 14px;
     position: absolute;
-    top: 8px;
+    top: 10px;
     left: 10px;
     text-decoration: none;
     text-decoration: none;
@@ -764,6 +799,15 @@ img.weibo-img{
     color: #666666;
 }
 
+.info-window.csr #info-window-title, .info-window.csr #info-window-place-label,
+.info-window.ind #info-window-title, .info-window.ind #info-window-place-label{
+    color: #0097c8;
+}
+
+.info-window.case #info-window-title, .info-window.case #info-window-place-label{
+    color: #d14100;
+}
+
 .waiting-ball{
     width: 15px;
     height: 15px;
@@ -776,12 +820,12 @@ img.weibo-img{
     display: none;
     width: 663px;
     height: 75%;
-    overflow: hidden;
     position: absolute;
-    top: 59px;
-    background: white;
-    border: 1px solid #d0d0d0;
-    left: 253px;
+    top: 46px;
+    background: #fffcf8;
+    border: 1px solid #b8af9c;
+    left: 241px;
+    z-index: 1000;
 }
 
 #l2-close-button{
@@ -791,9 +835,134 @@ img.weibo-img{
     top: 16px;
     right: 16px;
     background: url(../img/sprites-all.png) no-repeat 0px -520px;
+    cursor: pointer;
 }
 
 #l2-content{
     margin-left: 34px;
     margin-top: 19px;
+    padding-bottom: 19px;
+    padding-right: 37px;
 }
+
+.item-highlighter {
+    display: none;
+    background: green;
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    left: -19px;
+    background: url(../img/sprites-all.png) no-repeat -1px -84px;
+}
+
+#l2-shadow{
+    background: url(../img/bg/l-shadow.png) repeat-y;
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    left: -26px;
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    left: -26px;
+}
+
+#preview span {
+    color: #666666;
+    font-size: 12px;
+    display: block;
+}
+
+#preview span.title {
+    color: #49820b;
+    font-size: 14px;
+    line-height: 12px;
+}
+
+.preview-avatar {
+    float: left;
+}
+
+.preview-header h3 {
+    font-size: 24px;
+    color: #49820b;
+    margin: 0;
+    font-weight: normal;
+}
+
+.first-line, .second-line {
+    float: none;
+    overflow: hidden;
+}
+
+.first-line span, .second-line span {
+    margin-top: 8px;
+    line-height: 16px;
+}
+
+.first-line span.title {
+    margin-top: 25px;
+}
+
+.second-line span.title {
+    margin-top: 20px;
+}
+
+.first-line div, .second-line div {
+    float: left;
+    width: 130px;
+}
+
+div.work-address {
+    width: 130px;
+}
+
+div.contact {
+    width: 280px;
+}
+
+#preview span.email {
+    display: inline;
+}
+
+.preview-header {
+    padding-bottom: 18px;
+    border-bottom: 2px solid #49820b;
+    padding-left: 175px;
+}
+
+.preview-header.no-img {
+    padding-left: 0px;
+}
+
+.preview-roller {
+    clear: both;
+    overflow: auto;
+}
+
+.preview-roller span, .member-count span {
+    margin-top: 12px;
+    line-height: 20px;
+}
+
+.preview-roller span.title {
+    margin-top: 20px;
+}
+
+.preview-roller .aim span.title {
+    margin-top: 25px;
+}
+
+.member-count span{
+    float: left;
+}
+
+.member-count span.title {
+    margin-top: 30px;
+    float: none;
+}
+
+span.part-time, span.volunteers{
+    margin-left: 42px;
+}
+

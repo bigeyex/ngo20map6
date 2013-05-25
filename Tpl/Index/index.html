@@ -6,6 +6,7 @@
     <title>公益地图</title>
 
     {:css('index-base')}
+    {:css('animate-custom')}
 </head>
 <body>
 	<div id="master-box">
@@ -54,7 +55,7 @@
 						<a href="javascript:void(0);" id="register-button">注册</a>
 					</div>
 					<div id="language-box"></div>
-					<div id="search-box"><input type="text"/><i></i></div>
+					<div id="search-box"><input id="search-textbox" type="text"/><i></i></div>
 				</div>
 			</div>
 		</div> <!-- masthead -->
@@ -65,7 +66,7 @@
         		<h4><i class="gradient"></i>公益组织</h4>
         		<div class="map-list">
 					<ul data-bind="foreach: ngo_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -74,7 +75,7 @@
 						</div>
 						<span class="next-page">&gt;</span>
 					</div>
-					<div class="item-highlighter"></div>
+					
 				</div>
 				
 				<div class="list-more">
@@ -86,7 +87,7 @@
        			<h4><i class="gradient"></i>企业</h4>
        			<div class="map-list">
 					<ul data-bind="foreach: csr_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -95,7 +96,7 @@
 						</div>
 						<span class="next-page">&gt;</span>
 					</div>
-					<div class="item-highlighter"></div>
+					
 				</div>
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
@@ -106,7 +107,7 @@
         		<h4><i class="gradient"></i>对接案例</h4>
         		<div class="map-list">
 					<ul data-bind="foreach: case_list">
-						<li data-bind='attr: {"class": class_id, "className": class_id, "data_id": id, "data_type": type}, text: t_text'></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -115,13 +116,13 @@
 						</div>
 						<span class="next-page">&gt;</span>
 					</div>
-					<div class="item-highlighter"></div>
 				</div>
 				<div class="list-more">
 					<a href="javascript:void(0);" class="list-more-link">更多</a>
 					<span class="total-count">一共51个</span>
 				</div>
 			</div>
+			
 		</div>
 		<div id="detail-panel"></div>
 		<div id="weibo-box">
@@ -157,8 +158,10 @@
 			</div>
 		</div><!-- story-zone -->
 		<div id="l2-panel">
+			<div id="l2-shadow"></div>
 			<div id="l2-content"></div>
 			<div id="l2-close-button"></div>
+			<div class="item-highlighter"></div>
 		</div><!-- L2 panel -->
 	</div> <!-- master-box -->
 </body>

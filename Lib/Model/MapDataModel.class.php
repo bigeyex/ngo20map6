@@ -4,13 +4,13 @@ class MapDataModel extends Model{
 
 	protected $autoCheckFields = false;
 
-    public function get_all_data(){
+    public function get_all_data($key = ''){
         $model = new Model();
         $sql = "(select id, name, longitude, latitude, type, 'users' model, province, work_field rec_field, create_time from users where type != 'ind' and is_checked=1) union (select id, name, longitude, latitude, type, 'events' model, province, item_field rec_field, create_time from events where is_checked=1) order by type!='case',type!='ngo',create_time desc";
         return $model->query($sql);
     }
 
-	public function get_tile_data($tilex, $tiley, $zoom, $field, $province='', $type='', $model=''){
+	public function get_tile_data($tilex, $tiley, $zoom, $field, $key='', $type='', $model=''){
 		$scalex = array(0,301.421310,150.710655,75.355327,37.677664,18.838832,9.419416,4.709708,2.354854,1.177427,0.588714,0.294357,0.147179,0.07359,0.036795,0.018397,0.009199,0.0046,0.0023,0.001149);
         $scaley = array(0,138.558225,88.011798,50.105148,26.953469,13.990668,7.125178,3.594854,1.805441,0.904715,0.452855,0.226552,0.113307,0.056661,0.028332,0.014166,0.007084,0.003542,0.001771,0.000885);
         
@@ -44,7 +44,7 @@ class MapDataModel extends Model{
             'event_fields' => $event_fields,
             'type' => $type,
             'field' => $field,
-            'province' => $province,
+            'key' => $key,
             'where' => $cond,
             'order' => "type='case',type='ngo',  create_time asc",
             ));
