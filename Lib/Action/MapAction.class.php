@@ -2,9 +2,9 @@
 // 本类由系统自动生成，仅供测试用途
 class MapAction extends Action {
 
-    public function ajax_hotspots(){
+    public function ajax_hotspots($key=''){
         $map_data_model = D('MapData');
-        $this->ajaxReturn($map_data_model->get_all_data(), 'JSON');
+        $this->ajaxReturn($map_data_model->get_all_data($key), 'JSON');
     }
 
     public function tile(){

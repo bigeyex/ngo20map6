@@ -3,6 +3,7 @@ var map = new BMap.Map("allmap");            // 创建Map实例
 var point = new BMap.Point(105.537953, 39.075737);    // 创建点坐标
 map.centerAndZoom(point,5);                     // 初始化地图,设置中心点坐标和地图级别。
 map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_LARGE, offset: new BMap.Size(0, 60)})); 
 
 
 $('.main-nav-filter').hover(function(){
@@ -47,52 +48,65 @@ $('#search-textbox').keypress(function(e){
 	}
 });
 
-var story_board_default_top = $(window).height() - 50;
-var story_board_extended_top = 120;
-var story_board_expanded = false;
-//$('#story-board').css('height', $(window).height()-story_board_extended_top);
-$('#story-zone').css('top', story_board_default_top);
+var story_board = {
+	story_board_default_top : 0,
+	story_board_extended_top : 0,
+	story_board_expanded : 0,
+	init : function(){
+		var self = this;
+		self.story_board_default_top = $(window).height() - 50;
+		self.story_board_extended_top = 120;
+		self.story_board_expanded = false;
+		//$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
+		$('#story-zone').css('top', self.story_board_default_top);
+		$('#story-board').height($(window).height() - 154);
 
-$(window).resize(function(){
-	//$('#story-board').css('height', $(window).height()-story_board_extended_top);
-	story_board_default_top = $(window).height() - 50;
-	$('#story-zone').css('top', story_board_default_top);
-});
+		$(window).resize(function(){
+			//$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
+			self.story_board_default_top = $(window).height() - 50;
+			$('#story-zone').css('top', self.story_board_default_top);
+			$('#story-board').height($(window).height() - 154);
+		});
 
 
+		$('#story-zone').mouseenter(function(){
+			if(!self.story_board_expanded){
+				$('#story-zone').clearQueue().animate({
+					top: self.story_board_default_top-5
+				});
+			}
+		});
 
-$('#story-zone').mouseenter(function(){
-	if(!story_board_expanded){
-		$('#story-zone').clearQueue().animate({
-			top: story_board_default_top-5
+		$('#story-zone').mouseleave(function(){
+			if(!self.story_board_expanded){
+				$('#story-zone').clearQueue().animate({
+					top: self.story_board_default_top
+				});
+			}
+		});
+
+		$('#story-zone-handle').click(function(e){
+			if(self.story_board_expanded){
+				$('#story-zone').animate({
+					top: self.story_board_default_top
+				});
+				self.story_board_expanded = false;
+			}
+			else{
+				$('#story-zone').animate({
+					top: self.story_board_extended_top
+				});
+				self.story_board_expanded = true;
+			}
+			e.stopPropagation();
+			
 		});
 	}
-});
+};
 
-$('#story-zone').mouseleave(function(){
-	if(!story_board_expanded){
-		$('#story-zone').clearQueue().animate({
-			top: story_board_default_top
-		});
-	}
-});
+story_board.init();
 
-$('#story-zone-handle').click(function(e){
-	if(story_board_expanded){
-		$('#story-zone').animate({
-			top: story_board_default_top
-		});
-		story_board_expanded = false;
-	}
-	else{
-		$('#story-zone').animate({
-			top: story_board_extended_top
-		});
-		story_board_expanded = true;
-	}
-	e.stopPropagation();
-	
-});
+
 
 function HTMLOverlay(lon, lat, px, py, html){
 	this._center = new BMap.Point(lon, lat);
@@ -164,8 +178,13 @@ var mapdata = {
 		this.filter();
 	},
 	set_key: function(key){
+		if(key == this.key)return;
+		var self = this;
 		this.key = key;
-		this.filter();
+		$.get(app_path+'/Map/ajax_hotspots/key/'+key, function(result){
+			self.init(result);
+			list_control.change_viewport();
+		});
 	},
 	set_field: function(field){
 		this.rec_field = field;
@@ -358,7 +377,7 @@ var list_control = {	//knockout.js model
 				pager_place_left -= 1;
 			}
 		}
-		for(var i=page; i<total_page && pager_place_left>=1; i++, pager_place_left--){
+		for(var i=page; i<=total_page && pager_place_left>=1; i++, pager_place_left--){
 			this.pager.push(i);
 		}
 		$('.pager div span').click(function(e){
@@ -562,13 +581,15 @@ var l2_panel = {
 		else if(data.model == 'events'){
 			$('#l2-content').load(app_path+'/Event/preview/id/'+data.id, this.calc_height);
 		}
-		$('#l2-panel').show().removeClass().addClass('animated fadeInRight');;
+		$('#l2-panel').show().removeClass().addClass('animated fadeInRight');
+		$('#l2-panel').addClass(data.type);
 	},
 	calc_height: function(){
 		$('.preview-roller').height($('#l2-panel').height()-38-$('.preview-header').height()-20);
 	},
 	close: function(){
 		$('#l2-panel').hide();
+		$('.map-list li').removeClass('selected');
 	}
 
 };

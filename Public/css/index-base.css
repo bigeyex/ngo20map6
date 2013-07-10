@@ -55,7 +55,7 @@ body, html,#master-box, #allmap {
     float: left;
     margin: 0;
     padding: 0;
-    width: 280px;
+    width: 210px;
     margin-left: 141px;
     margin-top: 0px;
 }
@@ -145,7 +145,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
 }
 
 #main-nav-controls {
-    width: 552px;
+    width: 502px;
     float: right;
 }
 
@@ -393,18 +393,20 @@ img.weibo-img{
     border-bottom: 1px solid #d8d8d8;
     cursor: pointer;
     display: block;
+    height: 12px;
+    overflow: hidden;
 }
 
-#map-list li:hover{
+#map-list li.selected{
     background: url(../img/bg/gradients.jpg) repeat-x;
 }
 
-#ngo-list-section li:hover{
+#ngo-list-section li.selected{
     background-position: 0 -80px;
     color: #fdf2ef;
 }
 
-#map-list li:hover span{
+#map-list li.selected span{
     border: none;
     padding-bottom: 17px;
     background-image: url(../img/markers/markers-ngo-highlight.png);
@@ -440,7 +442,12 @@ img.weibo-img{
     background-image: url(../img/markers/markers-ngo.png);
     background-repeat: no-repeat;
 }
-#ngo-list-section li:hover span{
+
+#ngo-list-section li:hover{
+    color: #358a10;
+}
+
+#ngo-list-section li.selected span{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
@@ -453,12 +460,17 @@ img.weibo-img{
     background-image: url(../img/markers/markers-csr.png);
     background-repeat: no-repeat;
 }
-#csr-list-section li:hover span{
+
+#csr-list-section li:hover{
+    color: #008ec6;
+}
+
+#csr-list-section li.selected span{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
 
-#csr-list-section li:hover{
+#csr-list-section li.selected{
     background-position: 0 -130px;
     color: #eff8fc;
 }
@@ -471,12 +483,17 @@ img.weibo-img{
     background-image: url(../img/markers/markers-case.png);
     background-repeat: no-repeat;
 }
-#case-list-section li:hover span{
+
+#case-list-section li:hover{
+    color: #e14b08;
+}
+
+#case-list-section li.selected span{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
 
-#case-list-section li:hover{
+#case-list-section li.selected{
     background-position: 0 -180px;
     color: #fcf2ef;
 }
@@ -618,7 +635,7 @@ img.weibo-img{
 #story-board {
     width: 100%;
     height: 800px;
-    background-color: #e3e3e3;
+    background: url(../img/bg/tile-story.jpg);
     overflow: auto;
     z-index: 1001;
     position: relative;
@@ -678,28 +695,51 @@ img.weibo-img{
     background: #cecece;
     bottom: 0px;
     position: absolute;
-    z-index: 1001;
+    z-index: 1003;
 }
 
 #story-list {
     height: 20px;
     width: 100%;
     margin: 0;
-    padding: 10px;
+    padding: 0 0 0 22px;
     list-style: none;
 }
 
 #story-list li.board-story {
     display: block;
     list-style: none;
-    width: 383px;
-    height: 383px;
+    width: 384px;
+    height: 381px;
     margin: 0;
     padding: 0;
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-left: 20px;
+    margin-top: 23px;
     float: left;
-    background-color: white;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #fcfaf5;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.5);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.5);
+    box-shadow: 0 1px 1px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.5);
+    background: url(../img/bg/story-block-gradient.jpg) repeat-x;
+    overflow: hidden;
+}
+
+#story-list h3{
+    color: #49820b;
+    font-weight: normal;
+    font-size: 20px;
+    margin: 0;
+    padding: 18px 69px 0 15px;
+    line-height: 28px;
+}
+
+.story-img-box{
+    height: 292px;
+    width: 384px;
+    overflow: hidden;
 }
 
 .down-triangle {
@@ -851,7 +891,7 @@ img.weibo-img{
     width: 20px;
     height: 30px;
     position: absolute;
-    left: -19px;
+    left: -13px;
     background: url(../img/sprites-all.png) no-repeat -1px -84px;
 }
 
@@ -966,3 +1006,19 @@ span.part-time, span.volunteers{
     margin-left: 42px;
 }
 
+#l2-panel.csr .preview-header h3, #l2-panel.csr #preview span.title ,
+#l2-panel.ind .preview-header h3, #l2-panel.ind #preview span.title {
+    color: #008ec6;
+}
+
+#l2-panel.case .preview-header h3, #l2-panel.case #preview span.title {
+    color: #e14b08;
+}
+
+#l2-panel.csr .preview-header, #l2-panel.ind .preview-header{
+    border-bottom: 2px solid #008ec6;
+}
+
+#l2-panel.case .preview-header{
+    border-bottom: 2px solid #e14b08;
+}

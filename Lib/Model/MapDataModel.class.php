@@ -6,7 +6,12 @@ class MapDataModel extends Model{
 
     public function get_all_data($key = ''){
         $model = new Model();
-        $sql = "(select id, name, longitude, latitude, type, 'users' model, province, work_field rec_field, create_time from users where type != 'ind' and is_checked=1) union (select id, name, longitude, latitude, type, 'events' model, province, item_field rec_field, create_time from events where is_checked=1) order by type!='case',type!='ngo',create_time desc";
+        if($key == ''){
+            $sql = "(select id, name, longitude, latitude, type, 'users' model, province, work_field rec_field, create_time from users where type != 'ind' and is_checked=1) union (select id, name, longitude, latitude, type, 'events' model, province, item_field rec_field, create_time from events where is_checked=1) order by type!='case',type!='ngo',create_time desc";
+        }
+        else{
+            $sql = "(select id, name, longitude, latitude, type, 'users' model, province, work_field rec_field, create_time from users where type != 'ind' and (name like '%$key%' or introduction like '%$key%') and is_checked=1) union (select id, name, longitude, latitude, type, 'events' model, province, item_field rec_field, create_time from events where (name like '%$key%' or description like '%$key%') and is_checked=1) order by type!='case',type!='ngo',create_time desc";            
+        }
         return $model->query($sql);
     }
 
