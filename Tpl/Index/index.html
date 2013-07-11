@@ -1,65 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
-    <title>公益地图</title>
-
-    {:css('index-base')}
-    {:css('animate-custom')}
-</head>
-<body>
-	<div id="master-box">
-		<div id="masthead">
-			<div id="main-nav">
-				<div id="logo">公益地图</div>
-				<ul id="main-nav-filters">
-					<li id="fields-filter" class="main-nav-filter">
-						<a class="filter-menu-button" id="field-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
-						<div id="field-list" class="filter-box">
-							<div class="masker"></div>
-							<i class="triangle"></i>
-							<ul class="main-nav-filter-list">
-									<li val="" class="selected all">
-										全部领域
-									</li>
-								<?php foreach(C('ORG_FIELDS') as $field): ?>
-									<li val="{$field}">
-										{$field}
-									</li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-					</li>
-					<li id="region-filter" class="main-nav-filter">
-						<a class="filter-menu-button" id="region-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a>
-						<div id="region-list" class="filter-box">
-							<div class="masker"></div>
-							<i class="triangle"></i>
-							<ul class="main-nav-filter-list">
-									<li val="" class="selected all">
-										全部地区
-									</li>
-								<?php foreach(C('PROVINCES') as $field): ?>
-									<li val="{$field}">
-										{$field}
-									</li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-					</li>
-				</ul>
-				<div id="main-nav-controls">
-					<div id="register-buttons">
-						<a href="javascript:void(0);" id="login-button">登录</a>
-						<a href="javascript:void(0);" id="register-button">注册</a>
-					</div>
-					<div id="language-box"></div>
-					<div id="search-box"><input id="search-textbox" type="text"/><i></i></div>
-				</div>
-			</div>
-		</div> <!-- masthead -->
-		<div id="main-nav-shadow"></div>
+<include file="Public:header"/>
 		<div id="allmap"></div>
 		<div id="map-list">
 			<div class="map-list-section" id="ngo-list-section">
@@ -187,15 +126,15 @@
 	</div> <!-- master-box -->
 </body>
 </html>
-{:js('jquery-1.9.1')}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+
 {:js('jsrender')}
 {:js('knockout-2.2.1')}
 {:js('moment')}
 {:js('moment.zh-cn')}
-<script type="text/javascript">
-app_path='__APP__';
-</script>
+
 {:js('index-map')}
+
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'language-box');

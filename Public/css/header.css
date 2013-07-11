@@ -1,0 +1,97 @@
+#login-box {
+    padding-top: 26px;
+    padding-right: 24px;
+    padding-bottom: 26px;
+    padding-left: 24px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 6px 10.392px 27px 0px rgba( 0, 0, 0, 0.28 );
+    position: absolute;
+    width: 243px;
+    height: 251px;
+}
+
+#login-box h4 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 14px;
+    color: #665f50;
+}
+
+#login-box p {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    color: #665f50;
+    font-size: 12px;
+}
+
+#login-box form {
+    padding-top: 4px;
+}
+
+#login-form-fields input {
+    display: block;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #bebcb5;
+    border-right-color: #bebcb5;
+    border-bottom-color: #bebcb5;
+    border-left-color: #bebcb5;
+    border-radius: 4px;
+    background-color: #f5f3ed;
+    width: 240px;
+    height: 29px;
+}
+
+#login-box label {
+    color: #999999;
+    font-size: 12px;
+    margin-top: 12px;
+    display: block;
+}
+
+#login-remember {
+    margin-top: 16px;
+    font-size: 12px;
+}
+
+#login-remember a {
+    text-decoration: none;
+    color: black;
+    margin-left: 14px;
+}
+
+#login-remember a:hover {
+    text-decoration: underline;
+}
+
+#login-remember input {
+    width: 11px;
+    height: 11px;
+}
+
+#login-action .action-button{
+  
+  border-radius: 4px;
+  background-image: -moz-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
+  width: 116px;
+  height: 28px;
+
+}
+

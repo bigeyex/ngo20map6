@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>公益地图</title>
+
+    {:css('index-base')}
+    {:css('animate-custom')}
+    {:css('header')}
+    {:js('jquery-1.9.1')}
+    {:js('jquery.lightbox_me')}
+    <script type="text/javascript">
+		app_path='__APP__';
+		$(function(){
+			$('#register-buttons a').click(function(e){
+				$('#login-box').lightbox_me({
+			        centered: true, 
+			        onLoad: function() { 
+			            $('#login-box').find('input:first').focus();
+			            }
+			        });
+			    e.preventDefault();
+			});
+			$('#login-close-button').click(function(){
+				$('#login-box').trigger('close');
+			});
+		});
+		
+	</script>
+</head>
+<body>
+	<div id="master-box">
+		<div id="masthead">
+			<div id="main-nav">
+				<div id="logo">公益地图</div>
+				<ul id="main-nav-filters">
+					<li id="fields-filter" class="main-nav-filter">
+						<a class="filter-menu-button" id="field-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部领域</a>
+						<div id="field-list" class="filter-box">
+							<div class="masker"></div>
+							<i class="triangle"></i>
+							<ul class="main-nav-filter-list">
+									<li val="" class="selected all">
+										全部领域
+									</li>
+								<?php foreach(C('ORG_FIELDS') as $field): ?>
+									<li val="{$field}">
+										{$field}
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</li>
+					<li id="region-filter" class="main-nav-filter">
+						<a class="filter-menu-button" id="region-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">全部地区</a>
+						<div id="region-list" class="filter-box">
+							<div class="masker"></div>
+							<i class="triangle"></i>
+							<ul class="main-nav-filter-list">
+									<li val="" class="selected all">
+										全部地区
+									</li>
+								<?php foreach(C('PROVINCES') as $field): ?>
+									<li val="{$field}">
+										{$field}
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</li>
+				</ul>
+				<div id="main-nav-controls">
+					<div id="register-buttons">
+						<a href="javascript:void(0);" id="login-button">登录</a>
+						<a href="javascript:void(0);" id="register-button">注册</a>
+					</div>
+					<div id="language-box"></div>
+					<div id="search-box"><input id="search-textbox" type="text"/><i></i></div>
+				</div>
+			</div>
+		</div> <!-- masthead -->
+		<div id="main-nav-shadow"></div>
+		<!-- login form -->
+		<div id="login-box" style="display:none;">
+			<div id="login-close-button"></div>
+			<h4>登录到NGO2.0</h4>
+			<p>已有帐号，请在下面登录</p>
+			<form action="{:U('Index/login_action')}" method="POST">
+			<div id="login-form-fields">
+				<label for="login-email" id="login-email-label">邮箱</label>
+				<input name="email" id="login-email" type="text" />
+				<label for="login-password">密码</label>
+				<input type="password" name="password" id="login-password"/>
+			</div>
+			
+			<div id="login-remember">
+				<input type="checkbox" name="remember" value="1"/>
+				<span>记住我</span>
+				<a href="{:U('User/forget_password')}" id="forget-password-link">忘记密码?</a>
+			</div>
+			<div id="login-action">
+				<input class="action-button" type="submit" value="登录"/>
+				<a class="action-button" href="">注册</a>
+				<a id="login-with-qq" href="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id={:C('QQ_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/qq_login">{:L('用QQ登录')}</a>
+				<a id="login-with-weibo" href="https://api.weibo.com/oauth2/authorize?client_id={:C('WEIBO_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/weibo_login">{:L('用微博登录')}</a>
+			</div>
+			<div id="api-login-links">
+				用第三方帐号直接登录: 
+				<a id="login-with-qq" href="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id={:C('QQ_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/qq_login">QQ</a>
+				<a id="login-with-weibo" href="https://api.weibo.com/oauth2/authorize?client_id={:C('WEIBO_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/weibo_login">新浪微博</a>
+			</div>
+			</form>
+		</div>
