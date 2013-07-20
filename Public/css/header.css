@@ -55,9 +55,10 @@
     background-color: #f5f3ed;
     width: 240px;
     height: 29px;
+    font-size: 16px;
 }
 
-#login-box label {
+#login-box label.form-label {
     color: #999999;
     font-size: 12px;
     margin-top: 12px;
@@ -85,13 +86,56 @@
 }
 
 #login-action .action-button{
-  
-  border-radius: 4px;
-  background-image: -moz-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
-  background-image: -webkit-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
-  background-image: -ms-linear-gradient( 90deg, rgb(109,174,26) 0%, rgb(125,196,27) 100%);
-  width: 116px;
-  height: 28px;
+    border-radius: 4px;
+    background: url(../img/bg/gradients2.jpg) repeat-x;
+    width: 116px;
+    height: 28px;
+    border: none;
+    display: block;
+    float: left;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: rgb( 255, 255, 255 );
+    text-align: center;
+    text-shadow: 0.8px 0.8px 1px rgb( 0, 0, 0 );
+    line-height: 28px;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer;
+}
 
+#login-action a.action-button {
+    margin-left: 10px;
+}
+
+#login-action {
+    margin-top: 10px;
+}
+
+#login-close-button{
+    background: url(../img/icons/close-button.gif) no-repeat;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 23px;
+    right: 23px;
+    cursor: pointer;
+}
+
+#api-login-links {
+    color: #999999;
+    float: left;
+    font-size: 12px;
+    margin-top: 14px;
+}
+
+#api-login-links a {
+    color: black;
+    text-decoration: none;
+}
+
+#api-login-links a:hover {
+    text-decoration: underline;
 }
 

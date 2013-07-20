@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>公益地图</title>
-
+    {:css('base')}
     {:css('index-base')}
     {:css('animate-custom')}
     {:css('header')}
@@ -88,26 +88,24 @@
 			<p>已有帐号，请在下面登录</p>
 			<form action="{:U('Index/login_action')}" method="POST">
 			<div id="login-form-fields">
-				<label for="login-email" id="login-email-label">邮箱</label>
+				<label for="login-email" id="login-email-label" class="form-label">邮箱</label>
 				<input name="email" id="login-email" type="text" />
-				<label for="login-password">密码</label>
+				<label for="login-password" class="form-label">密码</label>
 				<input type="password" name="password" id="login-password"/>
 			</div>
 			
 			<div id="login-remember">
-				<input type="checkbox" name="remember" value="1"/>
-				<span>记住我</span>
+				<input type="checkbox" name="remember" value="1" id="remember-box"/>
+				<label for="remember-box"><span>记住我</span></label>
 				<a href="{:U('User/forget_password')}" id="forget-password-link">忘记密码?</a>
 			</div>
 			<div id="login-action">
 				<input class="action-button" type="submit" value="登录"/>
 				<a class="action-button" href="">注册</a>
-				<a id="login-with-qq" href="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id={:C('QQ_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/qq_login">{:L('用QQ登录')}</a>
-				<a id="login-with-weibo" href="https://api.weibo.com/oauth2/authorize?client_id={:C('WEIBO_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/weibo_login">{:L('用微博登录')}</a>
 			</div>
 			<div id="api-login-links">
-				用第三方帐号直接登录: 
-				<a id="login-with-qq" href="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id={:C('QQ_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/qq_login">QQ</a>
+				用第三方帐号直接登录:  
+				<a id="login-with-qq" href="https://open.t.qq.com/cgi-bin/oauth2/authorize?client_id={:C('QQ_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/qq_login">QQ</a> |
 				<a id="login-with-weibo" href="https://api.weibo.com/oauth2/authorize?client_id={:C('WEIBO_APPKEY')}&response_type=code&redirect_uri=http://{$_SERVER.HTTP_HOST}__APP__/Api/weibo_login">新浪微博</a>
 			</div>
 			</form>

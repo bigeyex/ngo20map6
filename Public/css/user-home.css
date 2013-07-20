@@ -1,0 +1,136 @@
+body{
+	background: url(../img/bg/tile-innerbg.jpg);
+}
+
+#main-container{
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,.3);
+    margin-top: 46px;
+}
+
+#top-action-bar{
+    background: #f5f5f5;
+    padding: 10px 10px 10px 28px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#profile-sector{
+    position: relative;
+}
+
+#profile-sector h3{
+    font-size: 14px;
+}
+
+#user-name, #user-type, #completeness{
+    position: absolute;
+    top: 5px;
+    left: 78px;
+}
+
+#user-type{
+    top: 23px;
+}
+
+#completeness{
+    top: 41px;
+    font-size: 12px;
+    color: #777;
+}
+
+#completeness .number{
+    color: #3c5c08
+}
+
+#top-action-buttons{
+    position: absolute;
+    right: 0;
+}
+
+#top-action-buttons{
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 230px;
+    margin-top: 4px;
+}
+
+#top-action-buttons  h5{
+    font-size: 16px;
+    color: #6c6c6c;
+    font-weight: normal;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+#top-action-buttons  a{
+    display: block;
+    float: left;
+    width: 105px;
+    height: 38px;
+    margin-left: 5px;
+    line-height: 38px;
+    text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #8cc82f;
+	-webkit-box-shadow: inset 1px 2px rgba(255,255,255,.5);
+	-moz-box-shadow: inset 1px 2px rgba(255,255,255,.5);
+	box-shadow: inset 1px 2px rgba(255,255,255,.5);
+	border: solid 1px #78a11f;
+	background-image: -webkit-linear-gradient(bottom, #78b21b, #9ada38);
+	background-image: -moz-linear-gradient(bottom, #78b21b, #9ada38);
+	background-image: -o-linear-gradient(bottom, #78b21b, #9ada38);
+	background-image: -ms-linear-gradient(bottom, #78b21b, #9ada38);
+	background-image: linear-gradient(to top, #78b21b, #9ada38);
+    font-size: 16px;
+    color: #125700;
+	text-shadow: 0 1px 1px rgba(255,255,255,.5);
+}
+
+#left-menu {
+    float: left;
+    width: 219px;
+    padding-top: 27px;
+    border-right: 1px solid #e5e5e5;
+}
+
+#left-menu a{
+    display: block;
+    height: 16px;
+    line-height: 16px;
+    padding: 10px;
+    padding-left: 28px;
+    font-size: 14px;
+    color: #9a9a9a;
+    text-decoration: none;
+}
+
+#left-menu .number{
+    float: right;
+    display: block;
+    width: 30px;
+    text-align: center;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: #999999;
+    color: white;
+    font-size: 10px;
+    line-height: 16px;
+}
+
+#left-menu li.current a{
+    background: url(../img/bg/gradients3.jpg);
+    font-size: 14px;
+    color: #125700;
+    text-shadow: 0 1px 1px rgba(255,255,255,.5);
+}
+
+#left-menu li.current .number{
+    background: #54800d;
+}

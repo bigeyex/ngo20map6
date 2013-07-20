@@ -19,6 +19,9 @@ class UserAction extends Action {
 		}
 	}
 
+	public function home(){
+		$this->display();
+	}
 
 }
 
