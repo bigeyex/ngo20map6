@@ -19,6 +19,10 @@ class EventAction extends Action {
 		}
 	}
 
+	public function add(){
+		$this->display();
+	}
+
 
 }
 

@@ -395,22 +395,28 @@ var list_control = {	//knockout.js model
 		this.ngo_in_view = [];
 		this.csr_in_view = [];
 		this.case_in_view = [];
-		for(var di in mapdata.ngo_data){
-			var d = mapdata.ngo_data[di];
-			if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-				this.ngo_in_view.push(d);
+		if(this.current_type == '' || this.current_type == 'ngo'){
+			for(var di in mapdata.ngo_data){
+				var d = mapdata.ngo_data[di];
+				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
+					this.ngo_in_view.push(d);
+				}
 			}
 		}
-		for(var di in mapdata.csr_data){
-			var d = mapdata.csr_data[di];
-			if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-				this.csr_in_view.push(d);
+		if(this.current_type == '' || this.current_type == 'csr'){
+			for(var di in mapdata.csr_data){
+				var d = mapdata.csr_data[di];
+				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
+					this.csr_in_view.push(d);
+				}
 			}
 		}
-		for(var di in mapdata.case_data){
-			var d = mapdata.case_data[di];
-			if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-				this.case_in_view.push(d);
+		if(this.current_type == '' || this.current_type == 'case'){
+			for(var di in mapdata.case_data){
+				var d = mapdata.case_data[di];
+				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
+					this.case_in_view.push(d);
+				}
 			}
 		}
 	},

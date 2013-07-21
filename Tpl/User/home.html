@@ -4,15 +4,15 @@
 		<div id="profile-sector">
 			<div id="profile-img">
 				<img src="__APP__/Public/img/demo-img/demo-logo2.jpg" width="66" height="66"/>
-				<h3 id="user-name">宁夏义工联合会</h3>
-				<h3 id="user-type">公益组织</h3>
+				<h3 id="user-name">{:user('name')}</h3>
+				<h3 id="user-type">{:user('type_label')}</h3>
 				<p id="completeness">资料完成度: <span class="number">62%</span></p>
 				<div id="progressbar"><span id="progressbar-fill"></span></div>
 			</div>
 			<div id="top-action-buttons">
 				<h5 class="label">发布：</h5>
 				<a class="button title">有声图片</a>
-				<a class="button title">项目</a>
+				<a class="button title" href="{:U('Event/add')}">项目</a>
 			</div>
 		</div>
 	</div>

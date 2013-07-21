@@ -33,5 +33,38 @@ if(!$pass){
     redirect(__APP__.'/Index/index');
 }
 
+/* return attribute of current login user */
+function user($attr=null, $value=null){
+	if(!isset($_SESSION['login_user'])){
+		return false;
+	}
+	if($attr === null){
+		return true;
+	}
+	if($value === null){	// read user info
+		if($attr == 'type_label'){
+			switch ($_SESSION['login_user']['type']) {
+				case 'ngo':
+					return '公益组织';
+					break;
+				case 'ind':
+					return '公益人';
+					break;
+				case 'csr':
+					return '企业';
+					break;
+				case 'fund':
+					return '基金会';
+					break;
+			}
+		}
+
+		return $_SESSION['login_user'][$attr];
+	}
+	else{					//write user info
+		$_SESSION['login_user'][$attr] = $value;
+	}
+}
+
 
 ?>

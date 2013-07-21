@@ -1,0 +1,212 @@
+<include file="Public:header"/>
+
+<div id="main" class="form-region">
+    <form id="newform" name="newform" class="need-validate" enctype="multipart/form-data" action="__URL__/{$target_url}" method="post" >
+    <?php if ($target_url == 'save'): ?>
+        <input type="hidden" name="id" value="{$event.id}"/>
+    <?php endif ?>
+    <div class="form-section" id="main-content">
+        <h3 style="padding-left:15px;"> 发布公益项目  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+        <p class="after-title">{:L('以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。')}</p>
+        <div id="editor-zone">
+            <div id="editor-toolbar">
+                <span>{:L('插入')}: </span>
+                <a href="javascript:void(0);" id="insert-image">{:L('照片')}</a>
+                <a href="javascript:void(0);" id="insert-video">{:L('视频')}</a>
+                <a href="javascript:void(0);" id="insert-link">{:L('链接')}</a>
+            </div>
+            <p id="editor-help">{:L('为了确保资料完整请添加相关的<strong>照片</strong>和<strong>视频</strong>。')}</p>
+            <div id="editor-body">
+                <div id="title-part"><input type="text" name="name" id="editor-title" value="<?php if(isset($event['description'])): ?>{$event.name}<?php else: ?>在这里输入标题<?php endif; ?>"></div>
+                <div id="rte-part">
+                    <textarea name="description" id="editor" cols="115" rows="29">
+                        <?php if(isset($event['description'])): ?>
+                        {$event.description}
+                        <?php else: ?>
+                        项目简介： （插入相关照片,你的项目将会展示在首页中）
+                        <?php endif; ?>
+                    </textarea>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('相关机构')}</span>
+            <input type="text" name="host" class="validate[required]" value="{$event.host}"/>
+        </div>
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('执行区域')}</span>
+                <select name="province" id="province" class="validate[required]"></select>省
+                <select name="city" id="city"></select>市
+                <select name="county" id="county"></select>区/县
+                <input type="text" class="short" name="place" id="place" value="{$event.place}"/>
+                <input type="hidden" name="latitude" id="latitude"/>
+                <input type="hidden" name="longitude" id="longitude"/>
+
+        </div>
+        <div class="form-field" id="map-box">
+            <span class="title">{:L('在地图上的位置')}</span>
+            <div style="width:267px;height:163px;border:1px solid gray" id="map-locate-container"></div>
+            <span>({:L('如果地图中所示位置不是您的机构位置，点击地图来标注机构位置')})</span>
+            <div class="clearfix"></div>
+        </div>
+        <div class="form-field">
+            <span class="title">{:L('开始时间')}</span>
+            <input type="text" name="begin_time" id="begin_time" class="short" value="{$event.begin_time}"/>
+        </div>
+        <div class="form-field">
+            <span class="title">{:L('结束时间')}</span>
+            <input type="text" name="end_time" id="end_time" class="short" value="{$event.end_time}"/>
+        </div>
+        <div class="form-field check-group">
+            <span class="title">{:L('项目领域')}</span><!-- 工作领域 -->
+            <div class="multi-select-box">
+                <input type="text" name="item_field" readonly="readonly" onselectstart="return false" value="{$event.item_field}"/>
+                <div class="multi-select-dropdown">
+                <?php
+                    $i = 0;
+                    foreach(C('ORG_FIELDS') as $org){
+                    $i++;
+                    ?>
+                <span class="res-tag" id="focus-area">
+                    <input style="display:none" id="event-field-{$i}" type="checkbox" value="{$org}" <?php if (stripos($event['item_field'], $org) !== FALSE): ?> checked="checked" <?php endif; ?>/>
+                    <label for="event-field-{$i}">{$org}</label>
+                </span>
+                <?php } ?>
+                <div class="clearfix"></div>
+                </div>
+            </div> <!-- end of 工作领域 -->
+        </div>
+        <div class="form-field check-group">
+            <?php if($event_type == 'ngo'): ?>
+            <span class="title">{:L('项目需求')}</span><!-- 工作领域 -->
+            <?php else: ?>
+            <span class="title">{:L('项目资源')}</span><!-- 工作领域 -->
+            <?php endif; ?>
+            <div class="multi-select-box">
+                <input type="text" name="res_tags" readonly="readonly" onselectstart="return false"value="{$event.res_tags}"/>
+                <div class="multi-select-dropdown">
+                <?php
+                    $i = 0;
+                    $event_types = C('EVENT_TYPE');
+                    if($event_type == 'ngo'){
+                        $type_list = $event_types['requirement'];
+                    }
+                    else{
+                        $type_list = $event_types['resource'];
+                    }
+                    foreach($type_list as $org){
+                    $i++;
+                    ?>
+                <span class="res-tag" id="focus-area">
+                    <input style="display:none" id="event-field-{$i}" type="checkbox" value="{$org}" <?php if (stripos($event['res_tags'], $org) !== FALSE): ?> checked="checked" <?php endif; ?>/>
+                    <label for="event-field-{$i}">{$org}</label>
+                </span>
+                <?php } ?>
+                <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <?php if($event_type == 'ngo'): ?>
+        <div class="form-field">
+            <span class="title">{:L('需求描述')}</span>
+            <textarea name="req_description" cols="35" rows="7">{$event.req_description}</textarea>
+            <span>({:L('已经取得的和预期的成果')})</span>
+        </div>
+        <a class="hideable-section" href="javascript:void(0);" onclick="$(this).next().toggle();$(this).toggleClass('folded')">{:L('联系信息')}</a>
+        <div>
+            <div class="form-field">
+                <span class="title">{:L('联系人')}</span>
+                <input type="text" name="contact_name" value="{$event.contact_name}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('联系电话')}</span>
+                <input type="text" name="contact_phone" value="{$event.contact_phone}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('电子邮箱')}</span>
+                <input type="text" class="" name="contact_email" value="{$event.contact_email}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('联系QQ')}</span>
+                <input type="text" class="" name="contact_qq" value="{$event.contact_qq}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('项目标签')}</span>
+                <input type="text" class="" name="tags" value="{$tags}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('相关网址')}</span>
+                <input type="text" class="" name="url" value="{$event.url}"/>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="submit-buttons">
+            <input id="submit-button" type="submit" value="{:L('发表项目')}"/>
+            <input id="submit-button" type="reset" value="{:L('保存草稿')}"/>
+        </div>
+    </div> <!-- form-section -->
+    </form>
+</div>
+
+<div id="upload-dialog" class="model-dialog" style="display:none;">
+    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <h4>{:L('从本地上传图片')}</h4>
+    <div id="upload_button">{:L('选择本地图片')}</div>
+</div>
+
+<div id="insert-link-dialog" class="model-dialog" style="display:none;">
+    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <h4>{:L('添加链接')}</h4>
+    <input type="text" id="insert-link-text"/>
+    <a id="insert-link-button">{:L('添加链接')}</a>
+</div>
+
+<div id="insert-video-dialog" class="model-dialog" style="display:none;">
+    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <h4>{:L('添加在线视频')}</h4>
+    <p>
+        {:L('请填入网络视频地址。暂支持优酷、土豆、56网视频。')}<br/>
+        <span class="error" id="video-error-message"></span>
+
+
+    </p>
+    <input type="text" id="insert-video-text"/>
+    <a id="insert-video-button">{:L('添加视频')}</a>
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+{:css('pikaday')}
+{:css('validationEngine.jquery')}
+{:js('PCASClass')}
+{:js('ajaxupload')}
+{:js('jquery.validationEngine')}
+{:js('jquery.validationEngine-zh_CN')}
+{:js('jquery.rte')}
+{:js('moment')}
+{:js('pikaday')}
+{:js('event-edit')}
+{:css('form-page')}
+<?php if($target_url == 'save'): ?>
+<script type="text/javascript">
+//disable default status for rte
+touched_editor_title = true;
+touched_editor_content = true;
+$('iframe#editor-rte').contents().find('body').css('color','#000');
+
+//handle province selector
+$('#province option[value="{$event.province}"]').attr('selected', true);
+$('#province').change();
+$('#city option[value="{$event.city}"]').attr('selected', true);
+$('#city').change();
+$('#county option[value="{$event.county}"]').attr('selected', true);
+
+//handle custum checkbox initial status
+$('.res-tag input[checked="checked"]').next().addClass('selected');
+
+//place a mark on the map and set lng/lat as well
+addPointMarker(new BMap.Point({$event.longitude},{$event.latitude}));
+</script>
+<?php endif; ?>
+<include file="Public:footer"/>

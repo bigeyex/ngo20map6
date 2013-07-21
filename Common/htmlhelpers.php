@@ -1,14 +1,17 @@
 <?php
 
 
+// insert a <script> tag
 function js($str){
 	return '<script type="text/javascript" src="'.__APP__.'/Public/js/'.$str.'.js"></script>';
 }
 
+// insert css file
 function css($str){
 	return '<link href="'.__APP__.'/Public/css/'.$str.'.css" rel="stylesheet"/>';
 }
 
+// insert url of uploaded image or thumbnail
 function thumb($str, $thumb_level = 0){
 	if(is_array($str)){
 		if(isset($str['image'])){
@@ -24,6 +27,7 @@ function thumb($str, $thumb_level = 0){
 	}
 }
 
+// print default text if string is empty
 function place($str, $ifempty = "暂无"){
 	if(empty($str)){
 		return $ifempty;
@@ -47,10 +51,10 @@ function cleanInput($input) {
 	return $output;
 }
 
-function sanitize($input) {
+function san($input) {
     if (is_array($input)) {
         foreach($input as $var=>$val) {
-            $output[$var] = sanitize($val);
+            $output[$var] = san($val);
         }
     }
     else {
@@ -63,6 +67,20 @@ function sanitize($input) {
     return $output;
 }
 
+// back to the previous page
+function back(){
+	if(isset($_SESSION['last_page'])){
+        redirect($_SESSION['last_page']);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
+function flash($content, $type='error'){
+	$_SESSION['flash']['type'] = $type;
+	$_SESSION['flash']['content'] = $content;
+}
 
 ?>
