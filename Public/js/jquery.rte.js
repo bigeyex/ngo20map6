@@ -312,11 +312,11 @@ $('#insert-link-button').click(function(){
 $('#insert-image').click(function(){
     $('#upload-dialog').lightbox_me({centered: true});
     new AjaxUpload('upload_button', {
-        action: app_path+'/Event/upload_image',
+        action: app_path+'/Media/upload_image',
         onComplete: function(file, response) {
             console.log(response);
             $('#upload-dialog').trigger('close');
-            insertIt('editor-rte','<img src="'+app_path+'/Public/Uploadedthumb/thumbl_'+response+'"/>');
+            insertIt('editor-rte','<img src="'+app_path+'/Public/Uploadedthumb/thumb600_'+response+'"/>');
             //var doc = $('iframe#editor-rte').contents()[0];
             //document.getElementById('editor-rte').contentWindow.focus();
             //doc.execCommand('InsertImage', false, app_path+'/Public/Uploadedthumb/thumbl_'+response);

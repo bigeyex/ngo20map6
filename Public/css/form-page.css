@@ -17,6 +17,8 @@
     color: #85b552;
     border-bottom: 1px solid #dedede;
     margin-bottom: 7px;
+    font-size: 15px;
+    padding-left: 12px;
 }
 
 .form-field {
@@ -29,14 +31,56 @@
     float: left;
     display: block;
     text-align: right;
-    padding-right: 10px;
-    line-height: 20px;
+    padding-right: 16px;
+    line-height: 32px;
 }
 
-.form-field input[type=text], .form-field input[type=password] {
-    background: #e9e9e9;
-    height: 14px;
-    width: 261px;
+.form-field input[type=text], .form-field input[type=password], .form-field textarea {
+    width: 265px;
+    height: 29px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #f5f3ed;
+    -webkit-box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    -moz-box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    border: solid 1px rgba(103,98,81,.4);
+
+    font-size: 16px;
+    padding-left: 5px;
+}
+
+.form-field textarea{
+    height: 120px;
+}
+
+#main .select2-choices {
+    height: 29px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #f5f3ed;
+    -webkit-box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    -moz-box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    box-shadow: 1px 1px rgba(255,255,255,.2), inset 1px 1px 1px rgba(56,52,43,.1);
+    border: solid 1px rgba(103,98,81,.4);
+    min-width: 271px;
+    background-image: none;
+}
+
+#main .select2-container-multi .select2-choices .select2-search-field input{
+    padding:0;
+    background: none;
+}
+
+.select2-results li{
+    font-size: 14px;
+    padding-bottom:3px
+}
+
+#main .select2-search-choice-close{
+    top: 2px;
 }
 
 .form-field input.short {
@@ -134,6 +178,9 @@
 }
 .ordinary{
     color: black;
+    font-size: 12px;
+    color: #b5b5b5;
+    padding-left: 20px;
 }
 .after-title {
     color: #b5b5b5;
@@ -143,7 +190,7 @@
 /* add event page */
 
 #editor-zone {
-    margin: 27px;
+    margin: 20px 23px;
     position: relative;
 }
 
@@ -166,9 +213,12 @@
 }
 
 #editor-toolbar a {
-    padding-left: 30px;
     padding-right: 15px;
     color: black;
+    padding-left: 30px;
+    vertical-align: top;
+    width: auto;
+    height: auto;
 }
 
 #editor-help {
@@ -216,13 +266,13 @@
 }
 
 #insert-image{
-    background: url(../Img/icons/event-photos.jpg) no-repeat 6px;
+    background: url(../img/icons/event-photos.jpg) no-repeat 6px;
 }
 #insert-video{
-    background: url(../Img/icons/event-video.jpg) no-repeat 6px;
+    background: url(../img/icons/event-video.jpg) no-repeat 6px;
 }
 #insert-link{
-    background: url(../Img/icons/link.png) no-repeat 2px;
+    background: url(../img/icons/event-link.png) no-repeat 2px;
 }
 
 .model-dialog {
@@ -296,32 +346,6 @@
     cursor: pointer;
 }
 
-.multi-select-box{
-    position: relative;
-    background: url(../Img/multi_select_box.gif) no-repeat;
-    background-position: 108px;
-    width: 220px;
-}
-
-.check-group .multi-select-box input {
-    border: none;
-    background: none;
-    box-shadow: none;
-    width: 80px;
-    margin-left: 3px;
-    height: 20px;
-}
-
-.multi-select-dropdown {
-    position: absolute;
-    width: 222px;
-    background: white;
-    border: 1px solid #85b552;
-    display: none;
-    z-index: 1000;
-    left: 108px;
-}
-
 #newform a.hideable-section{
     background: url(../Img/fold-arrows.gif) no-repeat 59px 2px;
     margin-left: 50px;
@@ -334,3 +358,11 @@
 #newform a.hideable-section.folded{
     background-position: 59px -24px;
 }
+
+.form-comment{
+    line-height: 32px;
+    
+    padding-left: 14px;
+    color: black;
+}
+

@@ -191,6 +191,10 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     padding: 8px 12px;
 }
 
+#register-buttons:hover{
+    background: url(../img/bg/register-buttons-hover.jpg) no-repeat;
+}
+
 #register-buttons a{
     display: block;
     float: left;
@@ -202,8 +206,9 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     margin: 0;
 }
 
-#login-button{
-    padding-right: 10px;
+#register-buttons #login-button{
+    padding-left: 4px;
+    padding-top: 1px;
 }
 
 #register-buttons #register-button{
@@ -331,7 +336,7 @@ div.goog-te-gadget-simple img,
     height: 11px;
 }
 
-#login-action .action-button{
+.action-button{
     border-radius: 4px;
     background: url(../img/bg/gradients2.jpg) repeat-x;
     width: 116px;
@@ -390,4 +395,100 @@ div.goog-te-gadget-simple img,
 #api-login-links a:hover {
     text-decoration: underline;
 }
+
+
+/* user login menu */
+
+#login-menu{
+    width: 100px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    border-radius: 6px 6px 6px 6px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    border: solid 1px #a9a9a9;
+    padding: 5px 0;
+    position: relative;
+    top: 12px;
+}
+
+#login-menu li a{
+    line-height: 24px;
+    display: block;
+    height: 24px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    color: #85b552;
+    text-shadow: none;
+    margin-top: 3px;
+}
+
+#login-menu li a:hover{
+    background-color: rgba(255,255,255,0);
+    background-image: -webkit-linear-gradient(bottom, #6dae1a, #7dc41b);
+    background-image: -moz-linear-gradient(bottom, #6dae1a, #7dc41b);
+    background-image: -o-linear-gradient(bottom, #6dae1a, #7dc41b);
+    background-image: -ms-linear-gradient(bottom, #6dae1a, #7dc41b);
+    background-image: linear-gradient(to top, #6dae1a, #7dc41b);
+    color: white;
+}
+
+#login-menu-triangle{
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid white;
+    position: absolute;
+    top: -5px;
+    right: 8px;
+}
+
+#login-menu-zone .masker {
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    top: -20px;
+    background: none;
+}
+
+
+#footer {
+    clear: both;
+    margin-top: 75px;
+    background: #f0f0f0;
+    border-top: 1px solid #a7a7a7;
+    padding-bottom: 35px;
+}
+
+#footer-container {
+    width: 1020px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 25px;
+}
+
+#footer h6 {
+    color: #636363;
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+#footer a {
+    color: #a2a1a1;
+    font-size: 12px;
+}
+
+#footer ul{
+    padding-top: 10px;
+}
+
+#footer-partners, #footer-links, #footer-tech{
+    width: 240px;
+    float: left;
+}
+
 

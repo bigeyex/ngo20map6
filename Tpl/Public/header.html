@@ -10,8 +10,9 @@
 
     ?>
     <title>公益地图</title>
+
     {:css('base')}
-    
+    <link rel="stylesheet" type="text/css" href="__APP__/Public/img/sprites/icons.css" />
     {:css('animate-custom')}
     {:css('header')}
     {:js('jquery-1.9.1')}
@@ -30,6 +31,12 @@
 			});
 			$('#login-close-button').click(function(){
 				$('#login-box').trigger('close');
+			});
+
+			$('#login-menu-zone').mouseenter(function(){
+				$('#login-menu').stop().show();
+			}).mouseleave(function(){
+				$('#login-menu').stop().fadeOut();
 			});
 		});
 		
@@ -79,10 +86,21 @@
 				<div id="main-nav-controls">
 					<div id="register-buttons">
 						<?php if(user()): ?>
-							<a href="{:U('User/home')}" id="my-page-button">我的页面</a>
+							<span id="login-menu-zone">
+								<a href="{:U('User/home')}" id="my-page-button" class="title">我的页面</a>
+								<div id="login-menu" style="display:none;">
+									<div class="masker"></div>
+									<div id="login-menu-triangle"></div>
+									<ul id="login-menu-list">
+										<li><a href="">帐号设置</a></li>
+										<li><a>项目管理</a></li>
+										<li><a>信息/通知</a></li>
+										<li><a href="{:U('Account/logout')}">注销</a></li>
+									</ul>
+								</div>
+							</span>
 						<?php else: ?>
-							<a href="javascript:void(0);" id="login-button">登录</a>
-							<a href="javascript:void(0);" id="register-button">注册</a>
+							<a href="javascript:void(0);" id="login-button" class="title"> 登录 | 注册</a>
 						<?php endif; ?>
 					</div>
 					<div id="language-box"></div>

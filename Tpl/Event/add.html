@@ -7,13 +7,13 @@
     <?php endif ?>
     <div class="form-section" id="main-content">
         <h3 style="padding-left:15px;"> 发布公益项目  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
-        <p class="after-title">{:L('以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。')}</p>
+        <p class="after-title">以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。</p>
         <div id="editor-zone">
             <div id="editor-toolbar">
                 <span>{:L('插入')}: </span>
-                <a href="javascript:void(0);" id="insert-image">{:L('照片')}</a>
-                <a href="javascript:void(0);" id="insert-video">{:L('视频')}</a>
-                <a href="javascript:void(0);" id="insert-link">{:L('链接')}</a>
+                <a href="javascript:void(0);" id="insert-image">照片</a>
+                <a href="javascript:void(0);" id="insert-video">视频</a>
+                <a href="javascript:void(0);" id="insert-link">链接</a>
             </div>
             <p id="editor-help">{:L('为了确保资料完整请添加相关的<strong>照片</strong>和<strong>视频</strong>。')}</p>
             <div id="editor-body">
@@ -48,35 +48,20 @@
         <div class="form-field" id="map-box">
             <span class="title">{:L('在地图上的位置')}</span>
             <div style="width:267px;height:163px;border:1px solid gray" id="map-locate-container"></div>
-            <span>({:L('如果地图中所示位置不是您的机构位置，点击地图来标注机构位置')})</span>
+            <span class="form-comment">({:L('如果地图中所示位置不是您的机构位置，点击地图来标注机构位置')})</span>
             <div class="clearfix"></div>
         </div>
         <div class="form-field">
             <span class="title">{:L('开始时间')}</span>
-            <input type="text" name="begin_time" id="begin_time" class="short" value="{$event.begin_time}"/>
+            <input type="text" name="begin_time" id="begin_time" value="{$event.begin_time}"/>
         </div>
         <div class="form-field">
             <span class="title">{:L('结束时间')}</span>
-            <input type="text" name="end_time" id="end_time" class="short" value="{$event.end_time}"/>
+            <input type="text" name="end_time" id="end_time"  value="{$event.end_time}"/>
         </div>
-        <div class="form-field check-group">
+        <div class="form-field">
             <span class="title">{:L('项目领域')}</span><!-- 工作领域 -->
-            <div class="multi-select-box">
-                <input type="text" name="item_field" readonly="readonly" onselectstart="return false" value="{$event.item_field}"/>
-                <div class="multi-select-dropdown">
-                <?php
-                    $i = 0;
-                    foreach(C('ORG_FIELDS') as $org){
-                    $i++;
-                    ?>
-                <span class="res-tag" id="focus-area">
-                    <input style="display:none" id="event-field-{$i}" type="checkbox" value="{$org}" <?php if (stripos($event['item_field'], $org) !== FALSE): ?> checked="checked" <?php endif; ?>/>
-                    <label for="event-field-{$i}">{$org}</label>
-                </span>
-                <?php } ?>
-                <div class="clearfix"></div>
-                </div>
-            </div> <!-- end of 工作领域 -->
+            <input type="hidden" id="item-field" name="item_field" value="{$event.item_field}"/>
         </div>
         <div class="form-field check-group">
             <?php if($event_type == 'ngo'): ?>
@@ -84,29 +69,7 @@
             <?php else: ?>
             <span class="title">{:L('项目资源')}</span><!-- 工作领域 -->
             <?php endif; ?>
-            <div class="multi-select-box">
-                <input type="text" name="res_tags" readonly="readonly" onselectstart="return false"value="{$event.res_tags}"/>
-                <div class="multi-select-dropdown">
-                <?php
-                    $i = 0;
-                    $event_types = C('EVENT_TYPE');
-                    if($event_type == 'ngo'){
-                        $type_list = $event_types['requirement'];
-                    }
-                    else{
-                        $type_list = $event_types['resource'];
-                    }
-                    foreach($type_list as $org){
-                    $i++;
-                    ?>
-                <span class="res-tag" id="focus-area">
-                    <input style="display:none" id="event-field-{$i}" type="checkbox" value="{$org}" <?php if (stripos($event['res_tags'], $org) !== FALSE): ?> checked="checked" <?php endif; ?>/>
-                    <label for="event-field-{$i}">{$org}</label>
-                </span>
-                <?php } ?>
-                <div class="clearfix"></div>
-                </div>
-            </div>
+            <input type="hidden" id="res-tags" name="res_tags" value="{$event.res_tags}"/>
         </div>
         <?php if($event_type == 'ngo'): ?>
         <div class="form-field">
@@ -143,8 +106,9 @@
         </div>
         <?php endif; ?>
         <div class="submit-buttons">
-            <input id="submit-button" type="submit" value="{:L('发表项目')}"/>
-            <input id="submit-button" type="reset" value="{:L('保存草稿')}"/>
+            <input class="action-button" type="submit" value="{:L('发表项目')}"/>
+            <input class="action-button" type="reset" value="{:L('保存草稿')}"/>
+            <div class="clearfix"></div>
         </div>
     </div> <!-- form-section -->
     </form>
@@ -184,10 +148,63 @@
 {:js('jquery.validationEngine')}
 {:js('jquery.validationEngine-zh_CN')}
 {:js('jquery.rte')}
+{:js('jquery-ui.sortable')}
 {:js('moment')}
 {:js('pikaday')}
 {:js('event-edit')}
+
+{:css('select2')}
+{:js('select2')}
+{:js('select2_locale_zh-CN')}
 {:css('form-page')}
+<script type="text/javascript">
+
+
+$('#item-field').select2({
+	data: [
+		<?php $start=true;  foreach(C('ORG_FIELDS') as $org): ?>
+		<?php if($start == false): ?>,<?php endif; ?>{id: "<?=$org?>", text: '<?=$org?>'}
+		<?php $start=false; endforeach; ?>
+	],
+	multiple: true,
+	placeholder: "点击以选择",
+	tokenSeparators: [",", " "]
+});
+
+<?php
+	$event_types = C('EVENT_TYPE');
+	if($event_type == 'ngo'){
+	    $type_list = $event_types['requirement'];
+	}
+	else{
+	    $type_list = $event_types['resource'];
+	}
+?>
+
+$('#res-tags').select2({
+	data: [
+		<?php $start=true;  foreach($type_list as $org): ?>
+		<?php if($start == false): ?>,<?php endif; ?>{id: "<?=$org?>", text: '<?=$org?>'}
+		<?php $start=false; endforeach; ?>
+	],
+	multiple: true,
+	placeholder: "点击以选择",
+	tokenSeparators: [",", " "]
+});
+
+$("#item-field").select2("container").find("ul.select2-choices").sortable({
+    containment: 'parent',
+    start: function() { $("#item-field").select2("onSortStart"); },
+    update: function() { $("#item-field").select2("onSortEnd"); }
+});
+
+$("#res-tags").select2("container").find("ul.select2-choices").sortable({
+    containment: 'parent',
+    start: function() { $("#res-tags").select2("onSortStart"); },
+    update: function() { $("#res-tags").select2("onSortEnd"); }
+});
+
+</script>
 <?php if($target_url == 'save'): ?>
 <script type="text/javascript">
 //disable default status for rte
@@ -207,6 +224,8 @@ $('.res-tag input[checked="checked"]').next().addClass('selected');
 
 //place a mark on the map and set lng/lat as well
 addPointMarker(new BMap.Point({$event.longitude},{$event.latitude}));
+
+
 </script>
 <?php endif; ?>
 <include file="Public:footer"/>

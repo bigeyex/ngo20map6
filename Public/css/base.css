@@ -46,7 +46,7 @@ table {
 
 /* css reset end */
 
-h1,h2,h3,h4,h5,h6,.title{
+h1,h2,h3,h4,h5,h6,.title, .goog-te-menu-value span:first-child{
 	font-family: "FZLanTingHeiS-R-GB", "Microsoft YaHei", "STXihei", sans-serif;
 }
 
@@ -54,3 +54,10 @@ h1,h2,h3,h4,h5,h6,.title{
 	clear: both;
 }
 
+a{
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
+}

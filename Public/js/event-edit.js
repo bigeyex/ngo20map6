@@ -1,33 +1,4 @@
 
-$('.check-group label').click(function(e){
-    $(e.target).toggleClass('selected');
-    var selected_status = $(e.target).hasClass('selected');
-    if(selected_status){
-        $('#'+$(e.target).attr('id')+'-checkbox').attr('checked', 'checked');
-    }
-    else{
-        $('#'+$(e.target).attr('id')+'-checkbox').removeAttr('checked');
-    }
-    var p = $(e.target).parent().parent();
-    var text = p.find('.selected').map(function(){return $(this).text()}).get().join(', ');
-    p.parent().find('input[type="text"]').val(text);
-
-});
-
-$('.multi-select-box').click(function(e){
-    var drop_down = $(e.currentTarget).find('.multi-select-dropdown');
-    drop_down.toggle();
-    e.stopPropagation();
-});
-
-$('.multi-select-dropdown').click(function(e){
-    e.stopPropagation();
-});
-
-$(document.body).click(function(){
-    $('.multi-select-dropdown').hide();
-});
-
 
 new PCAS("province","city","county");
 

@@ -1,0 +1,275 @@
+
+<include file="Public:header"/>
+
+<div id="main" class="form-region">
+    <form id="newform" name="newform" class="need-validate" enctype="multipart/form-data" action="__URL__/insert" method="post" >
+    <?php if(isset($_SESSION['api'])): ?>
+    <input type="hidden" name="api_vendor" value="{@api.api_vendor}"/>
+    <input type="hidden" name="api_id" value="{@api.api_id}"/>
+    <?php endif; ?>
+    <div class="form-section">
+        <h3><span class="required">*</span> 请在下列选项中选出您的注册用户类型</h3>
+        
+        <ul id="type-selector">
+            <li>
+                我是
+                <input type="radio" name="type" value="ngo" style="display:none" id="type-ngo"/>
+                <label for="type-ngo">公益组织</label><br/>
+                (注册后，您的组织将被标注在地图上。您还可以发布项目信息)
+            </li>
+            <li>
+                我是<input type="radio" name="type" value="csr" style="display:none" id="type-csr"/>
+                <label for="type-csr">企业</label><br/>
+                (注册后，您的单位将被标注在地图上，您还可以发布企业社会责任项目)
+            </li>
+            <li>
+                我是<input type="radio" name="type" value="ind" style="display:none" id="type-ind"/>
+                <label for="type-ind">公益人</label><br/>
+                (注册后，您可以关注公益组织和企业社会责任的信息，发布公益评论)
+            </li>
+            <li>
+                我是<input type="radio" name="type" value="fund" style="display:none" id="type-fund"/>
+                <label for="type-fund">基金会</label><br/>
+                (注册后，您可以获得公益组织和企业社会责任的信息)
+            </li>
+        </ul>
+    </div>
+    <div class="form-section" id="main-content" style="display:none;">
+        <h3 style="padding-left:15px;"> 请填写以下资料完成注册  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+        <p class="after-title">{:L('以下信息将显示在机构资料页，方便大家了解你，完成度越高，你就可以执行更多的任务操作。')}</p>
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('电子邮箱')}</span>
+            <input type="text" id="email" name="email" class="validate[required,custom[email],ajax[ajaxUniqueEmail]]" value="{$user.email}"/>
+            <!-- TODO: 资料完成度 -->
+        </div>
+        <?php if(!isset($_SESSION['api'])): ?>   
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('密码')}</span>
+            <input id="password" type="password" name="password" class="validate[required]"/>
+            <span>({:L('请使用6位以上字母、数字的组合')})</span>
+        </div>
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('确认密码')}</span>
+            <input type="password" class="validate[equals[password]]"/>
+            <span>({:L('再输入一次密码，以确保没有输入错误')})</span>
+        </div>
+        <?php endif; ?>
+        <div class="form-field">
+            <span class="title except except-ind"><span class="required">*</span> {:L('机构全称')}</span>
+            <span class="title only ind-only"><span class="required">*</span> {:L('用户名')}</span>
+            <input type="text" id="name" name="name" value="{$user.name}" class="validate[required,ajax[ajaxUniqueName]]"/>
+            <span>({:L('不能与系统中已有的名字相同，可以使用中英文')})</span>
+        </div>
+        <div class="form-field">
+            <span class="title except except-ind"><span class="required">*</span> {:L('机构简介')}</span>
+            <span class="title only ind-only"><span class="required">*</span> {:L('简介')}</span>
+            <textarea name="introduction" id="introduction" cols="35" rows="7" class="validate[required]">{$user.introduction}
+            </textarea>
+        </div>
+        <div class="form-field">
+            <span class="title">{:L('办公地点')}</span>
+                <select name="province" id="province" class="validate[required]"></select>省
+                <select name="city" id="city"></select>市
+                <select name="county" id="county"></select>区/县
+                <input type="text" class="short" name="place" id="place" value="{$place}"/>
+                <input type="hidden" name="latitude" id="latitude"/>
+                <input type="hidden" name="longitude" id="longitude"/>
+
+        </div>
+        <div class="form-field" id="map-box">
+            <span class="title">{:L('在地图上的位置')}</span>
+            <div style="width:267px;height:163px;border:1px solid gray" id="map-locate-container"></div>
+            <span>({:L('如果地图中所示位置不是您的机构位置，点击地图来标注机构位置')})</span>
+            <div class="clearfix"></div>
+        </div>
+        <div class="form-field">
+            <span class="title except except-ind">{:L('机构标志')}</span>
+            <span class="title only ind-only">{:L('头像')}</span>
+            <input type="file" name="image_uploader" value="{:L('浏览')}" accept="image/*"/>
+        </div>
+        <div class="only ngo-only">
+            <div class="form-field">
+                <span class="title">{:L('联系人')}</span>
+                <input type="text" name="contact_name" value="{$user.contact_name}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构电话')}</span>
+                <input type="text" name="phone" value="{$user.phone}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构邮箱')}</span>
+                <input type="text" class="" name="public_email" value="{$user.public_email}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构传真')}</span>
+                <input type="text" name="fax" class="optional" value="{$user.fax}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构网站')}</span>
+                <input type="text" class="long-text" name="website" value="{$user.website}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('资金来源')}</span>
+                <textarea name="fund_source" id="fund_source" cols="35" rows="7">{$user.fund_source}
+                </textarea>
+            </div>
+        </div>
+        <div class="form-field">
+            <span class="title">{:L('微博账号')}</span>
+            <select name="weibo_provider">
+                <option value="腾讯微博" <?php if($user['weibo']=='腾讯微博'): ?> selected<?php endif; ?>>腾讯微博</option>
+                <option value="新浪微博" <?php if($user['weibo']=='新浪微博'): ?> selected<?php endif; ?>>新浪微博</option>
+                <option value="搜狐微博" <?php if($user['weibo']=='搜狐微博'): ?> selected<?php endif; ?>>搜狐微博</option>
+            </select>
+            <input type="text" name="weibo" value="{$user.weibo}" style="width:183px;"/>
+        </div>
+        <div class="form-field check-group">
+            <span class="title">{:L('关注领域')}</span><!-- 工作领域 -->
+            <input type="hidden" id="item-field" name="work_field" value="{$user.work_field}"/>
+        </div> <!-- end of 工作领域 -->
+        <div class="form-field check-group only ind-only">
+            <span class="title">{:L('专长')}</span><!-- 志愿者技能 -->
+            <input type="hidden" id="expertise" name="work_field" value="{$user.work_field}"/>
+        </div> <!-- end of volunteer skills -->
+        <div class="only ngo-only">
+            <div class="form-field">
+                <span class="title">{:L('机构使命')}</span>
+                <textarea name="aim" id="aim" cols="35" rows="7">{$user.aim}</textarea>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('服务区域')}</span>
+                <input type="text" class="long-text" name="service_area" value="{$user.service_area}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('成立年份')}</span>
+                <input type="text" class="validate[custom[number],min[1000]]" name="register_year" value="{$user.register_year}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('全职人数')}</span>
+                <input type="text" name="staff_fulltime" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_fulltime}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('兼职人数')}</span>
+                <input type="text" name="staff_parttime" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_parttime}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('核心志愿者数')}</span>
+                <input type="text" name="staff_volunteer" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_volunteer}"/>
+            </div>
+        </div>
+        <div class="form-field">
+            <span class="title">{:L('验证码')}</span>
+        	<div class="verify-block">
+                <span id="verify-img"><img src="{:U('Util/captcha')}" onclick="javascript:this.src='{:U('Util/captcha')}?tm='+Math.random();" /></span><br/>
+                <a id="change-img-button" href="javascript:void(0);">{:L('看不清')}</a><br/>
+            	<input type="text" name="verify" id="verify" class="validate[required,ajax[ajaxVerify]]" value=""/>
+            </div>
+        </div>
+        <div class="form-field">
+            <span class="title">
+                <input type="checkbox" name="protocol" id="protocol" checked="checked">
+            </span>
+            <span class="res-tag">
+                <label for="protocol" style="line-height:20px;">{:L('我同意接受公益地图的')}<a href="javascript:void(0);" onclick="newwindow()">{:L('《服务条款》')}</a></label>
+            </span>
+        </div>
+        <div class="submit-buttons">
+            <input class="action-button" type="submit" value="{:L('完成')}"/>
+            <input class="action-button" type="reset" value="{:L('重置')}"/>
+        </div>
+    </div> <!-- form-section -->
+    </form>
+</div>
+
+
+<div id="contract" style="display:none;">
+   tiaokuan
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+{:css('pikaday')}
+{:css('validationEngine.jquery')}
+{:js('PCASClass')}
+{:js('ajaxupload')}
+{:js('jquery.validationEngine')}
+{:js('jquery.validationEngine-zh_CN')}
+{:js('jquery.rte')}
+{:js('jquery-ui.sortable')}
+{:js('moment')}
+{:js('pikaday')}
+{:js('event-edit')}
+
+{:css('select2')}
+{:js('select2')}
+{:js('select2_locale_zh-CN')}
+{:css('form-page')}
+
+<script langage="text/javascript">
+$('#item-field').select2({
+    data: [
+        <?php $start=true;  foreach(C('ORG_FIELDS') as $org): ?>
+        <?php if($start == false): ?>,<?php endif; ?>{id: "<?=$org?>", text: '<?=$org?>'}
+        <?php $start=false; endforeach; ?>
+    ],
+    multiple: true,
+    placeholder: "点击以选择",
+    tokenSeparators: [","]
+});
+
+$('#expertise').select2({
+    data: [
+        <?php $start=true;  foreach(C('VOLUNTEER_SKILLS') as $org): ?>
+        <?php if($start == false): ?>,<?php endif; ?>{id: "<?=$org?>", text: '<?=$org?>'}
+        <?php $start=false; endforeach; ?>
+    ],
+    multiple: true,
+    placeholder: "点击以选择",
+    tokenSeparators: [","]
+});
+
+
+$("#item-field").select2("container").find("ul.select2-choices").sortable({
+    containment: 'parent',
+    start: function() { $("#item-field").select2("onSortStart"); },
+    update: function() { $("#item-field").select2("onSortEnd"); }
+});
+
+$("#expertise").select2("container").find("ul.select2-choices").sortable({
+    containment: 'parent',
+    start: function() { $("#expertise").select2("onSortStart"); },
+    update: function() { $("#expertise").select2("onSortEnd"); }
+});
+
+
+
+function newwindow(){
+    $("#contract").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 700,
+        zIndex: 3999,
+        modal: true,
+        buttons: {
+            "{:L('关闭')}" : function(){
+                $( this ).dialog( "close" );
+            }
+        }
+   });
+   $("#contract").dialog("open");
+}
+
+
+$('#type-selector label').click(function(e){
+    $('#type-selector label').removeClass("selected");
+    $(e.currentTarget).addClass("selected");
+    $('#main-content').show();
+    $('.only').hide();
+    $('.except').show();
+    var type=$('#'+$(e.currentTarget).attr('for')).val();
+    $('.'+type+'-only').show();
+    $('.except-'+type).hide();
+});
+
+</script>
+
+<include file="Public:footer"/>
