@@ -282,6 +282,7 @@ div.goog-te-gadget-simple img,
     margin-left: 0;
     color: #665f50;
     font-size: 12px;
+    line-height: 16px;
 }
 
 #login-box form {
@@ -314,6 +315,7 @@ div.goog-te-gadget-simple img,
     font-size: 12px;
     margin-top: 12px;
     display: block;
+    margin-bottom: 3px;
 }
 
 #login-remember {
