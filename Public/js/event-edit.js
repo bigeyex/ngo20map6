@@ -18,7 +18,7 @@ function relocate_map(){
 
     gc.getPoint(place, function(point){
       if (point) {
-        map.centerAndZoom(point, 16);
+        map.centerAndZoom(point, 11);
         addPointMarker(point);
       }
     });
