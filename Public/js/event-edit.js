@@ -1,6 +1,8 @@
 
-
-new PCAS("province","city","county");
+if(typeof default_province === 'undefined') default_province='';
+if(typeof default_city === 'undefined') default_city='';
+if(typeof default_county === 'undefined') default_county='';
+new PCAS("province","city","county",default_province,default_city,default_county);
 
 var map = new BMap.Map("map-locate-container");
 var point = new BMap.Point(116.404, 39.915);
@@ -44,14 +46,15 @@ pikaday_i18n = {
     weekdays      : ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
     weekdaysShort : ['日','一','二','三','四','五','六']
 };
-
-var begin_picker = new Pikaday({
-    field: document.getElementById('begin_time'),
-    format: 'YYYY-MM-DD',
-    i18n: pikaday_i18n
-});
-var end_picker = new Pikaday({
-    field: document.getElementById('end_time'),
-    format: 'YYYY-MM-DD',
-    i18n: pikaday_i18n
-});
+if($('#begin_time').length > 0){
+    var begin_picker = new Pikaday({
+        field: document.getElementById('begin_time'),
+        format: 'YYYY-MM-DD',
+        i18n: pikaday_i18n
+    });
+    var end_picker = new Pikaday({
+        field: document.getElementById('end_time'),
+        format: 'YYYY-MM-DD',
+        i18n: pikaday_i18n
+    });
+}

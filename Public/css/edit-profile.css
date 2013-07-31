@@ -1,0 +1,172 @@
+#left-menu {
+    float: left;
+    font-family: "宋体" sans-serif;
+}
+
+#main {
+    padding-left: 0;
+}
+
+#main-content {
+    margin-left: 135px;
+}
+
+#left-menu h3 {
+    font-size: 14px;
+    color: #85b552;
+    margin: 38px 3px 12px 13px;
+}
+
+#left-menu ul {
+    margin: 0;
+    padding: 0;
+    width: 136px;
+}
+
+#left-menu li {
+    list-style: none;
+    height: 36px;
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    display: block;
+    color: #b5b5b5;
+    line-height: 36px;
+    text-align: center;
+    margin-top: -1px;
+    cursor: pointer;
+}
+
+#left-menu li.selected {
+    background: white;
+    color: #85b552;
+}
+
+.form-field {
+    clear: none;
+    position: relative;
+}
+
+.submit-buttons {
+    margin-left: 122px;
+}
+
+.form-field span.title {
+    width: 108px;
+    padding-right: 25px;
+}
+
+.multi-select-box {
+    width: 300px;
+    background-position: 133px;
+}
+.form-field span{
+    line-height: 20px;
+}
+.photo {
+    float: left;
+}
+
+.photo-field {
+    height: 65px;
+}
+
+.photo-uploader {
+    float: left;
+    margin: 21px 30px
+;
+}
+
+.photo-uploader span {
+    width: 62px;
+    background-color: #85b552;
+    color: white;
+    line-height: 20px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.photo-uploader p {
+    color: #b5b5b5;
+    margin: 12px 0 0;
+}
+
+.progress-bar {
+    display: block;
+    padding-top: 7px;
+    position: relative;
+}
+
+.progress-filler, .progress-filled {
+    border-radius: 5px;
+}
+
+.progress-filler {
+    display: block;
+    width: 162px;
+    margin-left: 133px;
+    height: 6px;
+    background-color: #dedede;
+}
+
+.progress-filled {
+    background-color: #87b767;
+    display: block;
+    height: 6px;
+}
+
+.progress-number {
+    position: absolute;
+    top: 0;
+    left: 315px;
+}
+
+#forget-password-a {
+    padding-left: 17px;
+    color: #0063dc;
+}
+
+.section-password p.after-title{
+    width: 600px;
+    letter-spacing: 1px;
+    line-height: 14px;
+}
+
+.password-strength {
+    margin-left: 133px;
+    padding-top: 10px;
+}
+
+.password-strength span.title {
+    width: auto;
+    padding-right: 8px;
+}
+
+.password-strength .progress-filler {
+    margin: 0;
+    margin-top: 7px;
+    float: left;
+}
+
+.password-strength .progress-number {
+    left: 241px;
+    top: 11px;
+    color: #b5b5b5;
+}
+
+p.password-hint {
+    margin: 0;
+    position: absolute;
+    left: 415px;
+    top: 0;
+    width: 218px;
+    background-color: #e0ecd3;
+    padding: 5px;
+    color: #5b5b5b;
+    line-height: 14px;
+}
+
+div.new-password-field {
+    margin-bottom: 38px;
+}
+

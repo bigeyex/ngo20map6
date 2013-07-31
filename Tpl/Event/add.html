@@ -6,7 +6,7 @@
         <input type="hidden" name="id" value="{$event.id}"/>
     <?php endif ?>
     <div class="form-section" id="main-content">
-        <h3 style="padding-left:15px;"> 发布公益项目  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+        <h3 style="padding-left:15px;"> 发布公益活动  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
         <p class="after-title">以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。</p>
         <div id="editor-zone">
             <div id="editor-toolbar">
@@ -157,6 +157,16 @@
 {:js('select2')}
 {:js('select2_locale_zh-CN')}
 {:css('form-page')}
+
+<?php if ($target_url == 'save'): ?>
+<script type="text/javascript">
+default_province = '{$event.province}';
+default_city = '{$event.city}';
+default_county = '{$event.county}';
+</script>
+<?php endif; ?>
+{:js('event-edit')}
+
 <script type="text/javascript">
 
 
@@ -167,6 +177,7 @@ $('#item-field').select2({
 		<?php $start=false; endforeach; ?>
 	],
 	multiple: true,
+    closeOnSelect: false,
 	placeholder: "点击以选择",
 	tokenSeparators: [",", " "]
 });
@@ -188,6 +199,7 @@ $('#res-tags').select2({
 		<?php $start=false; endforeach; ?>
 	],
 	multiple: true,
+    closeOnSelect: false,
 	placeholder: "点击以选择",
 	tokenSeparators: [",", " "]
 });

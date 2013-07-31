@@ -1,1 +1,88 @@
-view evnet
+<include file="Public:header"/>
+
+<div id="bread-crumb">
+	<div id="bread-crumb-inner">
+		<a href="{:U('Index/index')}">首页</a> > 
+		<a href="{:U('User/view')}/id/{$user.id}">{$user.name}</a> > 
+		<span>{$event.name}</span>
+	</div>
+</div>
+
+<div id="event-container">
+	<div id="left-column">
+		<div class="block">
+			<h3>{$event.name}</h3>
+			<span class="sub-title">{$user.name}</span>
+		</div>
+		<div class="block">
+			<div class="content-brick">
+				<h4>项目简介</h4>
+				<p>{$event.description}</p>
+			</div>
+			<div class="content-brick">
+				<h4>项目成果</h4>
+				<p>{$event.outcome}</p>
+			</div>
+			<div class="content-brick">
+				<h4>项目需求</h4>
+				<p>{$event.res_tags}</p>
+			</div>
+			<div class="content-brick">
+				<h4>需求描述</h4>
+				<p>{$event.res_tags}</p>
+			</div>
+			<div class="content-brick">
+				<h4>相关图片</h4>
+			</div>
+		</div>
+	</div>
+	<div id="right-column">
+		<div id="user-namecard" class="block">
+			<div id="user-avatar">
+				<img src="__APP__/Public/Uploadedthumb/{$user.image}" width="80" />
+				<h4>{$user.name}</h4>
+			</div>
+			<div id="map-zone"></div>
+		</div>
+		<div class="block">
+			<div class="content-brick">
+				<h4>机构简介</h4>
+				<p>{$user.introduction|short=200}</p>
+			</div>
+			<div class="content-brick">
+				<h4>机构使命</h4>
+				<p>{$user.aim|short=150}</p>
+			</div>
+			<div class="content-brick">
+				<h4>员工数量</h4>
+				<p>
+					全职人数: {$user.staff_fulltime}<br/>
+					兼职人数: {$user.staff_parttime}<br/>
+					志愿者人数: {$user.staff_volunteer}
+				</p>
+			</div>
+			<div class="content-brick">
+				<h4>办公地址</h4>
+				<p>{$user.province}{$user.city}{$user.county}{$user.place}</p>
+			</div>
+		</div>
+		<div class="block">
+			<div class="content-brick">
+				<h4>联系方式</h4>
+				<p>{$user.contact_name}: {$user.phone}</p>
+			</div>
+			<div class="content-brick">
+				<h4>服务区域</h4>
+				<p>{$user.service_area}</p>
+			</div>
+			<div class="content-brick">
+				<h4>关注领域</h4>
+				<p>{$user.work_field}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+{:css('event-view')}
+
+<include file="Public:footer"/>

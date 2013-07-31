@@ -119,17 +119,17 @@
                     "alertText": "* 不接受特殊字符"
                 },
                 "ajaxUniqueEmail": {
-                    "url": app_path+"/User/check_unique_email",
+                    "url": app_path+"/Util/check_unique_email",
                     "alertText": "* 此电子邮件已被其他人使用",
                     "alertTextLoad": "* 正在确认电子邮件是否有其他人使用，请稍等。"
                 },
                 "ajaxUniqueName": {
-                    "url": app_path+"/User/check_unique_name",
+                    "url": app_path+"/Util/check_unique_name",
                     "alertText": "* 此名称已被其他人使用",
                     "alertTextLoad": "* 正在确认名称是否有其他人使用，请稍等。"
                 },
 				"ajaxVerify": {
-                    "url": app_path+"/User/check_verify",
+                    "url": app_path+"/Util/check_verify",
                     "alertText": "* 验证码不一致",
                     "alertTextLoad": "* 正在确认验证码是否一致，请稍等。"
                 },

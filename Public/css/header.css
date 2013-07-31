@@ -358,6 +358,11 @@ div.goog-te-gadget-simple img,
     cursor: pointer;
 }
 
+a.action-button{
+    color: white;
+    text-decoration: none;
+}
+
 #login-action a.action-button {
     margin-left: 10px;
 }
@@ -493,4 +498,19 @@ div.goog-te-gadget-simple img,
     float: left;
 }
 
-
+#flash-notice-region{
+    position: absolute;
+    top: 45px;
+    left: 300px;
+    width: 600px;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 8px 35px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    color: #c09853;
+}

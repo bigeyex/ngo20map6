@@ -1,0 +1,76 @@
+<!-- content wrapper begin -->
+<div class="uploader-wrapper" style="display:none;">
+
+	<div class="uploader">
+
+		<!-- first step upload image begin -->
+		<div id="big_uploader">
+			<form name="upload_big" id="upload_big" class="uploaderForm" method="post" enctype="multipart/form-data" action="{:U('Util/upload_image')}?act=upload" target="upload_target">
+				<h3><strong>1. 上传一张图片</strong></h3>
+				<div class="fileWrapper">
+					<a class="fileButton action-button">上传图片</a>
+					<input name="photo" id="upload-file" class="fileInput" size="27" type="file" />	
+				</div>
+				<input type="hidden" name="width" id="crop-width" value="1200" />
+				<input type="hidden" name="height" id="crop-height" value="600" />              
+				<input type="submit" name="action" value="现在上传图片" class="inputSubmit action-button" />
+			</form>
+			<div id="upload-notice" class="upload-notice">上传中...</div>
+		</div>
+		<!-- first step upload image end -->
+		
+		<div class="content">
+			
+			<!-- second step selection begin -->
+			<div id="uploaded">
+				<h3><strong>2. 从图片中裁剪出需要的部分</strong></h3>
+				<div id="div_upload_big" style="width:400px;height:200px;"></div>
+				<div class="uploadThumbWrapper">
+												<form name="upload_thumb" id="upload_thumb" class="uploaderForm" method="post" action="{:U('Util/upload_image')}?act=thumb" target="upload_target">
+						<input type="hidden" name="img_src" id="img_src" class="img_src" /> 
+						<input type="hidden" name="height" value="0" id="height" class="height" />
+						<input type="hidden" name="width" value="0" id="width" class="width" />
+						<input type="hidden" id="y1" class="y1" name="y" />
+						<input type="hidden" id="x1" class="x1" name="x" />
+						<input type="hidden" id="y2" class="y2" name="y1" />
+						<input type="hidden" id="x2" class="x2" name="x1" />                         
+						<input type="submit" value="确认/裁剪完成" class="inputSubmit action-button" />
+					</form>
+					<div id="notice2" class="notice">正在生成小图片...</div>
+				</div>
+			</div>
+			<!-- second step selection end -->
+			
+			<!-- preview the selection begin -->
+			<div class="previewWindow">
+				<h3>剪裁预览</h3>
+				<div class="previewWrapper" style="width:400px;height:200px;">
+					<div id="preview"></div>
+				</div>
+			</div>
+			<!-- preview the selection end -->
+
+			<!-- third step generated thumb begin -->
+			<!-- <div id="thumbnail">
+				<div class="thumbWrapper" style="width:400px;height:200px;">
+					<h3><strong>3. Step: Generated thumbnail</strong></h3>
+					<div id="div_upload_thumb"></div>
+				</div>
+			</div> -->
+			<!-- third step generated thumb end -->
+			
+		</div>
+		
+		<!-- hidden iframe begin -->
+		<iframe id="upload_target" name="upload_target" src=""></iframe>
+		<!-- hidden iframe end -->
+
+	</div>
+
+</div>
+<!-- content wrapper end -->
+
+{:css('imagecropper')}
+{:css('imgareaselect-default')}
+{:js('jquery.imgareaselect')}
+{:js('imagecropper')}

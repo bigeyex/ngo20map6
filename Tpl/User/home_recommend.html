@@ -1,0 +1,37 @@
+
+<ul id="result-items">
+	<?php foreach($results as $result): ?>
+	<li>
+		<?php if($result['image']): ?>
+		<div class="image">
+			<img src="__APP__/Public/Uploadedthumb/{$result.image}" alt="" width="163"/>
+		</div>
+		<?php endif; ?>	
+		
+		<div class="type-label title">{$result.type|label_type} {$result.model|label_type}</div>
+		<?php if($result['model'] == 'user'): //it is a user ?>
+		<h3>
+			<a href="{:U('User/view')}/id/{$result.id}">
+			{$result.name}
+			</a>
+		</h3>
+		<p class="content">
+			{$result.introduction|short=150}
+		</p>
+		
+		<?php else: ?>
+		<h3>
+			<a href="{:U('Event/view')}/id/{$result.id}">
+				{$result.name}
+			</a>
+		</h3>
+		<p class="content">
+			{$result.description|short=150}
+		</p>
+		
+		<?php endif; ?>
+		
+		
+	</li>
+	<?php endforeach; ?>
+</ul>

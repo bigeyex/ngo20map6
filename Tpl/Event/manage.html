@@ -1,0 +1,29 @@
+
+<ul id="result-items">
+	<?php if(empty($results)): ?>
+		<div id="no-events">还没有活动。现在开始<a href="{:U('Event/add')}">创建活动</a></div>
+	<?php else: ?>
+		<?php foreach($results as $result): ?>
+		<li>
+
+			<div class="type-label title">
+				<a href="{:U('Event/edit')}/id/{$result.id}">修改</a> | 
+				<a href="{:U('Event/delete')}/id/{$result.id}">删除</a>
+
+			</div>
+			
+			<h3>
+				<a href="{:U('Event/view')}/id/{$result.id}">
+					{$result.name}
+				</a>
+			</h3>
+			<p class="content">
+				{$result.description|short=150}
+			</p>
+			
+			
+			
+		</li>
+		<?php endforeach; ?>
+	<?php endif; ?>
+</ul>

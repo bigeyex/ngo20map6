@@ -97,7 +97,6 @@ body{
     float: left;
     width: 219px;
     padding-top: 27px;
-    border-right: 1px solid #e5e5e5;
 }
 
 #left-menu a{
@@ -134,4 +133,58 @@ body{
 
 #left-menu li.current .number{
     background: #54800d;
+}
+
+
+
+#home-content{
+    margin-left: 219px;
+    border-left: 1px solid #e5e5e5;
+}
+
+#result-items {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+#result-items li, #result-items .li {
+    padding: 10px;
+    list-style: none;
+    border-bottom: 1px solid #e3e3e3;
+    position: relative;
+    height: 75px;
+}
+
+#result-items h3, #result-items p {
+    font-family: 宋体, sans-serif;
+}
+
+#result-items h3 a {
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+}
+
+#result-items h3 {
+    padding: 8px 0;
+    margin: 0;
+}
+
+#result-items p {
+    margin: 0;
+    margin-right: 170px;
+}
+
+.type-label {
+    color: #505050;
+}
+
+#result-items .image {
+    float: right;
+    width: 163px;
+    height: 78px;
+    overflow: hidden;
+    margin-top: -1px;
 }

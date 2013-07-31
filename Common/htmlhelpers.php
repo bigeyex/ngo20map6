@@ -37,6 +37,36 @@ function place($str, $ifempty = "暂无"){
 	}
 }
 
+function short($str, $length=150){
+	if(mb_strlen($str) > $length){
+		$str = mb_substr($str, 0, $length) . '...';
+	}
+
+	return $str;
+}
+
+function label_type($str){
+	switch ($str) {
+		case 'ngo':
+			return '公益组织';
+			break;
+		case 'csr':
+		case 'ind':
+			return '企业';
+			break;
+		case 'case':
+			return '对接案例';
+			break;
+		case 'event':
+			return '活动';
+			break;
+		
+		default:
+			return '';
+			break;
+	}
+}
+
 /* filter GET and POST data before use */
 function cleanInput($input) {
 

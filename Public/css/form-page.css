@@ -208,7 +208,6 @@ select {
 }
 
 #newform a{
-    color: #85B552;
 }
 
 .submit-buttons input{
@@ -421,3 +420,10 @@ select {
     color: black;
 }
 
+#avatar-component{
+    float: left;
+}
+
+#avatar-preview-div{
+    margin-bottom: 5px;
+}

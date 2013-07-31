@@ -12,17 +12,17 @@
 			<div id="top-action-buttons">
 				<h5 class="label">发布：</h5>
 				<a class="button title">有声图片</a>
-				<a class="button title" href="{:U('Event/add')}">项目</a>
+				<a class="button title" href="{:U('Event/add')}">活动</a>
 			</div>
 		</div>
 	</div>
 	<div id="main-content">
 		<div id="left-menu">
 			<ul>
-				<li id="flow-link" class="current"><a href="javascript:void(0);">动态<span class="number">32</span></a></li>
-				<li id="project-link"><a href="javascript:void(0);">项目<span class="number">22</span></a></li>
-				<li id="voice-img-link"><a href="javascript:void(0);">有声图片<span class="number">10</span></a></li>
-				<li id="notice-link"><a href="javascript:void(0);">通知<span class="number">3</span></a></li>
+				<li id="flow-link" class="current"><a href="javascript:void(0);">动态</a></li>
+				<li id="project-link"><a href="javascript:void(0);">活动<span class="number">{$event_count}</span></a></li>
+				<!-- <li id="voice-img-link"><a href="javascript:void(0);">有声图片<span class="number">10</span></a></li> -->
+				<!-- <li id="notice-link"><a href="javascript:void(0);">通知<span class="number">3</span></a></li> -->
 			</ul>
 			
 		</div>
@@ -31,4 +31,20 @@
 	</div>
 </div>
 {:css('user-home')}
+<script type="text/javascript">
+$(function(){
+	
+	$('#flow-link').click(function(){
+		$('#home-content').load(app_path+'/User/home_recommend');
+	});
+	$('#project-link').click(function(){
+		$('#home-content').load(app_path+'/Event/manage');
+	});
+	<?php if($_GET['show'] == 'project'): ?>
+	$('#project-link').click();
+	<?php else: ?>
+	$('#flow-link').click();
+	<?php endif; ?>
+});	
+</script>
 <include file="Public:footer"/>

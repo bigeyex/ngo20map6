@@ -1,6 +1,14 @@
 <?php
 
 class EventsModel extends Model{
+	public function select_by_user($id){
+		return $this->where(array('user_id'=>$id))->select();
+	}
+
+	public function count_by_user($id){
+		return $this->where(array('user_id'=>$id))->count();
+	}
+
 	// if there is image attached with the event
 	// return the url of image with 'image' field
 	// else: no 'image' field

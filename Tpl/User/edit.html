@@ -1,0 +1,301 @@
+<include file="Public:header"/>
+<div id="main" class="form-region">
+    
+    <div id="left-menu">    
+        <h3>{:L('账号设置')}</h3>
+        <ul>
+            <li class="section-tab selected" type="base">{:L('基础资料')}</li>
+            <li class="section-tab" type="contact">{:L('联系信息')}</li>
+            <li class="section-tab" type="image">{:L('机构形象')}</li>
+            <li class="section-tab" type="resource">{:L('机构资源')}</li>
+            <li class="section-tab-password">{:L('账户安全')}</li>
+        </ul>
+    </div>
+    <div class="form-section" id="main-content">
+        <form id="newform" name="newform" class="need-validate" enctype="multipart/form-data" action="__URL__/save" method="post" >
+        <div class="section-base hideable-section">
+            <h3 style="padding-left:15px;"> 修改资料  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+            <p class="after-title">{:L('以下信息将显示在机构资料页，方便大家了解你，完成度越高，你就可以执行更多的任务操作。')}</p>
+            <div class="form-field">
+                <span class="title">{:L('资料完成度')}</span>
+                <span class="progress-bar">
+                    <span class="progress-filler">
+                        <span class="progress-filled" style="width:{$complete_pixel}px;"></span>
+                    </span>
+                    <span class="progress-number">{$complete_100}%</span>
+                </span>
+            </div>
+            <div class="form-field">
+                <span class="title"><span class="required">*</span> {:L('电子邮箱')}</span>
+                <span>{$user.email}</span>
+                <a href="">{:L('修改密码')}</a>
+            </div>
+            <div class="form-field">
+                <?php if($user['type'] == 'ngo'): ?>
+                <span class="title"><span class="required">*</span> {:L('机构全称')}</span>
+                <?php else: ?>
+                <span class="title"><span class="required">*</span> {:L('用户名')}</span>
+                <?php endif; ?>
+                <input type="text" id="name" name="name" value="{$user.name}" class="validate[required,ajax[ajaxUniqueName]]"/>
+            </div>
+            <div class="form-field">
+                <span class="title only ind-only"><span class="required">*</span> {:L('简介')}</span>
+                <textarea name="introduction" id="introduction" cols="35" rows="7" class="validate[required]">{$user.introduction}</textarea>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('办公地点')}</span>
+                    <select name="province" id="province" class="validate[required]"></select>省
+                    <select name="city" id="city"></select>市
+                    <select name="county" id="county"></select>区/县
+                    <input type="text" class="short" name="place" id="place" value="{$place}"/>
+                    <input type="hidden" name="latitude" id="latitude"/>
+                    <input type="hidden" name="longitude" id="longitude"/>
+
+            </div>
+            <div class="form-field" id="map-box">
+                <span class="title">{:L('在地图上的位置')}</span>
+                <div style="width:267px;height:163px;border:1px solid gray" id="map-locate-container"></div>
+                <span>({:L('如果地图中所示位置不是您的机构位置，点击地图来标注机构位置')})</span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="section-contact hideable-section" style="display:none;">
+            <h3 style="padding-left:15px;"> 联系信息  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+            <p class="after-title">{:L('以下信息将显示在机构联系方式，能迅速找到彼此。')}</p>
+            <div class="form-field">
+                <span class="title">{:L('资料完成度')}</span>
+                <span class="progress-bar">
+                    <span class="progress-filler">
+                        <span class="progress-filled" style="width:{$complete_pixel}px;"></span>
+                    </span>
+                    <span class="progress-number">{$complete_100}%</span>
+                </span>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('微博账号')}</span>
+                <select name="weibo_provider">
+                    <option value="腾讯微博" <?php if($user['weibo']=='腾讯微博'): ?> selected<?php endif; ?>>腾讯微博</option>
+                    <option value="新浪微博" <?php if($user['weibo']=='新浪微博'): ?> selected<?php endif; ?>>新浪微博</option>
+                    <option value="搜狐微博" <?php if($user['weibo']=='搜狐微博'): ?> selected<?php endif; ?>>搜狐微博</option>
+                </select>
+                <input type="text" name="weibo" value="{$user.weibo}" style="width:183px;"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('联系人')}</span>
+                <input type="text" name="contact_name" value="{$user.contact_name}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构电话')}</span>
+                <input type="text" name="phone" value="{$user.phone}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构邮箱')}</span>
+                <input type="text" class="" name="public_email" value="{$user.public_email}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构传真')}</span>
+                <input type="text" name="fax" class="optional" value="{$user.fax}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构网站')}</span>
+                <input type="text" class="long-text" name="website" value="{$user.website}"/>
+            </div>
+            <div class="form-field check-group">
+                <span class="title">{:L('关注领域')}</span><!-- 工作领域 -->
+                <input type="hidden" id="item-field" name="work_field" value="{$user.work_field}"/>
+            </div> <!-- end of 工作领域 -->
+            <div class="form-field check-group only ind-only">
+                <span class="title">{:L('专长')}</span><!-- 志愿者技能 -->
+                <input type="hidden" id="expertise" name="expertise" value="{$user.work_field}"/>
+            </div> <!-- end of volunteer skills -->
+        </div>
+
+        <div class="section-image hideable-section" style="display:none;">
+            <h3 style="padding-left:15px;"> 机构形象  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+            <p class="after-title">{:L('描述机构的形象，让更多人了解你，让你找到更多同一使命的人。')}</p>
+            <div class="form-field">
+                <span class="title">{:L('资料完成度')}</span>
+                <span class="progress-bar">
+                    <span class="progress-filler">
+                        <span class="progress-filled" style="width:{$complete_pixel}px;"></span>
+                    </span>
+                    <span class="progress-number">{$complete_100}%</span>
+                </span>
+            </div>
+            <div class="form-field photo-field">
+                <?php if($user['type'] != 'ind'): ?>
+                <span class="title except except-ind">{:L('机构标志')}</span>
+                <?php else: ?>
+                <span class="title only ind-only">{:L('头像')}</span>
+                <?php endif; ?>
+                <input id="photo-field" type="hidden" name="photo" value="{$user.photo}">
+                <div class="photo">
+                    <?php if($user['image']): ?>
+                        <img id="photo-image" src="__APP__/Public/Uploadedthumb/{$user.image}" alt="" height="66"/>
+                        <?php else: ?>
+                        <img id="photo-image" src="__APP__/Public/Img/no-image-mid.gif" alt="" height="66"/>
+                    <?php endif; ?> 
+                </div>
+                <div class="photo-uploader">
+                    <span id="upload-image-button">{:L('本地图片')}</span>
+                    <p>{:L('仅支持jpg、png、gif图片文件，且文件小于5M')}</p>
+                </div>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('机构使命')}</span>
+                <textarea name="aim" id="aim" cols="35" rows="7">{$user.aim}</textarea>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('服务区域')}</span>
+                <input type="text" class="long-text" name="service_area" value="{$user.service_area}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('成立年份')}</span>
+                <input type="text" class="validate[custom[number],min[1000]]" name="register_year" value="{$user.register_year}"/>
+            </div>
+        </div>
+
+        <div class="section-resource hideable-section" style="display:none;">
+            <h3 style="padding-left:15px;"> 机构资源  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
+            <p class="after-title">{:L('描述机构的形象，让更多人了解你，让你找到更多同一使命的人。')}</p>
+            <div class="form-field">
+                <span class="title">{:L('资料完成度')}</span>
+                <span class="progress-bar">
+                    <span class="progress-filler">
+                        <span class="progress-filled" style="width:{$complete_pixel}px;"></span>
+                    </span>
+                    <span class="progress-number">{$complete_100}%</span>
+                </span>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('全职人数')}</span>
+                <input type="text" name="staff_fulltime" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_fulltime}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('兼职人数')}</span>
+                <input type="text" name="staff_parttime" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_parttime}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('核心志愿者数')}</span>
+                <input type="text" name="staff_volunteer" class="validate[custom[number]]" validate-numeric-error-message="{:L('请只输入数字')}" value="{$user.staff_volunteer}"/>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('资金来源')}</span>
+                <textarea name="fund_source" id="fund_source" cols="35" rows="7">{$user.fund_source}
+                </textarea>
+            </div>
+        </div>
+        <div class="submit-buttons form-field">
+            <input id="submit-button" type="submit" value="{:L('保存')}"/>
+        </div>
+        </form>
+        <form action="{:U('User/editpass')}" method="POST" id="change-password-form">
+        <div class="section-password hideable-section" style="display:none;">
+            <h3 style="padding-left:15px;"> 账号安全 </h3>
+            <p class="after-title"><span class="required">{:L('重要提示：每天互联网都会有大量用户的帐号存在着严重被盗的风险。如果你正在使用与其他网
+站相同的密码，建议你尽快修改。')}</span></p>
+            <div class="form-field">
+                <span class="title">{:L('当前密码')}</span>
+                <input type="text" name="prepass" class="validate[required]" value=""/>
+                <a href="" id="forget-password-a">{:L('忘记密码')}</a>
+            </div>
+            <div class="form-field new-password-field">
+                <span class="title">{:L('新密码')}</span>
+                <input type="password" name="password" id="password" class="validate[required]" value=""/>
+                <span class="progress-bar password-strength">
+                    <span class="title">{:L('安全强度')}</span>
+                    <span class="progress-filler" style="width: 170px">
+                        <span class="progress-filled" style="width:0px;"></span>
+                    </span>
+                    <span class="progress-number">0 %</span>
+                </span>
+                <p class="password-hint">{:L('密码由6-16位半角字符（字母、数字、
+符号）组成，区分大小写')}</p>
+            </div>
+            <div class="form-field">
+                <span class="title">{:L('确认密码')}</span>
+                <input type="password" class="validate[equals[password]]" value=""/>
+                <p class="password-hint">{:L('密码由6-16位半角字符（字母、数字、
+符号）组成，区分大小写')}</p>
+            </div>
+            <div class="submit-buttons form-field">
+                <input id="submit-button" type="submit" value="{:L('保存')}"/>
+            </div>
+        </div>
+        </form>
+    </div> <!-- form-section -->
+    
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+{:css('pikaday')}
+{:css('validationEngine.jquery')}
+{:js('PCASClass')}
+{:js('ajaxupload')}
+{:js('jquery.validationEngine')}
+{:js('jquery.validationEngine-zh_CN')}
+{:js('jquery-ui.sortable')}
+
+{:js('jquery.lightbox_me')}
+
+{:css('select2')}
+{:js('select2')}
+{:js('select2_locale_zh-CN')}
+{:css('form-page')}
+{:css('edit-profile')}
+{:js('password-strength')}
+
+<script type="text/javascript">
+default_province = '{$user.province}';
+default_city = '{$user.city}';
+default_county = '{$user.county}';
+</script>
+{:js('event-edit')}
+
+<script langage="text/javascript">
+    $('.section-tab').click(function(e){
+        var o = $(e.currentTarget);
+        $('.hideable-section').hide();
+        $('.section-'+o.attr('type')).show();
+        $('.section-password').hide();
+        $('.submit-buttons').show();
+        $('.section-tab').removeClass('selected');
+        $('.section-tab-password').removeClass('selected');
+        o.addClass('selected');
+    });
+
+    $('.section-tab-password').click(function(e){
+        $('.hideable-section').hide();
+        $('.section-password').show();
+        $('.submit-buttons').hide();
+        $('.section-password .submit-buttons').show();
+        $('.section-tab').removeClass('selected');
+        $('.section-tab-password').addClass('selected');
+    });
+
+    //handle custum checkbox initial status
+    $('.res-tag input[checked="checked"]').next().addClass('selected');
+
+    //place a mark on the map and set lng/lat as well
+    addPointMarker(new BMap.Point({$user.longitude},{$user.latitude}));
+
+    new AjaxUpload('upload-image-button', {
+        action: app_path+'/Event/upload_image',
+        onComplete: function(file, response) {
+            $('#photo-field').val(response);
+            $('#photo-image').attr('src', app_path+'/Public/Uploadedthumb/thumbl_'+response);
+        }
+    });
+
+    $('.new-password-field input').keyup(function(){
+        var strength = checkPassword($('.new-password-field input').val());
+        $('.new-password-field .progress-filled').css('width', strength/100*170);
+        $('.new-password-field .progress-number').text(strength + ' %');
+    });
+
+    $("#change-password-form").validationEngine('attach');
+
+</script>
+
+<include file="Public:footer"/>
