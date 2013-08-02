@@ -19,12 +19,27 @@ function thumb($str, $thumb_level = 0){
 		}
 	}
 
-	if($thumb_level == 0){
+	if($thumb_level === 0){
 		return __APP__.'/Public/Uploaded/'.$str;
 	}
 	else{
-		return __APP__.'/Public/Uploaded/thumb'.$thumb_level.'_'.$str;
+		return __APP__.'/Public/Uploadedthumb/'.$thumb_level.'_'.$str;
 	}
+}
+
+function upimage($str, $thumb=true){
+	if(!empty($str)){
+		if($thumb){
+			return __APP__.'/Public/Uploadedthumb/'.$str;
+		}
+		else{
+			return __APP__.'/Public/Uploaded/'.$str;
+		}
+	}
+	else{
+		return __APP__.'/Public/img/no-image-placeholder.gif';
+	}
+
 }
 
 // print default text if string is empty

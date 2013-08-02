@@ -36,6 +36,13 @@ class UserAction extends Action {
         $this->display();
     }
 
+    public function view($id){
+        $user_model = new UsersModel();
+        $user = $user_model->find($id);
+        $this->assign('user', $user);
+        $this->display();
+    }
+
 	public function home(){
         $event_model = new EventsModel();
         $this->assign('event_count', $event_model->count_by_user(user('id')));

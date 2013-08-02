@@ -1,0 +1,82 @@
+<include file="Public:header"/>
+
+<div id="bread-crumb">
+	<div id="bread-crumb-inner">
+		<a href="{:U('Index/index')}">首页</a> > 
+		<a href="{:U('User/view')}/id/{$user.id}">{$user.name}</a>
+	</div>
+</div>
+
+<div id="event-container">
+	<div id="left-column">
+		<div class="block" id="user-namecard">
+			<div id="namecard-text">
+				<div id="user-home-avatar">
+					<img src="{:upimage($user['image'])}" width="143" />
+				</div>
+				<div id="namecard-text-part">
+					<h3>{$user.name}</h3>
+					<div class="content-brick namecard-left">
+						<h4>办公地址</h4>
+						<p>{$user.province}{$user.city}{$user.county}{$user.place}</p>
+					</div>
+					<div class="content-brick namecard-right">
+						<h4>服务区域</h4>
+						<p>{$user.service_area}</p>
+					</div>
+					<div class="content-brick namecard-left">
+						<h4>联系方式</h4>
+						<p>{$user.contact_name} {$user.phone}</p>
+					</div>
+					<div class="content-brick namecard-right">
+						<h4>关注领域</h4>
+						<p>{$user.work_field}</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="block">
+			<div class="content-brick">
+				<h4>机构简介</h4>
+				<p>{$user.introduction}</p>
+			</div>
+			<div class="content-brick">
+				<h4>机构使命</h4>
+				<p>{$user.aim}</p>
+			</div>
+			<div class="content-brick">
+				<h4>员工数量</h4>
+				<p>
+					全职人数: {$user.staff_fulltime}<br/>
+					兼职人数: {$user.staff_parttime}<br/>
+					志愿者人数: {$user.staff_volunteer}
+				</p>
+			</div>
+		</div>
+		<div class="block">
+			<div class="content-brick">
+				<h4>最新消息</h4>
+				<!-- display user weibo -->
+			</div>
+		</div>
+	</div> <!-- left-column -->
+	
+	<div id="right-column">
+		<div class="content-brick">
+			<div id="map-zone"></div>
+		</div>
+		<div class="content-brick">
+			<h4>项目案例</h4>
+			<p></p>
+		</div>
+		<div class="content-brick">
+			<h4>更多相关组织</h4>
+			<p></p>
+		</div>
+	</div>
+</div>
+
+{:css('event-view')}
+
+<include file="Public:footer"/>

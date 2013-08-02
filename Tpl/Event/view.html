@@ -39,7 +39,7 @@
 	<div id="right-column">
 		<div id="user-namecard" class="block">
 			<div id="user-avatar">
-				<img src="__APP__/Public/Uploadedthumb/{$user.image}" width="80" />
+				<img src="{:upimage($user['image'])}" width="80" />
 				<h4>{$user.name}</h4>
 			</div>
 			<div id="map-zone"></div>
