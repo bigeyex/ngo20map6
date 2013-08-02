@@ -773,3 +773,85 @@ span.part-time, span.volunteers{
 #l2-panel.case .preview-header{
     border-bottom: 2px solid #e14b08;
 }
+
+.map-type-filters{
+    width: 240px;
+    overflow: hidden;
+}
+
+.map-type-filters span{
+    display: inline-block;
+    background: url(../img/bg/type-filter-button-bg.jpg);
+    border: 1px solid #c9c5bc;
+    width: 80px;
+    height: 30px;
+    border-top: none;
+    margin-left: -5px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.map-type-filters span.last{
+    border-right: none;
+}
+
+.map-type-filters span.checked{
+    background: none;
+    border: none;
+    height: 31px;
+    width: 83px;
+}
+
+#keywords-filter{
+    width: 320px;
+    margin-top: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    box-shadow: 0 2px 5px rgba(49,81,29,.3);
+    border: solid 1px #a9a9a9;
+    padding: 10px;
+    position: relative;
+}
+
+#keywords-filter i.triangle{
+    width: 23px;
+    height: 28px;
+    padding: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px 3px 0 0;
+    background-color: #fff;
+    border: solid 1px #a9a9a9;
+    border-bottom: 0;
+    position: absolute;
+    top: -29px;
+    background-position: 7px -552px;
+    right: 0px;
+}
+
+#keywords-filter h4{
+    font-size: 14px;
+}
+
+#keywords-filter span{
+    width: 80px;
+    font-size: 12px;
+    color: #3a910f;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    line-height: 16px;
+    display: block;
+    float: left;
+}
+
+.remove-keyword-link{
+    font-size: 12px;
+    padding-left: 5px;
+}

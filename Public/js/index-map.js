@@ -5,6 +5,16 @@ map.centerAndZoom(point,5);                     // 初始化地图,设置中心�
 map.enableScrollWheelZoom();                            //启用滚轮放大缩小
 map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_LARGE, offset: new BMap.Size(0, 60)})); 
 
+$.fn.buttongroup = function(callback){
+	var these = this;
+	return this.click(function(){
+		these.removeClass('checked');
+		$(this).addClass('checked');
+		callback($(this).attr('value'));
+	});
+}
+
+
 
 $('.main-nav-filter').hover(function(){
 	$(this).find('.filter-box').show();
@@ -18,6 +28,20 @@ $('.main-nav-filter').click(function(){
 
 $('.main-nav-filter').blur(function(){
 	$(this).find('.filter-box').fadeOut();
+});
+
+$('#search-box').hover(function(){
+	$('#keywords-filter').show();
+}, function(){
+	$('#keywords-filter').fadeOut();
+});
+
+$('#search-textbox').click(function(){
+	$('#keywords-filter').show();
+});
+
+$('#search-textbox').blur(function(){
+	$('#keywords-filter').fadeOut();
 });
 
 
@@ -46,6 +70,19 @@ $('#search-textbox').keypress(function(e){
 		mapdata.set_key($('#search-textbox').val());
 		list_control.change_viewport();
 	}
+});
+
+$('#keywords-filter span').click(function(){
+	var text = $(this).text();
+	$('#search-textbox').val(text);
+	mapdata.set_key(text);
+	list_control.change_viewport();
+});
+
+$('.remove-keyword-link').click(function(){
+	$('#search-textbox').val('');
+	mapdata.set_key('');
+	list_control.change_viewport();
 });
 
 var story_board = {
@@ -145,6 +182,7 @@ var mapdata = {
 	province : '',
 	key: '',
 	rec_field : '',
+	model : '',
 	type : '',
 
 	//methods
@@ -193,6 +231,12 @@ var mapdata = {
 	set_type: function(type){
 		this.type = type;
 		map_control.refresh_tilelayer();
+		this.filter();
+	},
+	set_model: function(model){
+		this.model = model;
+		map_control.refresh_tilelayer();
+		this.filter();
 	},
 	sort: function(){
 		this.ngo_data.sort(this._compare_func);
@@ -261,7 +305,7 @@ var util = {
 }
 
 var list_control = {	//knockout.js model
-	detailed_page_size : 11,
+	detailed_page_size : 10,
 	page_size: 3,
 	ngo_in_view : [],
 	csr_in_view : [],
@@ -294,6 +338,10 @@ var list_control = {	//knockout.js model
 			$('.item-highlighter').show();
 			$('.item-highlighter').css('top', this.offsetTop+8);
 			l2_panel.open(data);
+		});
+		$('.map-type-filters span').buttongroup(function(type){
+			mapdata.set_model(type);
+			list_control.change_viewport();
 		});
 	},
 	change_viewport: function(){
@@ -398,6 +446,7 @@ var list_control = {	//knockout.js model
 		if(this.current_type == '' || this.current_type == 'ngo'){
 			for(var di in mapdata.ngo_data){
 				var d = mapdata.ngo_data[di];
+				if(mapdata.model != '' && d.model != mapdata.model)continue;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.ngo_in_view.push(d);
 				}
@@ -406,6 +455,7 @@ var list_control = {	//knockout.js model
 		if(this.current_type == '' || this.current_type == 'csr'){
 			for(var di in mapdata.csr_data){
 				var d = mapdata.csr_data[di];
+				if(mapdata.model != '' && d.model != mapdata.model)continue;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.csr_in_view.push(d);
 				}
@@ -414,6 +464,7 @@ var list_control = {	//knockout.js model
 		if(this.current_type == '' || this.current_type == 'case'){
 			for(var di in mapdata.case_data){
 				var d = mapdata.case_data[di];
+				if(mapdata.model != '' && d.model != mapdata.model)continue;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.case_in_view.push(d);
 				}
@@ -430,14 +481,15 @@ var list_control = {	//knockout.js model
 		$('#'+list_name+'-list-section .map-list').slideDown().animate({height:$(window).height()-162}, function(){
 			$('.map-list').css('overflow', 'auto');
 		});
-
+		$('#'+list_name+'-type-filter').show();
+		$('.map-type-filters').show();
 		//refresh map markers
 		mapdata.set_type(list_name);
 		this.page_size = this.detailed_page_size;
 		this.current_type = list_name;
 		this.change_viewport();
 
-		//design pager
+		$('#'+list_name+'-type-filter span.all').click();
 	}
 }
 
@@ -452,7 +504,7 @@ var map_control = {
 		this.tileLayer.getTilesUrl = function(tileCoord, zoom) {
 			var x = tileCoord.x;
 			var y = tileCoord.y;
-			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'.gif';
+			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'-'+mapdata.model+'.gif';
 		};
 		map.addTileLayer(this.tileLayer);
 	}

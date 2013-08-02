@@ -110,7 +110,18 @@
 						<?php endif; ?>
 					</div>
 					<div id="language-box"></div>
-					<div id="search-box"><input id="search-textbox" type="text"/><i></i></div>
+					<div id="search-box">
+						<input id="search-textbox" type="text"/><i></i>
+						<?php if(MODULE_NAME == 'Index'): ?>
+							<div id="keywords-filter" style="display:none;">
+								<i class="triangle"></i>
+								<h4>关键词 <a href="javascript:void(0);" class="remove-keyword-link">清除</a></h4>
+								<?php foreach(C('HOMEPAGE_TAG') as $tag): ?>
+								<span>{$tag}</span>
+								<?php endforeach; ?>
+							</div>
+						<?php endif; ?>
+					</div>
 				</div>
 			</div>
 		</div> <!-- masthead -->
