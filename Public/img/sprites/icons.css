@@ -1,8 +1,20 @@
 .sprite-icons-event-link,
 .sprite-icons-event-video,
 .sprite-icons-event-photos,
-.sprite-icons-close-button{background-image:url(icons.png);background-repeat:no-repeat;display: inline-block;}
+.sprite-icons-close-button,
+.sprite-icons-csr-arrow-right,
+.sprite-icons-ngo-arrow-right,
+.sprite-icons-ngo-arrow-down,
+.sprite-icons-csr-arrow-down,
+.sprite-icons-case-arrow-right,
+.sprite-icons-case-arrow-down{background-image:url(icons.png);background-repeat:no-repeat}
 .sprite-icons-event-link{background-position:0px 0px;width:24px;height:24px;}
 .sprite-icons-event-video{background-position:-24px 0px;width:18px;height:23px;}
 .sprite-icons-event-photos{background-position:-42px 0px;width:18px;height:20px;}
 .sprite-icons-close-button{background-position:0px -24px;width:16px;height:16px;}
+.sprite-icons-csr-arrow-right{background-position:-16px -24px;width:4px;height:7px;}
+.sprite-icons-ngo-arrow-right{background-position:-20px -24px;width:4px;height:6px;}
+.sprite-icons-ngo-arrow-down{background-position:-42px -20px;width:6px;height:4px;}
+.sprite-icons-csr-arrow-down{background-position:-48px -20px;width:6px;height:4px;}
+.sprite-icons-case-arrow-right{background-position:-24px -24px;width:4px;height:6px;}
+.sprite-icons-case-arrow-down{background-position:-54px -20px;width:6px;height:4px;}

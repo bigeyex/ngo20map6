@@ -490,6 +490,25 @@ var list_control = {	//knockout.js model
 		this.change_viewport();
 
 		$('#'+list_name+'-type-filter span.all').click();
+		
+		// change the appearance of little triangles
+		var type_list = ['ngo', 'csr', 'case'];
+		for(var type_id in type_list){
+			var type = type_list[type_id];
+			if(type == list_name){
+				// change the direction of triangle to "down"
+				var item = $('.sprite-icons-'+type+'-arrow-right');
+				item.addClass('sprite-icons-'+type+'-arrow-down');
+				item.removeClass('sprite-icons-'+type+'-arrow-right');
+			}
+			else{
+				// change the direction of triangle to "right"
+				var item = $('.sprite-icons-'+type+'-arrow-down');
+				item.addClass('sprite-icons-'+type+'-arrow-right');
+				item.removeClass('sprite-icons-'+type+'-arrow-down');
+			}
+		}
+
 	}
 }
 

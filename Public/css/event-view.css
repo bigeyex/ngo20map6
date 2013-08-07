@@ -59,3 +59,29 @@ span.sub-title {
     margin-bottom: 20px;
 }
 
+/* user view section */
+
+#namecard-text #user-home-avatar {
+    float: left;
+}
+
+#namecard-text-part {
+    margin-left: 170px;
+}
+
+#namecard-text-part h3{
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+#namecard-text-part .content-brick {
+    float: left;
+}
+
+#namecard-text-part .namecard-left{
+    width: 271px;
+}
+
+#namecard-text-part .namecard-right{
+    width: 165px;
+}
