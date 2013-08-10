@@ -12,10 +12,18 @@ class EventAction extends Action {
     public function view($id){
         $event_model = new EventsModel();
         $user_model = new UsersModel();
+        $recommend_model = new RecommendModel();
+        $media_model = new MediaModel();
         $event = $event_model->find($id);
         $user = $user_model->find($event['user_id']);
+        $recommended_users = $recommend_model->users_by_event($id);
+        $recommended_events = $recommend_model->events_by_event($id);
+        $images = $media_model->select_images_by_event($id);
+        $this->assign('images', $images);
         $this->assign('event', $event);
         $this->assign('user', $user);
+        $this->assign('rec_users', $recommended_users);
+        $this->assign('rec_events', $recommended_events);
         $this->display();
     }
 

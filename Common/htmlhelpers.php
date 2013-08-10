@@ -60,6 +60,10 @@ function short($str, $length=150){
 	return $str;
 }
 
+function datef($str, $format='Y年m月d日 h:i'){
+	return date($format, strtotime($str));
+}
+
 function label_type($str){
 	switch ($str) {
 		case 'ngo':

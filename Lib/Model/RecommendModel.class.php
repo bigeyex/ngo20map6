@@ -55,6 +55,54 @@ class RecommendModel{
     	return $result;
     }
 
+    public function users_by_event($id, $type='ngo', $count=6, $has_image=true){
+        $event_model = new EventsModel();
+        $event = $event_model->find($id);
+        return $this->recommend_users($event, $type, $count, $has_image);  
+    }
+
+    public function users_by_user($id, $type='ngo', $count=6, $has_image=true){
+        $user_model = new UsersModel();
+        $user = $user_model->find($id);
+        return $this->recommend_users($user, $type, $count, $has_image);  
+    }
+
+    public function recommend_users($data, $type='ngo', $count=6, $has_image=true){
+        $geo_weight = 10;
+        $category_weight = 200; 
+        $event_model = new EventsModel();
+        if(!$data) return false;
+        $my_longitude = $data['longitude'];
+        $my_latitude = $data['latitude'];
+        if($has_image){
+            $sql_image = 'and image is not null';
+        }
+        else{
+            $sql_image = '';
+        }
+        $sql = "select id,name,longitude,latitude,image, $geo_weight*(abs(longitude-$my_longitude)+abs(latitude-$my_latitude)) score from users where type='$type' $sql_image and longitude is not null order by score limit $count";
+        $result = $event_model->query($sql);
+        return $result;
+    }
+
+    public function events_by_event($id, $type='ngo', $count=6, $has_image=true){
+        $geo_weight = 10;
+        $category_weight = 200; 
+        $event_model = new EventsModel();
+        $media_model = new MediaModel();
+        $event = $event_model->find($id);
+        if(!$event) return false;
+        $my_longitude = $event['longitude'];
+        $my_latitude = $event['latitude'];
+        $sql = "select id,name,longitude,latitude,description, $geo_weight*(abs(longitude-$my_longitude)+abs(latitude-$my_latitude)) score from events where type='$type' and longitude is not null order by score limit $count";
+        $result = $event_model->query($sql);
+        if($has_image){
+            for ($i=0; $i < count($result); $i++) { 
+                $result[$i]['image'] = $media_model->where(array('event_id'=>$result[$i]['id'], 'type'=>image))->find();
+            }
+        }
+        return $result;
+    }
 
 
 }

@@ -5,7 +5,7 @@
 	<div class="preview-header <?php if (empty($user['image'])): ?>no-img<?php endif; ?>">
 		
 		
-		<h3>{$user.name}</h3>
+		<h3><a href="{:U('User/view')}/id/{$user.id}" target="_blank">{$user.name}</a></h3>
 		<div class="first-line">
 			<div class="work-field">
 				<span class="title">所属领域</span>

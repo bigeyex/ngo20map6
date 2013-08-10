@@ -1,8 +1,22 @@
 <?php
 
 class EventsModel extends Model{
-	public function select_by_user($id){
-		return $this->where(array('user_id'=>$id))->select();
+	public function select_by_user($id, $with_image=true){
+		$media_model = new MediaModel();
+		$result = $this->where(array('user_id'=>$id))->order('id desc')->select();
+		if(!$result){
+			$result = array();
+		}
+		if($with_image){
+			for($i=0;$i<count($result);$i++){
+				$media = $media_model->where(array(
+					'event_id' => $result[$i]['id'],
+					'type' => 'image'
+					))->order('featured desc')->find();
+				$result[$i]['image'] = $media['url'];
+			}
+		}
+		return $result;
 	}
 
 	public function count_by_user($id){

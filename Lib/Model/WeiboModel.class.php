@@ -29,6 +29,14 @@ class WeiboModel extends Model{
 		//return the result;
 		return $weibo;
 	}
+
+	public function select_weibo_by_user($id, $count=20, $page=1){
+		$weibo = $this->where(array(
+				'user_id' => $id,
+			))->order('post_time desc')->limit($count)->select();
+		if(!$weibo)$weibo = array();
+		return $weibo;
+	}
 }
 
 

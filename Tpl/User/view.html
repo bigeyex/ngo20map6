@@ -55,29 +55,80 @@
 				</p>
 			</div>
 		</div>
-		<div class="block">
+		<div class="">
 			<div class="content-brick">
 				<h4>最新消息</h4>
 				<!-- display user weibo -->
+				<div id="weibo-zone">
+					<ul>
+						<?php foreach ($weibo as $t): ?>
+							<li>
+								<?php if (!empty($t['image'])): ?>
+									<div class="weibo-image-holder">
+										<img src="{$t.image}" alt="微博图片"/>
+									</div>
+								<?php endif ?>
+									<p class="weibo-content">{$t.content}</p>
+									<div class="weibo-info">
+										<span class="weibo-postdate">
+											{$t.post_time|datef}
+										</span>
+									</div>
+								
+							</li>
+						<?php endforeach ?>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div> <!-- left-column -->
 	
 	<div id="right-column">
 		<div class="content-brick">
-			<div id="map-zone"></div>
+			<div id="map-zone" style="width:319px;height:281px;"></div>
 		</div>
 		<div class="content-brick">
 			<h4>项目案例</h4>
-			<p></p>
+			<div id="user-events">
+				<?php foreach ($events as $e): ?>
+					<a href="{:U('Event/view')}/id/{$e.id}">
+						<img src="{$e.image|upimage}" width="160"/>
+						<div class="event-title">{$e.name}</div>
+					</a>
+				<?php endforeach ?>
+				<div class="clearfix"></div>
+			</div>
 		</div>
 		<div class="content-brick">
 			<h4>更多相关组织</h4>
-			<p></p>
+			<div id="recommend-users">
+				<?php foreach ($rec_users as $r): ?>
+					<a href="{:U('User/view')}/id/{$r.id}">
+						<img src="__APP__/Public/Uploaded/{$r.image}" width="102"/>
+					</a>
+				<?php endforeach ?>
+				<div class="clearfix"></div>
+			</div>
 		</div>
 	</div>
 </div>
 
 {:css('event-view')}
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+
+<script type="text/javascript">
+	var longitude = {$user.longitude};
+	var latitude = {$user.latitude};
+	var map = new BMap.Map("map-zone");
+	var point = new BMap.Point(longitude, latitude);
+	map.centerAndZoom(point, 10);
+	var myIcon = new BMap.Icon(app_path+"/Public/Img/markers/green-event-marker.png", new BMap.Size(36, 26), {  
+		anchor: new BMap.Size(8, 26)
+	});
+	var point = new BMap.Point(longitude, latitude);
+	var marker = new BMap.Marker(point, {icon: myIcon}); 
+	map.addOverlay(marker);  
+</script>
 
 <include file="Public:footer"/>

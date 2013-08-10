@@ -38,8 +38,17 @@ class UserAction extends Action {
 
     public function view($id){
         $user_model = new UsersModel();
+        $event_model = new EventsModel();
+        $recommend_model = new RecommendModel();
+        $weibo_model = new WeiboModel();
         $user = $user_model->find($id);
+        $recommended_users = $recommend_model->users_by_user($id);
+        $events = $event_model->select_by_user($id);
+        $weibo = $weibo_model->select_weibo_by_user($id);
         $this->assign('user', $user);
+        $this->assign('events', $events);
+        $this->assign('rec_users', $recommended_users);
+        $this->assign('weibo', $weibo);
         $this->display();
     }
 

@@ -622,14 +622,16 @@ var info_window = {
 		if(self.overlay !== null)map.removeOverlay(self.overlay);
 	},
 	load: function(data){
-		this.show(data.longitude, data.latitude, '<div id="info-window-title">'+util.trim(data.name, 20)+'</div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>');
-		$('.info-window').addClass(data.type);
 		if(data.model == 'events'){
 			url_part = 'Event';
 		}
 		else if(data.model == 'users'){
 			url_part = 'User';
 		}
+		var data_url = app_path+'/'+url_part+'/view/id/'+data.id;
+		this.show(data.longitude, data.latitude, '<div id="info-window-title"><a href="'+data_url+'" target="_blank">'+util.trim(data.name, 20)+'</a></div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>');
+		$('.info-window').addClass(data.type);
+		
 		$.get(app_path+'/'+url_part+'/get_detail/id/'+data.id, function(res){
 			if(!res)return;
 			$('#info-window-detail').text(util.trim(res.description, 112));

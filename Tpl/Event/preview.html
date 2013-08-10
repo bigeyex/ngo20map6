@@ -5,7 +5,7 @@
 	<div class="preview-header  <?php if (empty($event['image'])): ?>no-img<?php endif; ?>">
 		
 		
-		<h3>{$event.name}</h3>
+		<h3><a href="{:U('Event/view')}/id/{$event.id}" target="_blank">{$event.name}</a></h3>
 		<div class="first-line">
 			<div class="work-field">
 				<span class="title">项目领域</span>
