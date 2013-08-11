@@ -34,11 +34,11 @@ class RecommendModel{
     	$sql_geo_fields = ", $geo_weight*(abs(longitude-$my_longitude)+abs(latitude-$my_latitude))";
     	$sql_user_cate = $sql_event_cate = '';
 		foreach($my_categories as $category){
-			$sql_user_cate .= "-$category_weight*if(work_field like '%$category%',1,0) score ";
-			$sql_event_cate .= "-$category_weight*if(item_field like '%$category%',1,0) score ";
+			$sql_user_cate .= "-$category_weight*if(work_field like '%$category%',1,0) ";
+			$sql_event_cate .= "-$category_weight*if(item_field like '%$category%',1,0) ";
 		}
-		$sql_user = $sql_user_fields . $sql_geo_fields . $sql_user_cate . "from users where type in ('" . implode("','", $user_types)."') and enabled=1 and is_checked=1";
-		$sql_event = $sql_event_fields . $sql_geo_fields . $sql_event_cate . "from events where type in ('" . implode("','", $event_types)."') and enabled=1 and is_checked=1";
+		$sql_user = $sql_user_fields . $sql_geo_fields . $sql_user_cate . " score from users where type in ('" . implode("','", $user_types)."') and enabled=1 and is_checked=1";
+		$sql_event = $sql_event_fields . $sql_geo_fields . $sql_event_cate . " score from events where type in ('" . implode("','", $event_types)."') and enabled=1 and is_checked=1";
 		$sql = "select * from ($sql_user) t1 union ($sql_event) order by score,create_time desc limit $limit_start, $record_per_page";
     	$result = $model->query($sql);
 
