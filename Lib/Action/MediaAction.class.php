@@ -10,7 +10,7 @@ class MediaAction extends Action {
 	    $upload->savePath = './Public/Uploaded/';
 	    $upload->thumb = true;
 	    $upload->thumbPath = './Public/Uploadedthumb/';
-	    $upload->thumbPrefix="thumb50_,thumb200_,thumb600_,thumb1000_";
+	    $upload->thumbPrefix="thumb50_,thumb200_,thumb600_,";
 	    $upload->allowExts=array('jpg','jpeg','png','gif');
 	    $upload->thumbMaxWidth = "50,200,600,1000";
 	    $upload->thumbMaxHeight = "50,200,600,1000";
