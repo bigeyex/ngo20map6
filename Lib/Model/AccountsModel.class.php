@@ -2,8 +2,13 @@
 
 class AccountsModel extends Model{
 
-	public function login($email, $pwd){
-        $result = $this->where(array('email' => $email, 'password' => md5($pwd)))->find();
+	public function login($email, $pwd, $mode='password'){
+        if($mode == 'password'){
+            $result = $this->where(array('email' => $email, 'password' => md5($pwd)))->find();
+        }
+        else if($mode == 'api'){
+            $result = $this->where(array('api_vendor' => $email, 'api_id' => $pwd))->find();
+        }
         if(!$result){
             return false;
         }

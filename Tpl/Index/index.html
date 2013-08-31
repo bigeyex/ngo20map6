@@ -2,7 +2,7 @@
 		<div id="allmap"></div>
 		<div id="map-list">
 			<div class="map-list-section" id="ngo-list-section">
-        		<h4><i class="gradient"></i>公益组织<i class="triangle sprite-icons-ngo-arrow-right"></i></h4>
+        		<h4><i class="gradient"></i>公益组织<span class="item-count"></span><i class="triangle sprite-icons-ngo-arrow-right"></i></h4>
         		<div class="map-list">
         			<div id="ngo-type-filter" class="map-type-filters" style="display:none;">
 	    				<span class="all checked" value="">全部</span>
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="map-list-section" id="csr-list-section">
-       			<h4><i class="gradient"></i>企业<i class="triangle sprite-icons-csr-arrow-right"></i></h4>
+       			<h4><i class="gradient"></i>企业<span class="item-count"></span><i class="triangle sprite-icons-csr-arrow-right"></i></h4>
        			<div class="map-list">
 	       			<div id="csr-type-filter" class="map-type-filters" style="display:none;">
 	    				<span class="all checked" value="">全部</span>
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="map-list-section" id="case-list-section">
-        		<h4><i class="gradient"></i>对接案例<i class="triangle sprite-icons-case-arrow-right"></i></h4>
+        		<h4><i class="gradient"></i>对接案例<span class="item-count"></span><i class="triangle sprite-icons-case-arrow-right"></i></h4>
         		<div class="map-list">
 					<ul data-bind="foreach: case_list">
 						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
@@ -83,9 +83,9 @@
 			<span id="weibo-time-past"></span>
 		</div>
 		<!-- <div id="story-zone-bottom"></div> -->
-		<div id="story-zone">
+		<!-- <div id="story-zone">
 			<div id="story-zone-handle">
-				<a id="about-us-link" href="javascript:void(0);">关于我们</a>
+				<a id="about-us-link" href="http://www.ngo20.org/?page_id=2&lang=en">关于我们</a>
 				<a id="story-board-button" href="javascript:void(0);">照片墙</a>
 				<i class="down-arrow"></i>
 			</div>
@@ -125,7 +125,7 @@
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-		</div><!-- story-zone -->
+		</div> --><!-- story-zone -->
 		<div id="l2-panel">
 			<div id="l2-shadow"></div>
 			<div id="l2-content"></div>
@@ -144,8 +144,12 @@
 
 {:js('index-map')}
 
+<include file="Public:footer"/>
+
 <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'language-box');
-}
-</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+// function googleTranslateElementInit() {
+//   new google.translate.TranslateElement({pageLanguage: 'zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'language-box');
+// }
+</script>
+
+<!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->

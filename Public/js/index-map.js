@@ -2,7 +2,7 @@
 var map = new BMap.Map("allmap");            // 创建Map实例
 var point = new BMap.Point(105.537953, 39.075737);    // 创建点坐标
 map.centerAndZoom(point,5);                     // 初始化地图,设置中心点坐标和地图级别。
-map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+// map.enableScrollWheelZoom();                            //启用滚轮放大缩小
 map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_LARGE, offset: new BMap.Size(0, 60)})); 
 
 $.fn.buttongroup = function(callback){
@@ -440,6 +440,7 @@ var list_control = {	//knockout.js model
 		var minlon = bounds.getSouthWest().lng;
 		var maxlat = bounds.getNorthEast().lat;
 		var maxlon = bounds.getNorthEast().lng;
+		var item_count=0;
 		this.ngo_in_view = [];
 		this.csr_in_view = [];
 		this.case_in_view = [];
@@ -447,6 +448,7 @@ var list_control = {	//knockout.js model
 			for(var di in mapdata.ngo_data){
 				var d = mapdata.ngo_data[di];
 				if(mapdata.model != '' && d.model != mapdata.model)continue;
+				item_count++;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.ngo_in_view.push(d);
 				}
@@ -456,6 +458,7 @@ var list_control = {	//knockout.js model
 			for(var di in mapdata.csr_data){
 				var d = mapdata.csr_data[di];
 				if(mapdata.model != '' && d.model != mapdata.model)continue;
+				item_count++;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.csr_in_view.push(d);
 				}
@@ -465,10 +468,16 @@ var list_control = {	//knockout.js model
 			for(var di in mapdata.case_data){
 				var d = mapdata.case_data[di];
 				if(mapdata.model != '' && d.model != mapdata.model)continue;
+				item_count++;
 				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
 					this.case_in_view.push(d);
 				}
 			}
+		}
+		if(this.current_type != ''){
+			$('.item-count').hide();
+			$('#'+this.current_type+'-list-section .item-count').show();
+			$('#'+this.current_type+'-list-section .item-count').text('('+item_count+')');
 		}
 	},
 	zoom_in_list: function(list_name){

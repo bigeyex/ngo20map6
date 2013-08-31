@@ -1,7 +1,7 @@
 body, html,#master-box, #allmap {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+/*    overflow: hidden;*/
     margin:0;
 }
 
