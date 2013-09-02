@@ -1,5 +1,5 @@
 select {
-    width: 65px;
+    width: 78px;
     height: 30px;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -14,9 +14,18 @@ select {
     border: solid 1px rgba(103,98,81,.4);
     background-image: url(../img/select-down-arrow.png);
     background-repeat: no-repeat;
-    background-position: 50px;
+    background-position: right;
     padding-left: 5px;
     padding-top: 3px;
+}
+
+.full-length{
+    width: 273px;
+}
+
+.half-length{
+    width: 120px;
+    margin-right: 5px;
 }
 
 
@@ -426,4 +435,26 @@ select {
 
 #avatar-preview-div{
     margin-bottom: 5px;
+}
+
+#terms-and-conditions{
+    display: block;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #bebcb5;
+    border-right-color: #bebcb5;
+    border-bottom-color: #bebcb5;
+    border-left-color: #bebcb5;
+    border-radius: 4px;
+    background-color: #f5f3ed;
+    width: 550px;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 20px;
 }

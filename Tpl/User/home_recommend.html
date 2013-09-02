@@ -1,5 +1,6 @@
 
 <ul id="result-items">
+	<?php if(!$results){ $results = array(); } ?>
 	<?php foreach($results as $result): ?>
 	<li>
 		<?php if($result['image']): ?>

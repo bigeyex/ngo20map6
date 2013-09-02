@@ -866,3 +866,7 @@ span.part-time, span.volunteers{
     right: 7px;
     top: 8px;
 }
+
+#footer{
+    margin-top: 0;
+}

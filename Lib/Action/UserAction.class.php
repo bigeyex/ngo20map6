@@ -6,7 +6,7 @@ class UserAction extends Action {
 		$user_model = D('Users');
 		$user = $user_model->find($id);
 		if($user){
-			$this->ajaxReturn(array('description'=>$user['introduction']),'JSON');
+			$this->ajaxReturn(array('description'=>strip_tags($user['introduction'])),'JSON');
 		}
 	}
 

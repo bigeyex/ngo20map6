@@ -31,7 +31,7 @@ class EventAction extends Action {
 		$event_model = D('Events');
 		$event = $event_model->find($id);
 		if($event){
-			$this->ajaxReturn(array('description'=>$event['description']),'JSON');
+			$this->ajaxReturn(array('description'=>strip_tags($event['description'])),'JSON');
 		}
 	}
 
