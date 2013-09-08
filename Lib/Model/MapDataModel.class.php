@@ -15,7 +15,7 @@ class MapDataModel extends Model{
         return $model->query($sql);
     }
 
-	public function get_tile_data($tilex, $tiley, $zoom, $field, $key='', $type='', $model=''){
+	public function get_tile_data($tilex, $tiley, $zoom, $field, $key='', $type='', $model='', $medal=''){
 		$scalex = array(0,301.421310,150.710655,75.355327,37.677664,18.838832,9.419416,4.709708,2.354854,1.177427,0.588714,0.294357,0.147179,0.07359,0.036795,0.018397,0.009199,0.0046,0.0023,0.001149);
         $scaley = array(0,138.558225,88.011798,50.105148,26.953469,13.990668,7.125178,3.594854,1.805441,0.904715,0.452855,0.226552,0.113307,0.056661,0.028332,0.014166,0.007084,0.003542,0.001771,0.000885);
         
@@ -50,6 +50,7 @@ class MapDataModel extends Model{
             'type' => $type,
             'field' => $field,
             'key' => $key,
+            'medal' => $medal,
             'where' => $cond,
             'order' => "type='case',type='ngo',  create_time asc",
             ));
@@ -66,16 +67,19 @@ class MapDataModel extends Model{
 			'type' => 'ngo',
 			'field' => '教育助学',
 			'province' => '安徽',
-			'progress' => $_GET['progress'],
-            'res_tags' => $_GET['res_tags'],
+            'start_lon' => 58.992792,
+            'end_lon' => 152.083114
+			'progress' => '',
+            'res_tags' => '捐赠资源',
             'where' => $cond,
             'order' => "type='case',type='ngo',  create_time asc",
 		));
 
 	*/
-	private function query_map($param){
+	public function query_map($param){
         $users_where = array();
         $events_where = array();
+        // $param = san($param);
 
         if(!empty($param['where'])){
             $users_where[] = $events_where[] = $param['where'];
@@ -83,7 +87,7 @@ class MapDataModel extends Model{
 
         $users_where[] = "type != 'ind'";
         if(!empty($param['type'])){
-            if($param['type'] == 'excsr'){
+            if($param['type'] == 'excsr' || $param['type'] == 'csr'){
                 //special case #1: ind events belongs to csr
                 $users_where[] = "type='csr'";
                 $events_where[] = "(type='csr' or type='ind')";
@@ -91,7 +95,7 @@ class MapDataModel extends Model{
             else if($param['type'] == 'csr'){
                 $users_where[] = $events_where[] = "type='csr'";
             }
-            else if($param['type'] == 'exngo'){
+            else if($param['type'] == 'exngo' || $param['type'] == 'ngo'){
                 //special case #2: fund belongs to extended ngo concept
                 $users_where[] = $events_where[] = "(type='ngo' or type='fund')";
             }
@@ -111,10 +115,18 @@ class MapDataModel extends Model{
                 $users_where[] = $events_where[] = "province like '%". $param['province'] ."%'";
         }
 
+        if(!empty($param['medal'])){
+            $medal_model = new MedalModel();
+            $user_ids = $medal_model->select_user_ids_by_medal_id($param['medal']);
+            $events_where[] = "user_id in (" . implode(',', $user_ids) . ")";
+            $users_where[] = "id in (" . implode(',', $user_ids) . ")";
+        }
+
         //资源标签限制
         if(!empty($param['res_tags'])){
             $events_where[] = "res_tags like '%". $param['res_tag'] ."%'";
         }
+
         if(!empty($param['res_tags2'])){
             $events_where[] = "res_tags like '%". $param['res_tag2'] ."%'";
         }
@@ -122,6 +134,26 @@ class MapDataModel extends Model{
         if(!empty($param['key'])){
                 $events_where[] = "(name like '%". $param['key'] ."%' or description like '%". $param['key'] ."%')";
                 $users_where[] = "(name like '%". $param['key'] ."%' or introduction like '%". $param['key'] ."%')";
+        }
+
+        if(!empty($param['start_lon'])){
+            $events_where[] = "longitude > " . $param['start_lon'];
+            $users_where[] = "longitude > " . $param['start_lon'];
+        }
+
+        if(!empty($param['end_lon'])){
+            $events_where[] = "longitude < " . $param['end_lon'];
+            $users_where[] = "longitude < " . $param['end_lon'];
+        }
+
+        if(!empty($param['start_lat'])){
+            $events_where[] = "latitude > " . $param['start_lat'];
+            $users_where[] = "latitude > " . $param['start_lat'];
+        }
+
+        if(!empty($param['end_lat'])){
+            $events_where[] = "latitude < " . $param['end_lat'];
+            $users_where[] = "latitude < " . $param['end_lat'];
         }
         
         //进度限制
@@ -157,6 +189,11 @@ class MapDataModel extends Model{
             $order = ' order by '.$param['order'];
         }
 
+        $limit = "";
+        if(!empty($param['limit'])){
+            $limit = ' limit '.$param['limit'];
+        }
+
         $sql_list = array();
         if(!empty($param['user_fields'])){
             $sql_list[] = '(select '.$param['user_fields'].' from users where '.implode(" and ", $users_where).')';
@@ -164,9 +201,15 @@ class MapDataModel extends Model{
         if(!empty($param['event_fields'])){
             $sql_list[] = '(select '.$param['event_fields'].' from events where '.implode(" and ", $events_where).')';
         }
-        $sql = implode(' union ', $sql_list) . $order;
+        $sql = implode(' union ', $sql_list) . $order . $limit; 
 
-        return $this->query($sql);
+        $result = $this->query($sql);
+        if(!$result) $result = array();
+        return $result;
+    }
+
+    public function query_number($type='', $model='', $param=array()){
+
     }
 
 

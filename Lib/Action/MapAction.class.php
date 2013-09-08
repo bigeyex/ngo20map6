@@ -7,6 +7,55 @@ class MapAction extends Action {
         $this->ajaxReturn($map_data_model->get_all_data($key), 'JSON');
     }
 
+    public function get_onscreen_data(){
+        $map_data_model = D('MapData');
+
+        $query_param = $_GET;
+        $user_fields="id, name, longitude, latitude, type, 'users' model, create_time";
+        $event_fields="id, name, longitude, latitude, type, 'events' model, create_time";
+        if(!empty($_GET['model'])){
+            if($_GET['model'] == 'users'){
+                $query_param['user_fields'] = $user_fields;
+            }
+            else if($_GET['model'] == 'events'){
+                $query_param['event_fields'] = $event_fields;
+            }
+        }
+        else{
+            $query_param['user_fields'] = $user_fields;
+            $query_param['event_fields'] = $event_fields;
+        }
+        $query_param['order'] = "type='case',type='ngo',  create_time asc";
+        $data = $map_data_model->query_map($query_param);
+        $this->ajaxReturn($data, 'JSON');
+    }
+
+    public function get_numbers(){
+        $map_data_model = D('MapData');
+
+        $query_param = $_GET;
+        $user_fields="count(*) cnt";
+        $event_fields="count(*) cnt";
+        if(!empty($_GET['model'])){
+            if($_GET['model'] == 'users'){
+                $query_param['user_fields'] = $user_fields;
+            }
+            else if($_GET['model'] == 'events'){
+                $query_param['event_fields'] = $event_fields;
+            }
+        }
+        else{
+            $query_param['user_fields'] = $user_fields;
+            $query_param['event_fields'] = $event_fields;
+        }
+        $data = $map_data_model->query_map($query_param);
+        $total_number = 0;
+        foreach($data as $d){
+            $total_number += $d['cnt'];
+        }
+        $this->ajaxReturn(array('num'=>$total_number), 'JSON');
+    }
+
     public function tile(){
 
     	$map_data_model = D('MapData');
@@ -15,7 +64,7 @@ class MapAction extends Action {
     	$tilex = $_GET['x'];
     	$tiley = $_GET['y'];
 
-        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['key'], $_GET['type'], $_GET['model']);
+        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['key'], $_GET['type'], $_GET['model'], $_GET['medal']);
 
         header("content-type:image/png");  
         $img=imagecreatetruecolor(256,256);  

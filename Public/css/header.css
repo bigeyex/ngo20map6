@@ -45,7 +45,7 @@
     float: left;
     margin: 0;
     padding: 0;
-    width: 210px;
+    width: 300px;
     margin-left: 141px;
     margin-top: 0px;
 }
@@ -71,7 +71,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     text-shadow: 0 1px rgba(214,255,80,.75);
 }
 
-#field-list, #region-list {
+#field-list, #region-list, #medal-list {
     top: 48px;
     left: 14px;
     position: absolute;
@@ -135,7 +135,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
 }
 
 #main-nav-controls {
-    width: 502px;
+    width: 546px;
     float: right;
 }
 
@@ -513,4 +513,13 @@ a.action-button{
     -moz-border-radius: 4px;
     border-radius: 4px;
     color: #c09853;
+}
+
+.medal-list li a{
+    display: inline-block;
+    background: url(../img/badge.png) no-repeat;
+    height: 46px;
+    width: 133px;
+    padding-top: 27px;
+    text-align: center;
 }

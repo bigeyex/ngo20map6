@@ -34,6 +34,17 @@
 	</div>
 	<div class="preview-roller">
 		<div class="description">
+			<span class="title">勋章</span>
+			<span>
+				<ul class="medal-list">
+					<?php foreach ($medals as $medal): ?>
+						<li><a href="javascript:void(0);">{$medal.name}</a></li>
+					<?php endforeach ?>
+					
+				</ul>
+			</span>
+		</div>
+		<div class="description">
 			<span class="title">机构简介</span>
 			<span>{$user.introduction|strip_tags|nl2br}</span>
 		</div>

@@ -34,7 +34,7 @@
 			});
 
 			$('#login-menu-zone').mouseenter(function(){
-				$('#login-menu').stop().show();
+				$('#login-menu').stop().show().css({opacity:1});
 			}).mouseleave(function(){
 				$('#login-menu').stop().fadeOut();
 			});
@@ -82,6 +82,23 @@
 								<?php foreach(C('PROVINCES') as $field): ?>
 									<li val="{$field}">
 										{$field}
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</li>
+					<li id="medal-filter" class="main-nav-filter">
+						<a class="filter-menu-button" id="medal-filter-button" href="javascript:void(0);" onclick="$(this).parent().toggleClass('expanded')">勋章</a>
+						<div id="medal-list" class="filter-box">
+							<div class="masker"></div>
+							<i class="triangle"></i>
+							<ul class="main-nav-filter-list medal-list">
+									<li val="" class="selected all">
+										全部显示
+									</li>
+								<?php foreach($medals as $medal): ?>
+									<li val="{$medal.id}">
+										{$medal.name}
 									</li>
 								<?php endforeach; ?>
 							</ul>
