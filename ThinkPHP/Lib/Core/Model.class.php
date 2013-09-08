@@ -496,10 +496,11 @@ class Model {
         $options    =  $this->_parseOptions($options);
         $resultSet  = $this->db->select($options);
         if(false === $resultSet) {
+            return array();
             return false;
         }
         if(empty($resultSet)) { // 查询结果为空
-            return null;
+            return array();
         }
         $this->_after_select($resultSet,$options);
         return $resultSet;
@@ -1094,7 +1095,9 @@ class Model {
             array_shift($parse);
         }
         $sql  =   $this->parseSql($sql,$parse);
-        return $this->db->query($sql);
+        $result =  $this->db->query($sql);
+        if(!$result) $result = array();
+        return $result;
     }
 
     /**

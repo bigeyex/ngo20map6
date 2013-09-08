@@ -12,8 +12,12 @@ class UserAction extends Action {
 
 	public function preview($id){
 		$user_model = new UsersModel();
+        $medal_model = new MedalModel();
 		$user = $user_model->find($id);
+        $medals = $medal_model->select_by_userid($id);
+
 		if($user){
+            $this->assign('medals', $medals);
 			$this->assign('user',$user);
 			$this->display();
 		}

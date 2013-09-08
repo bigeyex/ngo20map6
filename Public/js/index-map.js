@@ -65,6 +65,20 @@ $('#field-list li').click(function(){
 	$('#field-filter-button').text($(this).text());
 });
 
+$('#medal-list li').click(function(){
+	var medal = $(this).attr('val');
+	mapdata.set_medal(medal);
+	list_control.change_viewport();
+	list_control.zoom_in_list('ngo');
+	if(medal != ''){
+		$('#medal-filter-button').text('有勋章');
+	}
+	else{
+		$('#medal-filter-button').text('勋章');
+	}
+	
+});
+
 $('#search-textbox').keypress(function(e){
 	if(e.which == 13){
 		mapdata.set_key($('#search-textbox').val());
@@ -84,64 +98,6 @@ $('.remove-keyword-link').click(function(){
 	mapdata.set_key('');
 	list_control.change_viewport();
 });
-
-var story_board = {
-	story_board_default_top : 0,
-	story_board_extended_top : 0,
-	story_board_expanded : 0,
-	init : function(){
-		var self = this;
-		self.story_board_default_top = $(window).height() - 50;
-		self.story_board_extended_top = 120;
-		self.story_board_expanded = false;
-		//$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
-		$('#story-zone').css('top', self.story_board_default_top);
-		$('#story-board').height($(window).height() - 154);
-
-		$(window).resize(function(){
-			//$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
-			self.story_board_default_top = $(window).height() - 50;
-			$('#story-zone').css('top', self.story_board_default_top);
-			$('#story-board').height($(window).height() - 154);
-		});
-
-
-		$('#story-zone').mouseenter(function(){
-			if(!self.story_board_expanded){
-				$('#story-zone').clearQueue().animate({
-					top: self.story_board_default_top-5
-				});
-			}
-		});
-
-		$('#story-zone').mouseleave(function(){
-			if(!self.story_board_expanded){
-				$('#story-zone').clearQueue().animate({
-					top: self.story_board_default_top
-				});
-			}
-		});
-
-		$('#story-zone-handle').click(function(e){
-			if(self.story_board_expanded){
-				$('#story-zone').animate({
-					top: self.story_board_default_top
-				});
-				self.story_board_expanded = false;
-			}
-			else{
-				$('#story-zone').animate({
-					top: self.story_board_extended_top
-				});
-				self.story_board_expanded = true;
-			}
-			e.stopPropagation();
-			
-		});
-	}
-};
-
-story_board.init();
 
 
 
@@ -174,46 +130,34 @@ HTMLOverlay.prototype.draw = function(){
 
 /* SECTION: information list after selecting a menu item */
 var mapdata = {
-	//variables
-	raw_data : [],
-	ngo_data : [],
-	csr_data : [],
-	case_data : [],
 	province : '',
 	key: '',
 	rec_field : '',
 	model : '',
 	type : '',
+	medal : '',
 
-	//methods
 	
-	filter: function(){
-		this.ngo_data = [];
-		this.csr_data = [];
-		this.case_data = [];
-		for(var ri in this.raw_data){
-			r = this.raw_data[ri];
-			if(this.province != '' && r.province.indexOf(this.province) == -1)
-				continue;
-			if(this.rec_field != '' && (r.rec_field === null || r.rec_field.indexOf(this.rec_field) == -1))
-				continue;
-			this._accept(r);
-		}
-		this.sort();
-		this._refresh_hotspots();
-	},
-	init: function(raw){
+	change_numbers: function(){
 		var self = this;
-		this.raw_data = raw;
-		this.filter();
-		//refresh total count
-		$('#ngo-list-section .total-count').text('一共'+this.ngo_data.length+'个');
-		$('#csr-list-section .total-count').text('一共'+this.csr_data.length+'个');
-		$('#case-list-section .total-count').text('一共'+this.case_data.length+'个');
+		$.get(app_path+'/Map/get_numbers', {
+				type : self.type,
+				field : self.rec_field,
+				model : self.model,
+				key : self.key,
+			}, function(data){
+				$('.item-count').hide();
+				if(this.current_type != ''){
+					$('#'+this.current_type+'-list-section .item-count').show();
+					$('#'+this.current_type+'-list-section .item-count').text('('+data.num+')');
+				}
+			}
+		);
+	},
+	init: function(){
 	},
 	set_province: function(province){
 		this.province = province;
-		this.filter();
 	},
 	set_key: function(key){
 		if(key == this.key)return;
@@ -226,71 +170,22 @@ var mapdata = {
 	},
 	set_field: function(field){
 		this.rec_field = field;
-		this.filter();
+		this.change_numbers();
 	},
 	set_type: function(type){
 		this.type = type;
 		map_control.refresh_tilelayer();
-		this.filter();
+		this.change_numbers();
 	},
 	set_model: function(model){
 		this.model = model;
 		map_control.refresh_tilelayer();
-		this.filter();
+		this.change_numbers();
 	},
-	sort: function(){
-		this.ngo_data.sort(this._compare_func);
-		this.csr_data.sort(this._compare_func);
-		this.case_data.sort(this._compare_func);
-	},
-	_accept: function(r){
-		if(r.type == 'ngo'){
-			this.ngo_data.push(r);
-		}
-		else if(r.type == 'csr' || r.type == 'ind'){
-			this.csr_data.push(r);
-		}
-		else if(r.type == 'case'){
-			this.case_data.push(r);
-		}
-	},
-	_compare_func : function(a, b){
-		//the newer the lower
-		var da = new Date(a);
-		var db = new Date(b);
-		if(da.getTime() < db.getTime()){
-			return 1;
-		}
-		if(da.getTime() > db.getTime()){
-			return -1;
-		}
-		return 0;
-	},
-	_add_hotspots: function(data_array){
-		for(var di in data_array){
-			d = data_array[di];
-			var hotspot = new BMap.Hotspot(new BMap.Point(d.longitude, d.latitude),
-	          {text:d.name, minZoom: 2, maxZoom: 18, userData: d});
-	     	map.addHotspot(hotspot);
-		}
-	},
-	_refresh_hotspots: function(){
+	set_medal: function(model){
+		this.medal = model;
 		map_control.refresh_tilelayer();
-		map.clearHotspots();
-	    if(this.type == 'ngo'){
-	    	this._add_hotspots(this.ngo_data);
-	    }
-	    else if(this.type == 'csr'){
-	    	this._add_hotspots(this.csr_data);
-	    }
-	    else if(this.type == 'case'){
-	    	this._add_hotspots(this.case_data);
-	    }
-	    else{
-	    	this._add_hotspots(this.csr_data);
-	    	this._add_hotspots(this.ngo_data);
-	    	this._add_hotspots(this.case_data);
-	    }
+		this.change_numbers();
 	}
 };
 
@@ -346,15 +241,7 @@ var list_control = {	//knockout.js model
 	},
 	change_viewport: function(){
 		this.filter_by_view();
-		map.clearOverlays();
-		if(this.current_type == ''){
-			this.gotoPage(1, 'ngo');
-			this.gotoPage(1, 'csr');
-			this.gotoPage(1, 'case');
-		}
-		else{	
-			this.gotoPage(1, this.current_type);
-		}
+		
 	},
 	gotoPage: function(page, record_type){
 		var self = this;
@@ -441,44 +328,61 @@ var list_control = {	//knockout.js model
 		var maxlat = bounds.getNorthEast().lat;
 		var maxlon = bounds.getNorthEast().lng;
 		var item_count=0;
+		var self = this;
 		this.ngo_in_view = [];
 		this.csr_in_view = [];
 		this.case_in_view = [];
-		if(this.current_type == '' || this.current_type == 'ngo'){
-			for(var di in mapdata.ngo_data){
-				var d = mapdata.ngo_data[di];
-				if(mapdata.model != '' && d.model != mapdata.model)continue;
-				item_count++;
-				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-					this.ngo_in_view.push(d);
+		$.get(app_path+'/Map/get_onscreen_data', {
+				type : mapdata.type,
+				field : mapdata.rec_field,
+				model : mapdata.model,
+				medal : mapdata.medal,
+				key : mapdata.key,
+				start_lon : minlon,
+				end_lon : maxlon,
+				start_lat : minlat,
+				end_lat : maxlat
+			}, function(data){
+				// store queried data into 3 categories
+				for(var di in data){
+					var d = data[di];
+					if(d.type == 'ngo' || d.type == 'fund'){
+						self.ngo_in_view.push(d);
+					}
+					else if(d.type == 'csr' || d.type == 'ind'){
+						self.csr_in_view.push(d);
+					}
+					else if(d.type == 'case'){
+						self.case_in_view.push(d);
+					}
+
+					//refresh hotsopt
+					var hotspot = new BMap.Hotspot(new BMap.Point(d.longitude, d.latitude),
+			          {text:d.name, minZoom: 2, maxZoom: 18, userData: d});
+			     	map.addHotspot(hotspot);
 				}
-			}
-		}
-		if(this.current_type == '' || this.current_type == 'csr'){
-			for(var di in mapdata.csr_data){
-				var d = mapdata.csr_data[di];
-				if(mapdata.model != '' && d.model != mapdata.model)continue;
-				item_count++;
-				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-					this.csr_in_view.push(d);
+
+				//reverse the order of 3 lists
+				//so can display in temporal order, from newest to oldest.
+				self.ngo_in_view.reverse();
+				self.csr_in_view.reverse();
+				self.case_in_view.reverse();
+
+				//set the content of left list
+				map.clearOverlays();
+				if(self.current_type == ''){
+					self.gotoPage(1, 'ngo');
+					self.gotoPage(1, 'csr');
+					self.gotoPage(1, 'case');
 				}
+				else{	
+					self.gotoPage(1, this.current_type);
+		}
+
 			}
-		}
-		if(this.current_type == '' || this.current_type == 'case'){
-			for(var di in mapdata.case_data){
-				var d = mapdata.case_data[di];
-				if(mapdata.model != '' && d.model != mapdata.model)continue;
-				item_count++;
-				if(d.longitude>minlon && d.longitude<maxlon && d.latitude>minlat && d.latitude<maxlat){
-					this.case_in_view.push(d);
-				}
-			}
-		}
-		if(this.current_type != ''){
-			$('.item-count').hide();
-			$('#'+this.current_type+'-list-section .item-count').show();
-			$('#'+this.current_type+'-list-section .item-count').text('('+item_count+')');
-		}
+
+		,'json');
+
 	},
 	zoom_in_list: function(list_name){
 		//slide list sections
@@ -532,7 +436,7 @@ var map_control = {
 		this.tileLayer.getTilesUrl = function(tileCoord, zoom) {
 			var x = tileCoord.x;
 			var y = tileCoord.y;
-			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'-'+mapdata.model+'.gif';
+			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'-'+mapdata.model+'-'+mapdata.medal+'.gif';
 		};
 		map.addTileLayer(this.tileLayer);
 	}
@@ -541,9 +445,9 @@ var map_control = {
 map_control.refresh_tilelayer();
 
 /* do list stuff */
-$.get(app_path+'/Map/ajax_hotspots', function(result){
+$(function(){
 	//save to variable
-	mapdata.init(result);
+	mapdata.init();
 
 	//init the list - 3 for each
 	list_control.init();
