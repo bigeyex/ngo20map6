@@ -148,8 +148,8 @@ var mapdata = {
 			}, function(data){
 				$('.item-count').hide();
 				if(this.current_type != ''){
-					$('#'+this.current_type+'-list-section .item-count').show();
-					$('#'+this.current_type+'-list-section .item-count').text('('+data.num+')');
+					$('#'+self.type+'-list-section .item-count').show();
+					$('#'+self.type+'-list-section .item-count').text('('+data.num+')');
 				}
 			}
 		);
