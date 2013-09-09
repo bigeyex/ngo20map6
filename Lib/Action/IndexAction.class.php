@@ -10,14 +10,14 @@ class IndexAction extends Action {
         // get all the numbers
         $map_data_model = D('MapData');
         $ngo_num_record = $map_data_model->
-            query_map(array('type'=>'exngo', 'user_fields'=>'count(*) cnt'));
+            query_number(array('type'=>'exngo'));
         $csr_num_record = $map_data_model->
-            query_map(array('type'=>'excsr', 'user_fields'=>'count(*) cnt'));
+            query_number(array('type'=>'excsr'));
         $case_num_record = $map_data_model->
-            query_map(array('type'=>'case', 'user_fields'=>'count(*) cnt'));
-        $this->assign('ngo_num', $ngo_num_record[0]['cnt']);
-        $this->assign('csr_num', $csr_num_record[0]['cnt']);
-        $this->assign('case_num', $case_num_record[0]['cnt']);
+            query_number(array('type'=>'case'));
+        $this->assign('ngo_num', $ngo_num_record);
+        $this->assign('csr_num', $csr_num_record);
+        $this->assign('case_num', $case_num_record);
 
         $this->display();
     }

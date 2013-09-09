@@ -11,8 +11,8 @@ class MapAction extends Action {
         $map_data_model = D('MapData');
 
         $query_param = $_GET;
-        $user_fields="id, name, longitude, latitude, type, 'users' model, create_time";
-        $event_fields="id, name, longitude, latitude, type, 'events' model, create_time";
+        $user_fields="id, name, longitude, latitude, type, 'users' model, province, create_time";
+        $event_fields="id, name, longitude, latitude, type, 'events' model, province, create_time";
         if(!empty($_GET['model'])){
             if($_GET['model'] == 'users'){
                 $query_param['user_fields'] = $user_fields;
@@ -33,26 +33,7 @@ class MapAction extends Action {
     public function get_numbers(){
         $map_data_model = D('MapData');
 
-        $query_param = $_GET;
-        $user_fields="count(*) cnt";
-        $event_fields="count(*) cnt";
-        if(!empty($_GET['model'])){
-            if($_GET['model'] == 'users'){
-                $query_param['user_fields'] = $user_fields;
-            }
-            else if($_GET['model'] == 'events'){
-                $query_param['event_fields'] = $event_fields;
-            }
-        }
-        else{
-            $query_param['user_fields'] = $user_fields;
-            $query_param['event_fields'] = $event_fields;
-        }
-        $data = $map_data_model->query_map($query_param);
-        $total_number = 0;
-        foreach($data as $d){
-            $total_number += $d['cnt'];
-        }
+        $total_number = $map_data_model->query_number($_GET);
         $this->ajaxReturn(array('num'=>$total_number), 'JSON');
     }
 

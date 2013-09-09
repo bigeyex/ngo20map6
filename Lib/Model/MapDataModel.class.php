@@ -208,8 +208,27 @@ class MapDataModel extends Model{
         return $result;
     }
 
-    public function query_number($type='', $model='', $param=array()){
-
+    public function query_number($query_param=array()){
+        $user_fields="count(*) cnt";
+        $event_fields="count(*) cnt";
+        if(!empty($query_param['model'])){
+            if($query_param['model'] == 'users'){
+                $query_param['user_fields'] = $user_fields;
+            }
+            else if($query_param['model'] == 'events'){
+                $query_param['event_fields'] = $event_fields;
+            }
+        }
+        else{
+            $query_param['user_fields'] = $user_fields;
+            $query_param['event_fields'] = $event_fields;
+        }
+        $data = $this->query_map($query_param);
+        $total_number = 0;
+        foreach($data as $d){
+            $total_number += $d['cnt'];
+        }
+        return $total_number;
     }
 
 
