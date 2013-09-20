@@ -587,3 +587,61 @@ var l2_panel = {
 };
 
 l2_panel.init();
+
+var story_board = {
+  story_board_default_top : 0,
+  story_board_extended_top : 0,
+  story_board_expanded : 0,
+  init : function(){
+    var self = this;
+    self.story_board_default_top = $(window).height() - 50;
+    self.story_board_extended_top = 120;
+    self.story_board_expanded = false;
+    //$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
+    $('#story-zone').css('top', self.story_board_default_top);
+    $('#story-board').height($(window).height() - 154);
+
+    $(window).resize(function(){
+      //$('#story-board').css('height', $(window).height()-self.story_board_extended_top);
+      self.story_board_default_top = $(window).height() - 50;
+      $('#story-zone').css('top', self.story_board_default_top);
+      $('#story-board').height($(window).height() - 154);
+    });
+
+
+    $('#story-zone').mouseenter(function(){
+      if(!self.story_board_expanded){
+        $('#story-zone').clearQueue().animate({
+          top: self.story_board_default_top-5
+        });
+      }
+    });
+
+    $('#story-zone').mouseleave(function(){
+      if(!self.story_board_expanded){
+        $('#story-zone').clearQueue().animate({
+          top: self.story_board_default_top
+        });
+      }
+    });
+
+    $('#story-zone-handle').click(function(e){
+      if(self.story_board_expanded){
+        $('#story-zone').animate({
+          top: self.story_board_default_top
+        });
+        self.story_board_expanded = false;
+      }
+      else{
+        $('#story-zone').animate({
+          top: self.story_board_extended_top
+        });
+        self.story_board_expanded = true;
+      }
+      e.stopPropagation();
+      
+    });
+  }
+};
+
+story_board.init();

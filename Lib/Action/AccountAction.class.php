@@ -65,13 +65,13 @@ class AccountAction extends Action {
             $_SESSION['api'] = $api;
 
             //check if new user
-            $account_model = new AccountAction();
+            $account_model = new AccountsModel();
 
             if($account_model->login('qq', $openid, 'api')){
                 $this->redirect('User/home');
             }
             else{
-                $this->redirect('User/newUser');
+                $this->redirect('User/register');
             }
         }
     }
@@ -114,13 +114,13 @@ class AccountAction extends Action {
                 $_SESSION['api'] = $api;
 
                 //check if new user
-                $account_model = new AccountAction();
+                $account_model = new AccountsModel();
 
                 if($account_model->login('weibo', $api_id, 'api')){
                     $this->redirect('User/home');
                 }
                 else{
-                    $this->redirect('User/pre_register');
+                    $this->redirect('User/register');
                 }
             }   //get weibo id
             else die('get weibo id failed');
