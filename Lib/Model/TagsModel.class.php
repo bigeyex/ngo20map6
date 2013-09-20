@@ -6,7 +6,7 @@ class TagsModel extends Model{
 		$tagmap_model = M('tagmap');
 		$existing_tag = $this->where(array('name'=>$tag_name))->find();
     	if(!$existing_tag){
-    		$tag_id = $tag_model->add(array('name' => $tag_name));
+    		$tag_id = $this->add(array('name' => $tag_name));
     	}
     	else{
     		$tag_id = $existing_tag['id'];
