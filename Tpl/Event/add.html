@@ -5,6 +5,8 @@
     <?php if ($target_url == 'save'): ?>
         <input type="hidden" name="id" value="{$event.id}"/>
     <?php endif ?>
+    <input type="hidden" name="type" value="{$_GET.type}"/>
+
     <div class="form-section" id="main-content">
         <h3 style="padding-left:15px;"> 发布公益活动  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
         <p class="after-title">以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。</p>
@@ -35,6 +37,10 @@
             <span class="title"><span class="required">*</span> {:L('相关机构')}</span>
             <input type="text" name="host" class="validate[required]" value="{$event.host}"/>
         </div>
+        <div class="form-field check-group">
+            <span class="title"><span class="required">*</span> 项目领域</span><!-- 工作领域 -->
+            <input type="hidden" id="item-field" name="item_field" class="validate[funcCall[validate_item_field]]" value="{$event.item_field}"/>
+        </div> <!-- end of 工作领域 -->
         <div class="form-field">
             <span class="title"><span class="required">*</span> {:L('执行区域')}</span>
                 <select name="province" id="province" class="validate[required]"></select>省
@@ -58,10 +64,6 @@
         <div class="form-field">
             <span class="title">{:L('结束时间')}</span>
             <input type="text" name="end_time" id="end_time"  value="{$event.end_time}"/>
-        </div>
-        <div class="form-field">
-            <span class="title">{:L('项目领域')}</span><!-- 工作领域 -->
-            <input type="hidden" id="item-field" name="item_field" value="{$event.item_field}"/>
         </div>
         <div class="form-field check-group">
             <?php if($event_type == 'ngo'): ?>
@@ -215,6 +217,14 @@ $("#res-tags").select2("container").find("ul.select2-choices").sortable({
     start: function() { $("#res-tags").select2("onSortStart"); },
     update: function() { $("#res-tags").select2("onSortEnd"); }
 });
+
+
+function validate_item_field(){
+    var val = $('#item-field').val();
+    if(val == ''){
+        return '必须选择一项工作领域';
+    }
+}
 
 </script>
 <?php if($target_url == 'save'): ?>
