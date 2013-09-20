@@ -111,6 +111,7 @@ class UserAction extends Action {
         if($account_id){
         	$user_model->account_id = $account_id;
         	$user_model->add();
+            $account_model->login($_POST['email'], $_POST['password']);
         	$this->redirect('home');
         }
         else{

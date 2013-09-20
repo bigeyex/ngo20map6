@@ -66,7 +66,7 @@
             <textarea name="introduction" id="introduction" cols="35" rows="7" class="validate[required]">{$user.introduction}</textarea>
         </div>
         <div class="form-field">
-            <span class="title">办公地点</span>
+            <span class="title"><span class="required">*</span> 办公地点</span>
                 <select name="province" id="province" class="validate[required]"></select>省
                 <select name="city" id="city"></select>市
                 <select name="county" id="county"></select>区/县
@@ -75,8 +75,12 @@
                 <input type="hidden" name="longitude" id="longitude"/>
 
         </div>
+        <div class="form-field check-group">
+            <span class="title"><span class="required">*</span> 关注领域</span><!-- 工作领域 -->
+            <input type="hidden" id="item-field" name="work_field" class="validate[funcCall[validate_item_field]]" value="{$user.work_field}"/>
+        </div> <!-- end of 工作领域 -->
         <div class="form-field" id="map-box">
-            <span class="title">在地图上的位置</span>
+            <span class="title"><span class="required">*</span> 在地图上的位置</span>
             <div style="width:267px;height:163px;border:1px solid gray" id="map-locate-container"></div>
             <span>(如果地图中所示位置不是您的机构位置，点击地图来标注机构位置)</span>
             <div class="clearfix"></div>
@@ -131,10 +135,6 @@
             </select>
             <input type="text" name="weibo" value="{$user.weibo}" style="width:183px;"/>
         </div>
-        <div class="form-field check-group">
-            <span class="title">关注领域</span><!-- 工作领域 -->
-            <input type="hidden" id="item-field" name="work_field" class="validate[funcCall[validate_item_field]]" value="{$user.work_field}"/>
-        </div> <!-- end of 工作领域 -->
         <div class="form-field check-group only ind-only">
             <span class="title">专长</span><!-- 志愿者技能 -->
             <input type="hidden" id="expertise" name="expertise" value="{$user.work_field}"/>

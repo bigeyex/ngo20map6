@@ -109,6 +109,10 @@ class EventAction extends Action {
             $this->display('add');
             return;
         }
+
+        if(!user('is_admin')){
+            $event_model->type = user('type');
+        }
         
         
         // case: the admin want to assign this event to another person (rare)

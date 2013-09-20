@@ -116,7 +116,9 @@ select {
 
 .select2-results li{
     font-size: 14px;
-    padding-bottom:3px
+    padding-bottom:3px;
+    width: 100px;
+    display: inline-block;
 }
 
 #main .select2-search-choice-close{
