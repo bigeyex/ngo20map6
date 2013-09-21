@@ -153,7 +153,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    background: #f5f3ed url(../img/sprites-all.png) no-repeat 9px -151px;;
+    background: #f5f3ed;
     -webkit-box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
     -moz-box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
     box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
@@ -171,16 +171,29 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     background: none;
 }
 
-#search-box i{
+#search-dropdown-arrow, #search-menu-triangle{
     width: 15px;
     height: 15px;
     background: url(../img/sprites-all.png) no-repeat 0px -559px;
     display: block;
     position: absolute;
-    right: 4px;
-    top: 13px;
+    left: 11px;
+    top: 12px;
     cursor: pointer;
 }
+
+
+#search-action-button{
+    width: 22px;
+    height: 29px;
+    position: absolute;
+    right: 0px;
+    top: 1px;
+    background:  url(../img/sprites-all.png) no-repeat 0px -151px;
+    padding: 0;
+    cursor: pointer;
+}
+
 
 #register-buttons{
     font-size: 14px;

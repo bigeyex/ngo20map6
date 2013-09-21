@@ -17,27 +17,24 @@ $.fn.buttongroup = function(callback){
 
 
 $('.main-nav-filter').hover(function(){
-	$(this).find('.filter-box').show();
+	$(this).find('.filter-box').stop().show().css({opacity:1});;
 }, function(){
 	$(this).find('.filter-box').fadeOut();
 });
 
 $('.main-nav-filter').click(function(){
-	$(this).find('.filter-box').show();
+	$(this).find('.filter-box').stop().show().css({opacity:1});;
 });
 
-$('.main-nav-filter').blur(function(){
-	$(this).find('.filter-box').fadeOut();
-});
 
 $('#search-box').hover(function(){
-	$('#keywords-filter').show();
+	$('#keywords-filter').stop().show().css({opacity:1});;
 }, function(){
 	$('#keywords-filter').fadeOut();
 });
 
 $('#search-textbox').click(function(){
-	$('#keywords-filter').show();
+	$('#keywords-filter').stop().show().css({opacity:1});;
 });
 
 $('#search-textbox').blur(function(){
@@ -56,6 +53,8 @@ $('#region-list li').click(function(){
 		map.centerAndZoom(point,5);
 	}
 	$('#region-filter-button').text($(this).text());
+	$('#region-list li').removeClass('selected');
+	$(this).addClass('selected');
 });
 
 $('#field-list li').click(function(){
@@ -63,6 +62,8 @@ $('#field-list li').click(function(){
 	mapdata.set_field(field);
 	list_control.change_viewport();
 	$('#field-filter-button').text($(this).text());
+	$('#field-list li').removeClass('selected');
+	$(this).addClass('selected');
 });
 
 $('#medal-list li').click(function(){
@@ -76,6 +77,8 @@ $('#medal-list li').click(function(){
 	else{
 		$('#medal-filter-button').text('勋章');
 	}
+	$('#medal-list li').removeClass('selected');
+	$(this).addClass('selected');
 	
 });
 
@@ -84,6 +87,11 @@ $('#search-textbox').keypress(function(e){
 		mapdata.set_key($('#search-textbox').val());
 		list_control.change_viewport();
 	}
+});
+
+$('#search-action-button').click(function(){
+	mapdata.set_key($('#search-textbox').val());
+	list_control.change_viewport();
 });
 
 $('#keywords-filter span').click(function(){
@@ -170,6 +178,7 @@ var mapdata = {
 	},
 	set_field: function(field){
 		this.rec_field = field;
+		map_control.refresh_tilelayer();
 		this.change_numbers();
 	},
 	set_type: function(type){

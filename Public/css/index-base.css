@@ -816,12 +816,13 @@ span.part-time, span.volunteers{
     box-shadow: 0 2px 5px rgba(49,81,29,.3);
     border: solid 1px #a9a9a9;
     padding: 10px;
-    position: relative;
+    position: absolute;
+    left: 0px;
 }
 
 #keywords-filter i.triangle{
     width: 23px;
-    height: 28px;
+    height: 29px;
     padding: 0;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -830,9 +831,10 @@ span.part-time, span.volunteers{
     border: solid 1px #a9a9a9;
     border-bottom: 0;
     position: absolute;
-    top: -29px;
+    top: -30px;
     background-position: 7px -552px;
     right: 0px;
+    left: 2px;
 }
 
 #keywords-filter h4{
@@ -869,4 +871,8 @@ span.part-time, span.volunteers{
 
 #footer{
     margin-top: 0;
+}
+
+#medal-list i.triangle{
+    left: 210px;
 }
