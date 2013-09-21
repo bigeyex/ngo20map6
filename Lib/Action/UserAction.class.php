@@ -119,6 +119,13 @@ class UserAction extends Action {
         }   
 	}
 
+    public function register(){
+        if(isset($_SESSION['last_form'])){
+            $this->assign('user', $_SESSION['last_form']);
+        }
+        $this->display();
+    }
+
     public function save() {
         $user=M('Users');
         $user->create();

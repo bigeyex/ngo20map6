@@ -62,7 +62,7 @@
 								{$r.name}
 							</a>
 							<p class="description">
-								{$r.description|short=50}
+								{$r.description|strip_tags|short=50}
 							</p>
 						</div>
 					<?php endforeach ?>
