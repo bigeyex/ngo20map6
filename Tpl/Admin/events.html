@@ -1,0 +1,119 @@
+<layout name="admin_layout" />
+
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+});
+
+
+</script>
+<div id="right-content">
+	<div class="btn-toolbar">
+		<ul class="btn-group">
+			<li class="btn {:active_if($type == 'all')}"><a href="{:U('Admin/events')}/type/all">
+				{:L('全部')}</a></li>
+			<li class="btn {:active_if($type == 'ngo')}"><a href="{:U('Admin/events')}/type/ngo">
+				{:L('公益项目')}</a></li>
+			<li class="btn {:active_if($type == 'csr')}"><a href="{:U('Admin/events')}/type/csr">
+				{:L('CSR')}</a></li>
+			<li class="btn {:active_if($type == 'case')}"><a href="{:U('Admin/events')}/type/case">
+				{:L('对接案例')}</a></li>
+			<li class="btn {:active_if($type == 'ind')}"><a href="{:U('Admin/events')}/type/ind">
+				{:L('公益报道')}</a></li>
+		</ul>
+		<ul class="btn-group">
+			<li class="btn {:active_if($check == 'all')}"><a href="{:U('Admin/events')}/check/all">
+				{:L('全部')}</a></li>
+			<li class="btn {:active_if($check == 'pending')}"><a href="{:U('Admin/events')}/check/pending">
+				{:L('待审核')}</a></li>
+			<li class="btn {:active_if($check == 'checked')}"><a href="{:U('Admin/events')}/check/checked">
+				{:L('已审核')}</a></li>
+			<li class="btn {:active_if($check == 'deleted')}"><a href="{:U('Admin/events')}/check/deleted">
+				{:L('已删除')}</a></li>
+		</ul>
+		<ul class="btn-group">
+			<li>
+				<form id="admin-search-form" action="{:U('Admin/events')}" method="get">
+					<input class="input-small" class="text" type="text" name="q" value="{$q}"/>
+					<input class="btn" type="submit" value="{:L('筛选')}"/>
+					<a href="{:U('Admin/events')}/q/all">{:L('清除条件')}</a>
+				</form>
+			</li>
+		</ul>
+	</div>
+	<div id="admin-actions">
+	    <ul>
+	        <in name="check" value="all,pending">
+	        <li class="btn btn-success" onclick="batch(this,'check','events');">
+	            审核
+	        </li>
+	        </in>
+	        <in name="check" value="all,already">
+	        <li class="btn btn-warning" onclick="batch(this,'lock','events');">
+	            屏蔽
+	        </li>
+	        </in>
+	        <neq name="check" value="deleted">
+	        <li class="btn btn-danger" onclick="batch(this,'del','events');">
+	            删除
+	        </li>
+	        </neq>
+	        <eq name="check" value="deleted">
+	        <li class="btn" onclick="batch(this,'recovery','events');">
+	            恢复
+	        </li>
+	        <li class="btn btn-danger fast-confirm" onclick="batch(this,'erase','events');" ques="{:L('无法恢复!!确实要彻底删除该事件吗？')}">
+	            彻底删除
+	        </li>
+	        </eq>
+	    </ul>
+	</div> <!-- admin-actions -->
+	<div class="page-show">
+    	{$page}
+	</div>
+
+	<table class="table table-hover syllabus-table">
+	    <tr>
+	        <th><input id="check" type="checkbox" onclick="CheckAll('syllabus-table')"></th>
+	        <th width="200">{:L('事件名称')}</th>
+	        <th width="200">{:L('主办者')}</th>
+	        <th width="200">{:L('发布时间')}</th>
+	        <th width="200">{:L('操作')}</th>
+	    </tr>
+	    <volist name="event_result" id="vo">
+	        <tr <?php if($key%2!=0)echo 'class="odd"'; ?> onmouseover="over(this);" onmouseout="out(this);">
+	            <td><input type="checkbox" value="{$vo.id}" name="key"></td>
+	            <td><a class="{:class_if('uncheck', !$vo['is_checked'])}" target="_blank" href="{:U('Event/view/id')}/{$vo.id}">{$vo.name}</a></td>
+	            <td><a target="_blank" href="{:U('User/home')}/id/{$vo.user_id}">{$vo.creator_name}</a></td>
+	            <td>
+	                <php>if(!empty($vo['create_time'])){ echo date('Y-m-d', strtotime($vo['create_time'])); }</php>
+	            </td>
+	            <td>
+	                <eq name="vo['enabled']" value="0">
+	                    <a href="{:U('Admin/batch')}/ids/{$vo.id}/action/recovery/type/events" class=" btn btn-mini" ques="{:L('确实要恢复该事件吗？')}">{:L('恢复')}</a>
+	                    <a href="{:U('Admin/batch')}/ids/{$vo.id}/action/erase/type/events" class=" fast-confirm btn-danger btn btn-mini" ques="{:L('无法恢复!!确实要彻底删除该事件吗？')}">彻底删除</a>
+	                <else/>
+	                    <a target="_blank" href="{:U('Event/edit/id')}/{$vo.id}" class="btn btn-mini">{:L('编辑')}</a>
+	                    <eq name="vo['is_checked']" value="1">
+	                        <a href="{:U('Admin/batch')}/ids/{$vo.id}/action/lock/type/events" class="fast-confirm btn btn-mini" ques="{:L('确实要屏蔽该事件吗？')}">{:L("屏蔽")}</a>
+	                    <else/>
+	                        <a href="{:U('Admin/batch')}/ids/{$vo.id}/action/check/type/events" class=" btn btn-mini btn-success" ques="{:L('确实要审核通过该事件吗？')}">{:L("审核")}</a>
+	                    </eq>
+	                    <a href="{:U('Admin/batch')}/ids/{$vo.id}/action/del/type/events" class="fast-confirm btn btn-mini btn-danger" ques="{:L('确实要删除该事件吗？')}">{:L("删除")}</a>
+	                </eq>
+	            </td>
+	        </tr>
+	    </volist>
+	</table>
+	<div class="page-show">
+    	{$page}
+	</div>
+	
+</div>
+
+

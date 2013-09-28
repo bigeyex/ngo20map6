@@ -513,7 +513,7 @@ a.action-button{
 
 #flash-notice-region{
     position: absolute;
-    top: 45px;
+    top: 0px;
     left: 300px;
     width: 600px;
     font-size: 14px;
@@ -526,6 +526,40 @@ a.action-button{
     -moz-border-radius: 4px;
     border-radius: 4px;
     color: #c09853;
+
+    animation: slideup 5s;
+    -moz-animation: slideup 5s;
+    -webkit-animation: slideup 5s;
+    -o-animation: slideup 5s;
+}
+
+
+@keyframes slideup
+{
+0%   {top:45px;}
+75%  {top:45px;}
+100% {top:0px;}
+}
+
+@-moz-keyframes slideup
+{
+0%   {top:45px;}
+75%  {top:45px;}
+100% {top:0px;}
+}
+
+@-webkit-keyframes slideup
+{
+0%   {top:45px;}
+75%  {top:45px;}
+100% {top:0px;}
+}
+
+@-o-keyframes slideup
+{
+0%   {top:45px;}
+75%  {top:45px;}
+100% {top:0px;}
 }
 
 .medal-list li a{

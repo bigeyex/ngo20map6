@@ -1,5 +1,39 @@
 <?php
+function current_for_action($action_name){
+	if(ACTION_NAME == $action_name){
+		return 'current';
+	}
+	else{
+		return '';
+	}
+}
 
+function current_for_module($module_name){
+	if(MODULE_NAME == $module_name){
+		return 'current';
+	}
+	else{
+		return '';
+	}
+}
+
+function active_if($condition){
+	if($condition){
+		return 'active';
+	}
+	else{
+		return '';
+	}
+}
+
+function class_if($class, $condition){
+	if($condition){
+		return $class;
+	}
+	else{
+		return '';
+	}
+}
 
 // insert a <script> tag
 function js($str){
