@@ -110,7 +110,11 @@
 					<div id="register-buttons">
 						<?php if(user()): ?>
 							<span id="login-menu-zone">
-								<a href="{:U('User/home')}" id="my-page-button" class="title">我的页面</a>
+								<?php if(user('is_admin')): ?>
+								<a href="{:U('Admin/users')}" id="my-page-button" class="title">管理</a>
+								<?php else: ?>
+								<a href="{:U('User/home')}" id="my-page-button" class="title">我的页面</a>	
+								<?php endif; ?>
 								<div id="login-menu" style="display:none;">
 									<div class="masker"></div>
 									<div id="login-menu-triangle"></div>

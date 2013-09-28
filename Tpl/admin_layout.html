@@ -1,0 +1,44 @@
+<include file="Public:header"/>
+<div id="main-container">
+	<div id="top-action-bar">
+		<div id="profile-sector">
+			<div id="profile-img">
+				<img src="__APP__/Public/img/demo-img/demo-logo2.jpg" width="66" height="66"/>
+				<h3 id="user-name">{:user('name')}</h3>
+			</div>
+			<div id="top-action-buttons">
+				<h5 class="label">发布：</h5><br/>
+				<a class="button title" href="{:U('Event/add')}/type/csr">CSR新闻</a>
+				<a class="button title" href="{:U('Event/add')}/type/case">对接案例</a>
+			</div>
+		</div>
+	</div>
+	<div id="main-content">
+		<div id="left-menu">
+			<ul>
+				<li id="user-manage-link" class="{:current_for_action('users')}"><a href="{:U('Admin/users')}">用户管理</a></li>
+				<li id="event-manage-link" class="{:current_for_action('events')}"><a href="{:U('Admin/events')}">活动管理</a></li>
+				<li id="event-manage-link" class="{:current_for_module('Medal')}"><a href="{:U('Medal/index')}">勋章管理</a></li>
+				<!-- <li id="voice-img-link"><a href="javascript:void(0);">有声图片<span class="number">10</span></a></li> -->
+				<!-- <li id="notice-link"><a href="javascript:void(0);">通知<span class="number">3</span></a></li> -->
+			</ul>
+			
+		</div>
+		<div id="home-content">{__CONTENT__}</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+{:css('bootstrap')}
+{:css('user-home')}
+{:css('admin')}
+{:js('bootstrap')}
+{:css('jquery.fastconfirm')}
+{:js('jquery.fastconfirm')}
+{:js('admin')}
+<script type="text/javascript">
+$(function(){
+	
+});	
+</script>
+<include file="Public:footer"/>

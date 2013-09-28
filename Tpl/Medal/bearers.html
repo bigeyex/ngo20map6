@@ -1,0 +1,101 @@
+<layout name="admin_layout" />
+
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<h2>{:L('授予勋章')} - {$medal.name}</h2>
+		<div class="well" id="bearer-info">
+			<a href="javascript:void(0);" onclick="$('#bearer_names').toggle();">{:L('收起/展开')}</a>
+			{:L('该勋章持有者：')}{$bearer_count}
+			<div style="display:none;" id="bearer_names">
+				{$bearer_names}
+			</div>
+		</div>
+		<form id="admin-search-form" class="" action="__SELF__">
+			<div class="btn-toolbar" >
+				<ul class="btn-group">
+					<li class="btn {:active_if($type == 'all')}" ><a href="{:U('Medal/bearers')}/type/all">
+						{:L('全部')}</a></li>
+					<li class="btn {:active_if($type == 'ngo')}"><a href="{:U('Medal/bearers')}/type/ngo">
+						{:L('公益组织')}</a></li>
+					<li class="btn {:active_if($type == 'csr')}"><a href="{:U('Medal/bearers')}/type/csr">
+						{:L('企业社会责任')}</a></li>
+					<li class="btn {:active_if($type == 'ind')}"><a href="{:U('Medal/bearers')}/type/ind">
+						{:L('公益人')}</a></li>
+				</ul>
+					<input type="text" class="input-medium" name="q" value="{$q}"/>
+					<input type="submit" class="btn btn-primary" value="搜索"/>
+					<a class="btn" href="{:U('Medal/bearers')}/q/all">{:L('清除搜索条件')}</a>
+
+			</div>
+		</form>
+		<div class="page-show">
+    	{$page}
+		</div>
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>{:L('显示名')}</th>
+				<th>{:L('电子邮箱')}</th>
+				<th>{:L('用户类型')}</th>
+				<th>{:L('操作')}</th>
+			</tr>
+			<?php foreach ($user_result as $user): ?>
+			<tr>
+				<td>{$user.id}</td>
+				<td><a href="{:U('User/home/id')}/{$vo.id}">{$user.name}</a></td>
+				<td>{$user.email}</td>
+				<td>{$user.type}</td>
+				<td>
+						<a class="btn btn-warning ungrant" onclick="ungrant(this, {$user.id}, {$medal.id})"  <?php if(!$user['is_granted']): ?> style="display:none;"<?php endif; ?>>{:L('收回')}</a>
+						<a class="btn grant" onclick="grant(this, {$user.id}, {$medal.id})" <?php if($user['is_granted']): ?> style="display:none;"<?php endif; ?>>{:L('授予')}</a>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+function grant(btn, uid, id){
+	var btn_element = btn;
+	$.get('{:U("Medal/grant")}',{'uid':uid, 'id':id},function(response){
+		if(response == "ok"){
+			$(btn).hide();
+			$(btn).parent().find(".ungrant").show();
+			reload_bearer_info();
+		}
+		else{
+			alert(response);
+		}
+	});
+}
+function ungrant(btn, uid, id){
+	var btn_element = btn;
+	$.get('{:U("Medal/ungrant")}',{'uid':uid, 'id':id},function(response){
+		if(response == "ok"){
+			$(btn).hide();
+			$(btn).parent().find(".grant").show();
+			reload_bearer_info();
+		}
+		else{
+			alert(response);
+		}
+	});
+}
+function reload_bearer_info(){
+	$("#bearer-info").load("{:U('Medal/get_bearer_names')}/id/{$medal.id}");
+}
+</script>
+

@@ -1,0 +1,20 @@
+#right-content{
+	padding: 10px;
+}
+
+#admin-search-form,#admin-search-form input{
+	margin: 0;
+	margin-left: 3px;
+}
+
+.btn-group li a{
+	color: #333;
+}
+
+.uncheck{
+	color: #c09853;
+}
+
+#top-action-buttons {
+	width: 267px;
+}

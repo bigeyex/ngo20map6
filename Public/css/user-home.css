@@ -64,6 +64,9 @@ body{
     font-weight: normal;
     margin-left: 5px;
     margin-bottom: 5px;
+    background: none;
+    text-shadow: none;
+    margin-top: 0;
 }
 
 #top-action-buttons  a{
@@ -95,7 +98,7 @@ body{
 
 #left-menu {
     float: left;
-    width: 219px;
+    width: 170px;
     padding-top: 27px;
 }
 
@@ -138,7 +141,7 @@ body{
 
 
 #home-content{
-    margin-left: 219px;
+    margin-left: 170px;
     border-left: 1px solid #e5e5e5;
 }
 

@@ -1,0 +1,52 @@
+<layout name="admin_layout" />
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<form class="form-horizontal" action="{:U('Medal/'.$action)}" method="POST">
+			<?php if($action == "save"): ?>
+			<input type="hidden" name="id" value="{$medal.id}"/>
+			<?php endif; ?>
+			<fieldset>
+				<legend>{:L('新建勋章')}</legend>
+				<div class="control-group">
+					<label class="control-label" for="input01">{:L('名称')}</label>
+					<div class="controls">
+						<input type="text" name="name" class="input-large" id="input01" value="{$medal.name}">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('价值')}</label>
+					<div class="controls">
+						<input type="text" name="score" class="input-large" id="input02" value="{$medal.score}">
+						<p class="help-block">{:L('勋章的价值')}</p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="textarea">勋章描述</label>
+					<div class="controls">
+						<textarea class="input-xlarge" name="description" id="textarea" rows="3">{$medal.description}</textarea>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">
+						{:L('保存勋章')}
+					</button>
+					<button class="btn"><a href="{:U('Medal/index')}">{:L('取消')}</a></button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
