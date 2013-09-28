@@ -27,7 +27,11 @@
 			</div>
 			<div class="contact">
 				<span class="title">联系方式</span>
-				<span>{$user.contact_name} (电话){:place($user['phone'])} <span class="email">{$user.public_email}</span></span>
+				<span>{$user.contact_name} (电话){:place($user['phone'])} <span class="email">{$user.public_email}</span>
+				<?php if(!empty($user['website'])): ?>
+					<br/><a href="{$user.website|addhttp}" target="_blank">访问机构网站</a>
+				<?php endif; ?>
+				</span>
 			</div>
 		</div>
 		<div class="clearfix"></div>

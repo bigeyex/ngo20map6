@@ -16,7 +16,12 @@ class AccountAction extends Action {
             	setcookie("ngo20_login_token", $login_token, time()+3600*24*14);
             }
 
-            $this->redirect('User/home/');
+            if(user('is_admin')){
+                $this->redirect('Admin/users/');
+            }
+            else{
+                $this->redirect('User/home/');
+            }
             
         }
 		else{

@@ -27,6 +27,9 @@
 					<div class="content-brick namecard-left">
 						<h4>联系方式</h4>
 						<p>{$user.contact_name} {$user.phone}</p>
+						<?php if(!empty($user['website'])): ?>
+							<br/><a href="{$user.website|addhttp}" target="_blank">访问机构网站</a>
+						<?php endif; ?>
 					</div>
 					<div class="content-brick namecard-right">
 						<h4>关注领域</h4>
