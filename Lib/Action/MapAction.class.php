@@ -44,6 +44,11 @@ class MapAction extends Action {
     	$zoom = $_GET['zoom'];
     	$tilex = $_GET['x'];
     	$tiley = $_GET['y'];
+        $key = $_GET['key'];
+        $field = $_GET['field'];
+        $type = $_GET['type'];
+        $model = $_GET['model'];
+        $medal = $_GET['medal'];
 
         $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['key'], $_GET['type'], $_GET['model'], $_GET['medal']);
 
@@ -85,7 +90,7 @@ class MapAction extends Action {
         }
         imagesavealpha($img,true); 
         if(empty($_GET['key'])){
-        Imagepng($img, "Runtime/Cache/tile-$zoom-$tilex-$tiley.png");
+        Imagepng($img, "Runtime/Cache/tile-$zoom-$tilex-$tiley-$key-$field-$type-$model-$medal.png");
         }
         Imagepng($img);  
         ImageDestroy($img);  

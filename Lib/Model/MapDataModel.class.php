@@ -15,6 +15,19 @@ class MapDataModel extends Model{
         return $model->query($sql);
     }
 
+    public function invalidate_tile($lon, $lat){
+        $lon = floatval($lon);
+        $lat = floatval($lat);
+        $point = $this->convertLL2MC($lon, $lat);
+        $lon = $point[0];
+        $lat = $point[1];
+        for($z=1;$z<=18;$z++){
+            $tile_x = $lon * pow(2, $z-18) / 256;
+            $tile_y = $lat * pow(2, $z-18) / 256;
+            $this->unlink_tile_file($z, $tile_x, $tile_y);
+        }
+    }
+
 	public function get_tile_data($tilex, $tiley, $zoom, $field, $key='', $type='', $model='', $medal=''){
 		$scalex = array(0,301.421310,150.710655,75.355327,37.677664,18.838832,9.419416,4.709708,2.354854,1.177427,0.588714,0.294357,0.147179,0.07359,0.036795,0.018397,0.009199,0.0046,0.0023,0.001149);
         $scaley = array(0,138.558225,88.011798,50.105148,26.953469,13.990668,7.125178,3.594854,1.805441,0.904715,0.452855,0.226552,0.113307,0.056661,0.028332,0.014166,0.007084,0.003542,0.001771,0.000885);
@@ -304,6 +317,18 @@ class MapDataModel extends Model{
             $cF += $T - $cE;
         }
         return $cF;
+    }
+
+    function unlink_tile_file($z, $x, $y){
+        $x = intval($x);
+        $y = intval($y);
+        $z = intval($z);
+        $base_path = 'Runtime/Cache';
+        $list = exec("ls -1 $base_path/tile-$z-$x-$y-*", $output, $error);
+        foreach ($output as &$file){
+            unlink($file);
+        }
+
     }
 
 }
