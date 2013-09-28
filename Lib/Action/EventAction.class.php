@@ -69,6 +69,13 @@ class EventAction extends Action {
 
     public function save(){
         $event_model = new EventsModel();
+        $this_id = intval($_POST['id']);
+        $old_event = $event_model->find($this_id);
+        if($old_event['longitute']!=$_POST['longitute'] || $old_event['latitude']!=$_POST['latitude']){
+            $map_data_model = D('MapData');
+            $map_data_model->invalidate_tile($old_event['longitute'], $old_event['latitude']);
+            $map_data_model->invalidate_tile($_POST['longitute'], $_POST['latitude']);
+        }
         $event_model->create();
         if(!user('is_admin')){
             $event_model->user_id = user('id');
@@ -77,8 +84,8 @@ class EventAction extends Action {
             flash('您提交的内容中可能有不合适的地方，请重新编辑');
         }
 
+
         $event_model->save();
-        $this_id = $event_model->id;
         $event_model->create_tags($this_id);
         $event_model->create_image_records($this_id);
        
@@ -126,6 +133,9 @@ class EventAction extends Action {
         $this_id = $event_model->add();
         $event_model->create_tags($this_id);
         $event_model->create_image_records($this_id);
+
+        $map_data_model = D('MapData');
+        $map_data_model->invalidate_tile($_POST['longitute'], $_POST['latitude']);
        
         flash('事件已成功添加');
         

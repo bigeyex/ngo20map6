@@ -59,7 +59,7 @@
 								<img src="{$r.image|upimage=false}" width="60"/>
 							</a>
 							<a href="{:U('Event/view')}/id/{$r.id}" class="title">
-								{$r.name}
+								{$r.name|strip_tags|short=20}
 							</a>
 							<p class="description">
 								{$r.description|strip_tags|short=50}
