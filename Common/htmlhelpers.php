@@ -35,6 +35,14 @@ function class_if($class, $condition){
 	}
 }
 
+
+function addhttp($url) {
+    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+        $url = "http://" . $url;
+    }
+    return $url;
+}
+
 // insert a <script> tag
 function js($str){
 	return '<script type="text/javascript" src="'.__APP__.'/Public/js/'.$str.'.js"></script>';

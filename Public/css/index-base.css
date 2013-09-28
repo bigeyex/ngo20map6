@@ -590,12 +590,12 @@ img.weibo-img{
     color: #666666;
 }
 
-.info-window.csr #info-window-title, .info-window.csr #info-window-place-label,
-.info-window.ind #info-window-title, .info-window.ind #info-window-place-label{
+.info-window.csr #info-window-title a, .info-window.csr #info-window-place-label,
+.info-window.ind #info-window-title a, .info-window.ind #info-window-place-label{
     color: #0097c8;
 }
 
-.info-window.case #info-window-title, .info-window.case #info-window-place-label{
+.info-window.case #info-window-title a, .info-window.case #info-window-place-label{
     color: #d14100;
 }
 
@@ -757,12 +757,12 @@ span.part-time, span.volunteers{
     margin-left: 42px;
 }
 
-#l2-panel.csr .preview-header h3, #l2-panel.csr #preview span.title ,
-#l2-panel.ind .preview-header h3, #l2-panel.ind #preview span.title {
+#l2-panel.csr .preview-header h3 a, #l2-panel.csr #preview span.title,
+#l2-panel.ind .preview-header h3 a, #l2-panel.ind #preview span.title {
     color: #008ec6;
 }
 
-#l2-panel.case .preview-header h3, #l2-panel.case #preview span.title {
+#l2-panel.case .preview-header h3 a, #l2-panel.case #preview span.title {
     color: #e14b08;
 }
 
