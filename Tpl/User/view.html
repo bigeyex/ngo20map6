@@ -26,10 +26,11 @@
 					</div>
 					<div class="content-brick namecard-left">
 						<h4>联系方式</h4>
-						<p>{$user.contact_name} {$user.phone}</p>
+						<p>{$user.contact_name} {$user.phone}
 						<?php if(!empty($user['website'])): ?>
 							<br/><a href="{$user.website|addhttp}" target="_blank">访问机构网站</a>
 						<?php endif; ?>
+						</p>
 					</div>
 					<div class="content-brick namecard-right">
 						<h4>关注领域</h4>
@@ -57,6 +58,12 @@
 					志愿者人数: {$user.staff_volunteer}
 				</p>
 			</div>
+			<?php if(!empty($user['financial_link'])): ?>
+			<div class="content-brick">
+				<h4>财务状况</h4>
+				<a href="{$user.financial_link|addhttp}">查看财务状况</a>
+			</div>
+			<?php endif; ?>
 		</div>
 		<div class="">
 			<div class="content-brick">
