@@ -1,5 +1,14 @@
 <?php
 
+function ngo20_md5($str){
+	return md5($str);
+}
+
+function admin_only(){
+	if(!user('is_admin')){
+		die('需要管理员权限才能访问此页面');
+	}
+}
 
 function check_profanity_words(){
     foreach(C('profanity_words') as $p_word){
