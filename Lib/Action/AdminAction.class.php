@@ -170,6 +170,7 @@ class AdminAction extends Action{
     }
 
     public function events(){
+        admin_only();
     	$event_model = D('Events');
     	
     	//从session中读取搜索条件
@@ -245,6 +246,7 @@ class AdminAction extends Action{
     }
     
     public function users(){
+        admin_only();
     	$user_model = M('Users');
     	
     	//从session中读取搜索条件

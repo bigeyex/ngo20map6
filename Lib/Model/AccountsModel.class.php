@@ -9,7 +9,7 @@ class AccountsModel extends Model{
         else if($mode == 'api'){
             $result = $this->where(array('api_vendor' => $email, 'api_id' => $pwd))->find();
         }
-        if(!$result){
+        if(!$result || empty($result)){
             return false;
         }
         elseif($result['enabled'] == 0){

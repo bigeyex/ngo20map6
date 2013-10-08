@@ -13,6 +13,9 @@
     </div>
     <div class="form-section" id="main-content">
         <form id="newform" name="newform" class="need-validate" enctype="multipart/form-data" action="__URL__/save" method="post" >
+        <?php if(user('is_admin')): ?>
+            <input type="hidden" name="id" value="{$_GET.id}"/>
+        <?php endif; ?>
         <div class="section-base hideable-section">
             <h3 style="padding-left:15px;"> 修改资料  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
             <p class="after-title">{:L('以下信息将显示在机构资料页，方便大家了解你，完成度越高，你就可以执行更多的任务操作。')}</p>
@@ -191,15 +194,20 @@
         </div>
         </form>
         <form action="{:U('User/editpass')}" method="POST" id="change-password-form">
+        <?php if(user('is_admin')): ?>
+            <input type="hidden" name="id" value="{$_GET.id}"/>
+        <?php endif; ?>
         <div class="section-password hideable-section" style="display:none;">
             <h3 style="padding-left:15px;"> 账号安全 </h3>
             <p class="after-title"><span class="required">{:L('重要提示：每天互联网都会有大量用户的帐号存在着严重被盗的风险。如果你正在使用与其他网
 站相同的密码，建议你尽快修改。')}</span></p>
+            <?php if(!user('is_admin') && !(user('password') == ngo20_md5(''))): ?>
             <div class="form-field">
                 <span class="title">{:L('当前密码')}</span>
                 <input type="text" name="prepass" class="validate[required]" value=""/>
                 <a href="" id="forget-password-a">{:L('忘记密码')}</a>
             </div>
+            <?php endif; ?>
             <div class="form-field new-password-field">
                 <span class="title">{:L('新密码')}</span>
                 <input type="password" name="password" id="password" class="validate[required]" value=""/>
@@ -221,6 +229,32 @@
             </div>
             <div class="submit-buttons form-field">
                 <input id="submit-button" type="submit" value="{:L('保存')}"/>
+            </div>
+        </div>
+        </form>
+
+        <form action="{:U('User/editpass')}" method="POST" id="change-email-form">
+        <?php if(user('is_admin')): ?>
+            <input type="hidden" name="id" value="{$_GET.id}"/>
+        <?php endif; ?>
+        <input type="hidden" name="target" value="email"/>
+        <div class="section-password hideable-section" style="display:none;">
+            <h3 style="padding-left:15px;"> 修改登录电子邮箱 </h3>
+            <div class="form-field">
+                <?php if(!user('is_admin') && !(user('password') == ngo20_md5(''))): ?>
+                <div class="form-field">
+                    <span class="title">{:L('当前密码')}</span>
+                    <input type="text" name="prepass" class="validate[required]" value=""/>
+                    <a href="" id="forget-password-a">{:L('忘记密码')}</a>
+                </div>
+                <?php endif; ?>
+                <div class="form-field">
+                    <span class="title">{:L('新电子邮箱')}</span>
+                    <input type="text" name="email" class="validate[required,email]" value=""/>
+                </div>
+            </div>
+            <div class="submit-buttons form-field">
+                <input id="submit-button" type="submit" value="{:L('重置邮箱')}"/>
             </div>
         </div>
         </form>
