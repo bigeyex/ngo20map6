@@ -492,6 +492,74 @@ $('#weibo-box').hover(function(){
 	weibo_timer = window.setInterval(switch_weibo_marker, 10000);
 });
 
+var WeiboUtil = {
+    // 62进制字典
+    str62keys: [
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ],
+};
+
+
+/**
+ * 62进制值转换为10进制
+ * @param {String} str62 62进制值
+ * @return {String} 10进制值
+ */
+WeiboUtil.str62to10 = function(str62) {
+	var i10 = 0;
+	for (var i = 0; i < str62.length; i++)
+	{
+		var n = str62.length - i - 1;
+		var s = str62[i];
+		i10 += this.str62keys.indexOf(s) * Math.pow(62, n);
+	}
+	return i10;
+};
+ 
+/**
+ * 10进制值转换为62进制
+ * @param {String} int10 10进制值
+ * @return {String} 62进制值
+ */
+WeiboUtil.int10to62 = function(int10) {
+	var s62 = '';
+	var r = 0;
+	while (int10 != 0 && s62.length < 100) {
+		r = int10 % 62;
+		s62 = this.str62keys[r] + s62;
+		int10 = Math.floor(int10 / 62);
+	}
+	return s62;
+};
+ 
+/**
+ * mid转换为URL字符
+ * @param {String} mid 微博mid，如 "201110410216293360"
+ * @return {String} 微博URL字符，如 "wr4mOFqpbO"
+ */
+WeiboUtil.mid2url = function(mid) {
+    if(!mid) {
+        return mid;
+    }
+    mid = String(mid); //mid数值较大，必须为字符串！
+	if(!/^\d+$/.test(mid)){ return mid; }
+	var url = '';
+	
+	for (var i = mid.length - 7; i > -7; i = i - 7)	//从最后往前以7字节为一组读取mid
+	{
+		var offset1 = i < 0 ? 0 : i;
+		var offset2 = i + 7;
+		var num = mid.substring(offset1, offset2);
+		
+		num = this.int10to62(num);
+		url = num + url;
+	}
+	
+	return url;
+};
+
 /* switch weibo marker according to weibo list */
 function switch_weibo_marker(){
 	if(weibo_marker != null){
@@ -509,14 +577,16 @@ function switch_weibo_marker(){
 		$('.weibo-user-name').text("@"+weibo.weibo_name);
 		$('#weibo-user-avatar img').attr('src', weibo.avatar_img);
 		$('#weibo-time-past').text(moment(weibo.post_time).fromNow());
-		$('.weibo-content').html(util.trim(weibo.content, 50, '<a href="javascript:void(0)" onclick="expand_weibo_text()" class="expand-weibo-text">[展开]</a>'));
+		var weibo_content = util.trim(weibo.content, 40, '<a href="javascript:void(0)" onclick="expand_weibo_text()" class="expand-weibo-text">[展开]</a>');
 		if(weibo.image == ''){
 			$('.weibo-img').hide();
 		}
 		else{
-			$('.weibo-img').show();
-			$('.weibo-img').attr('src', weibo.image);
+			// $('.weibo-img').show();
+			// $('.weibo-img').attr('src', weibo.image);
+			weibo_content = '<img class="weibo-img" src="'+weibo.image+'" width="50"/>' + weibo_content;
 		}
+		$('.weibo-content').html(weibo_content);
 		$('#weibo-box').fadeIn();
 	});
 	weibo_data_last_index = weibo_data_index;
@@ -525,6 +595,13 @@ function switch_weibo_marker(){
 
 function expand_weibo_text(){
 	var weibo = weibo_data[weibo_data_last_index];
+	var weibo_content;
+	if(weibo.image == ''){
+		weibo_content = weibo.content;
+	}
+	else{
+		weibo_content = weibo.content + '<img class="weibo-img-big" src="'+weibo.image+'" width="200"/>';
+	}
 	$('.weibo-content').text(weibo.content);
 }
 
