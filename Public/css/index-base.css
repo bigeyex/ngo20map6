@@ -402,7 +402,7 @@ img.weibo-img{
     border-top: 1px solid #988e79;
 }
 
-#about-us-link{
+#about-us-link, #beian-link{
     color: #999999;
     font-size: 14px;
     position: absolute;
@@ -410,6 +410,11 @@ img.weibo-img{
     left: 10px;
     text-decoration: none;
     text-decoration: none;
+}
+
+#beian-link{
+    right: 10px;
+    left: auto;
 }
 
 #story-board-button{

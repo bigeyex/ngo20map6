@@ -19,6 +19,11 @@ class IndexAction extends Action {
         $this->assign('csr_num', $csr_num_record);
         $this->assign('case_num', $case_num_record);
 
+
+        $news_model = new NewsModel();
+        $news_list = $news_model->limit(20)->select();
+
+        $this->assign('news_list', $news_list);
         $this->display();
     }
 

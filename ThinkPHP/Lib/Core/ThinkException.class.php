@@ -59,10 +59,11 @@ class ThinkException extends Exception {
         $traceInfo      =   '';
         $time = date('y-m-d H:i:m');
         foreach($trace as $t) {
-            $traceInfo .= '['.$time.'] '.$t['file'].' ('.$t['line'].') ';
-            $traceInfo .= $t['class'].$t['type'].$t['function'].'(';
-            $traceInfo .= implode(', ', $t['args']);
-            $traceInfo .=")\n";
+            // $traceInfo .= '['.$time.'] '.$t['file'].' ('.$t['line'].') ';
+            // $traceInfo .= $t['class'].$t['type'].$t['function'].'(';
+            // $traceInfo .= implode(', ', $t['args']);
+            // $traceInfo .=")\n";
+            print_r($t);
         }
         $error['message']   = $this->message;
         $error['type']      = $this->type;
