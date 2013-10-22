@@ -53,6 +53,13 @@ class NewsAction extends Action{
 		$this->redirect('index');
 	}
 
+    public function delete($id){
+        $news_model = new NewsModel();
+        $news_model->delete($id);
+
+        $this->redirect('index');
+    }
+
 
 }
 ?>
