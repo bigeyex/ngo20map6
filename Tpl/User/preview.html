@@ -62,6 +62,12 @@
 			<span class="part-time">兼职人数: {$user.staff_parttime}</span>
 			<span class="volunteers">志愿者人数: {$user.staff_volunteer}</span>
 		</div>
+
+		<?php if(!empty($user['financial_link'])): ?>
+		<div class="financial_link">
+			<a href="{$user.financial_link|addhttp}">查看财务状况</a>
+		</div>
+		<?php endif; ?>
 	</div>
 	
 

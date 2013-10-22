@@ -1,0 +1,90 @@
+<layout name="admin_layout" />
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<form class="form-horizontal" action="{:U('News/'.$action)}" method="POST">
+			<?php if($action == "save"): ?>
+			<input type="hidden" name="id" value="{$news.id}"/>
+			<?php endif; ?>
+			<fieldset>
+				<legend>{:L('新建新闻')}</legend>
+				<div class="control-group">
+					<label class="control-label" for="input01">{:L('名称')}</label>
+					<div class="controls">
+						<input type="text" name="name" class="input-large" id="input01" value="{$news.name}">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('相关公益组织')}</label>
+					<div class="controls">
+						<input type="text" name="user_name" class="input-large" id="input03" value="{$news.user_name}">
+						<input type="hidden" name="user_id" class="input-large" value="{$news.user_id}">
+						<p class="help-block" id="org-validate"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('链接')}</label>
+					<div class="controls">
+						<input type="text" name="url" class="input-large" id="input02" value="{$news.url}">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('类型')}</label>
+					<div class="controls">
+						<select name="type" id="news-type">
+							<option value="news">新闻</option>
+							<option value="video">视频</option>
+						</select>
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('上传图片')}</label>
+					<div class="controls">
+			            <div id="avatar-component">
+			                <div id="avatar-preview-div" <?php if($action != "save"): ?>style="display:none;" <?php endif; ?>>
+			                    <img src="{:upimage($news['image'])}" width="438" height="438" id="avatar-preview-img"/>
+			                </div>
+			                <a class="action-button" href="javascript:void(0);" id="upload-avatar-button">上传图片</a>
+			            </div>
+			            <input type="hidden" name="image" id="avatar-hidden" value="{$news.image}"/>
+			            
+			            <div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">
+						{:L('保存新闻')}
+					</button>
+					<button class="btn"><a href="{:U('News/index')}">{:L('取消')}</a></button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+
+<include file="Public:image-cropper"/>
+<script type="text/javascript">
+$('#upload-avatar-button').click(function(){
+        init_cropper(438, 438, function(img){
+            $('#avatar-preview-img').attr('src', app_path+'/Public/Uploadedthumb/'+img);
+            $('#avatar-preview-div').show();
+            $('#avatar-hidden').val(img);
+        });
+    });   
+</script>

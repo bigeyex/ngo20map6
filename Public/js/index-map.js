@@ -731,3 +731,10 @@ var story_board = {
 };
 
 story_board.init();
+
+
+$(function(){
+	$('#about-us-link, #beian-link').click(function(e){
+		e.stopPropagation();
+	});
+});

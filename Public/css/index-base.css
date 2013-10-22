@@ -402,7 +402,7 @@ img.weibo-img {
     border-top: 1px solid #988e79;
 }
 
-#about-us-link{
+#about-us-link, #beian-link{
     color: #999999;
     font-size: 14px;
     position: absolute;
@@ -410,6 +410,11 @@ img.weibo-img {
     left: 10px;
     text-decoration: none;
     text-decoration: none;
+}
+
+#beian-link{
+    right: 10px;
+    left: auto;
 }
 
 #story-board-button{
@@ -421,7 +426,7 @@ img.weibo-img {
     position: absolute;
     top: 10px;
     left: 50%;
-    width: 50px;
+    width: 102px;
     margin-left: -33px;
     cursor: pointer;
     text-decoration: none;
@@ -461,7 +466,7 @@ img.weibo-img {
     display: block;
     list-style: none;
     width: 384px;
-    height: 381px;
+    height: 160px;
     margin: 0;
     padding: 0;
     margin-left: 20px;
@@ -476,6 +481,7 @@ img.weibo-img {
     box-shadow: 0 1px 1px rgba(0,0,0,.3), inset 0 0 0 1px rgba(255,255,255,.5);
     background: url(../img/bg/story-block-gradient.jpg) repeat-x;
     overflow: hidden;
+    position: relative;
 }
 
 #story-list h3{
@@ -483,12 +489,15 @@ img.weibo-img {
     font-weight: normal;
     font-size: 20px;
     margin: 0;
-    padding: 18px 69px 0 15px;
+    padding: 15px 15px 0 15px;
     line-height: 28px;
+    position: absolute;
+    top: 0px;
+    left: 160px;
 }
 
 .story-img-box{
-    height: 292px;
+    height: 160px;
     width: 384px;
     overflow: hidden;
 }

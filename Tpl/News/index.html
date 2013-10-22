@@ -1,0 +1,49 @@
+<layout name="admin_layout" />
+
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<br/><div>
+			<a href="{:U('News/add')}" class="btn">{:L('新建新闻')}</a>
+			
+		</div><br/>
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>{:L('标题')}</th>
+				<th>{:L('类型')}</th>
+				<th>{:L('操作')}</th>
+			</tr>
+			<?php foreach ($news_result as $news): ?>
+			<tr>
+				<td>{$news.id}</td>
+				<td><a href="{$news.url}">{$news.name}</a></td>
+				<td>
+					<?php if($news['type'] == 'news'): ?>
+						新闻
+					<?php else: ?>
+						视频
+					<?php endif; ?>
+				</td>
+
+				<td>
+					<a class="btn btn-mini" href="{:U('News/edit')}/id/{$news.id}">编辑</a>
+					<a class="btn btn-danger btn-mini fast-confirm" href="{:U('News/delete')}/id/{$news.id}" ques="{:L('确实要永久删除该新闻吗？')}">删除</a>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	</div>
+</div>
+

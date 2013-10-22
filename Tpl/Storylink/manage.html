@@ -1,0 +1,34 @@
+<layout name="admin_layout" />
+
+
+<div class="row">
+	<div class="span10">
+		<br/><div>
+			<a href="{:U('Medal/add')}" class="btn">{:L('新建故事')}</a>
+			
+		</div><br/>
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>{:L('标题')}</th>
+				<th>{:L('价值')}</th>
+				<th>{:L('描述')}</th>
+				<th>{:L('操作')}</th>
+			</tr>
+			<?php foreach ($medals as $medal): ?>
+			<tr>
+				<td>{$medal.id}</td>
+				<td>{$medal.name}</td>
+				<td>{$medal.score}</td>
+				<td>{$medal.description}</td>
+				<td>
+					<a class="btn btn-mini" href="{:U('Medal/edit')}/id/{$medal.id}">编辑</a>
+					<a class="btn btn-danger btn-mini fast-confirm" href="{:U('Medal/delete')}/id/{$medal.id}" ques="{:L('确实要永久删除该勋章吗？')}">删除</a>
+					<a class="btn btn-mini btn-primary" href="{:U('Medal/bearers')}/id/{$medal.id}/clear/1p">授予</a>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	</div>
+</div>
+
