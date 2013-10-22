@@ -27,6 +27,7 @@ class AccountAction extends Action {
 		else{
 			//login failed
 			flash('用户名或密码不正确');
+            $this->redirect('Index/index/');
 		}
 	}
 

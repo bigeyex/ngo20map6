@@ -30,53 +30,53 @@ body, html,#master-box, #allmap {
     left: 3px;
 }
 
-#weibo-box{
+#weibo-box {
     position: absolute;
     right: 6px;
     top: 51px;
-    padding: 8px 14px;
+    padding: 7px 7px;
     width: 200px;
     -webkit-border-radius: 4px/5px;
     -moz-border-radius: 4px/5px;
     border-radius: 4px/5px;
-    background-color: rgba(255,255,255,0.95);
+    background-color: rgba(253,252,248,0.90);
     -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
     -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
     box-shadow: 0 2px 5px rgba(49,81,29,.3);
     border: solid 1px #a9a9a9;
 }
 
-h4.weibo-user-name{
+h4.weibo-user-name {
     margin: 0;
-    padding: 3px 0 9px;
     color: #18944b;
-    font-size: 14px;
-    position: absolute;
-    top: 24px;
-    left: 74px;
+    font-size: 12px;
+    line-height: 14px;
+    width: 150px
+;
 }
 
-p.weibo-content{
+p.weibo-content {
     margin: 0;
-    color: :#4a4a4a;
+    color: :#646464;
     font-size: 12px;
     line-height: 18px;
     margin-top: 5px;
 }
 
-#weibo-img-container{
+#weibo-img-container {
     height: 135px;
     overflow: hidden;
 }
 
-img.weibo-img{
-    margin-top: 10px;
+img.weibo-img {
+    float: right;
 }
 
-#weibo-time-past{
+#weibo-time-past {
     font-size: 12px;
-    float: right;
-    margin-top: 5px;
+    position: absolute;
+    right: 7px;
+    top: 7px;
     color: #999999;
 }
 

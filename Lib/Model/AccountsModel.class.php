@@ -3,13 +3,14 @@
 class AccountsModel extends Model{
 
 	public function login($email, $pwd, $mode='password'){
+        if(empty($pwd))return false;
         if($mode == 'password'){
             $result = $this->where(array('email' => $email, 'password' => md5($pwd)))->find();
         }
         else if($mode == 'api'){
             $result = $this->where(array('api_vendor' => $email, 'api_id' => $pwd))->find();
         }
-        if(!$result){
+        if(!$result || empty($result)){
             return false;
         }
         elseif($result['enabled'] == 0){

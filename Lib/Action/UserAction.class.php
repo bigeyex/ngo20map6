@@ -40,6 +40,39 @@ class UserAction extends Action {
         $this->display();
     }
 
+    public function editpass() {
+        $account_model = new AccountsModel();
+        $account_model->create();
+
+        if(user('is_admin')){
+            $user_model = new UsersModel();
+            $user_record = $user_model->find($_POST['id']);
+            if($user_record){
+                $id = $user_record['account_id'];
+            }
+        }else{
+            $id = $_SESSION['login_user']['account_id'];        
+            if(md5($_POST['prepass']) != $_SESSION['login_user']['password']) {
+                setflash('请确认提供了正确的登录密码', 'error');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+        $account_model->id = $id;
+        if($_POST['target'] == 'email'){
+            $account_model->email = $_POST['email'];
+            $account_model->save();
+            flash('用户登录邮箱已成功修改', 'ok');
+        }
+        else{
+            $account_model->password = md5($_POST['password']);
+            $account_model->save();
+            $_SESSION['login_user']['password'] = md5($_POST['password']);
+            flash('用户密码已成功修改', 'ok');
+        }
+        
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
     public function view($id){
         $user_model = new UsersModel();
         $event_model = new EventsModel();

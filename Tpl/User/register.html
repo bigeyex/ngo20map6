@@ -4,8 +4,8 @@
 <div id="main" class="form-region">
     <form id="newform" name="newform" class="need-validate" enctype="multipart/form-data" action="__URL__/insert" method="post" >
     <?php if(isset($_SESSION['api'])): ?>
-    <input type="hidden" name="api_vendor" value="{@api.api_vendor}"/>
-    <input type="hidden" name="api_id" value="{@api.api_id}"/>
+    <input type="hidden" name="api_vendor" value="{$_SESSION.api.api_vendor}"/>
+    <input type="hidden" name="api_id" value="{$_SESSION.api.api_id}"/>
     <?php endif; ?>
     <div class="form-section" id="type-select-section">
         <h3><span class="required">*</span> 请在下列选项中选出您的注册用户类型</h3>

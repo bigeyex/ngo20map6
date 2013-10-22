@@ -27,9 +27,12 @@
 					<div class="content-brick namecard-left">
 						<h4>联系方式</h4>
 						<p>{$user.contact_name} {$user.phone}
-						<?php if(!empty($user['website'])): ?>
-							<br/><a href="{$user.website|addhttp}" target="_blank">访问机构网站</a>
-						<?php endif; ?>
+							<?php if(!empty($user['public_email'])): ?>
+								<br/><a href="mailto:{$user.public_email}">{$user.public_email}</a>
+							<?php endif; ?>
+							<?php if(!empty($user['website'])): ?>
+								<br/><a href="{$user.website|addhttp}" target="_blank">访问机构网站</a>
+							<?php endif; ?>
 						</p>
 					</div>
 					<div class="content-brick namecard-right">
