@@ -30,8 +30,7 @@ $(document).ready(function(){
 				<div class="control-group">
 					<label class="control-label" for="input02">{:L('相关公益组织')}</label>
 					<div class="controls">
-						<input type="text" name="user_name" class="input-large" id="input03" value="{$news.user_name}">
-						<input type="hidden" name="user_id" class="input-large" value="{$news.user_id}">
+						<input type="text" name="user_id" class="input-large" id="related-org" value="{$news.user_id}" username="{$news.user_name}">
 						<p class="help-block" id="org-validate"></p>
 					</div>
 				</div>
@@ -76,8 +75,9 @@ $(document).ready(function(){
 		</form>
 	</div>
 </div>
-
-
+{:css('select2')}
+{:js('select2')}
+{:js('select2_locale_zh-CN')}
 <include file="Public:image-cropper"/>
 <script type="text/javascript">
 $('#upload-avatar-button').click(function(){
@@ -87,4 +87,28 @@ $('#upload-avatar-button').click(function(){
             $('#avatar-hidden').val(img);
         });
     });   
+
+$('#related-org').select2({
+	minimumInputLength: 2,
+	placeholder: "请输入公益组织名称",
+	ajax: {
+                url: app_path+"/User/ajax_suggest",
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        q: term
+                    };
+                },
+                results: function (data, page) { 
+                    return {results: data};
+                }
+            },
+    initSelection : function (element, callback) {
+        callback({id: element.val(), text: element.attr('username')});
+    }
+});
+
+function formatResult(item) {
+        return item['text'];
+    }
 </script>

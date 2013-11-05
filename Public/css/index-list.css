@@ -1,0 +1,74 @@
+#container{
+	width: 960px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 60px;
+}
+
+#std-menu-items .wide-menu{
+	width: 500px;
+}
+
+#std-menu-items .wide-menu li{
+	min-width: 100px;
+	display: inline-block;
+}
+
+.pure-menu-children ul.pure-menu-children{
+	border: 1px solid #b7b7b7;
+	background: white;
+}
+
+#result-table{
+	margin-left: 10px;
+}
+
+.pure-paginator ul{
+	margin: 10px;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+.pager-brief {
+margin: 10px;
+font-size: 12px;
+}
+
+#search-form{
+	margin-left: 10px;
+}
+
+.clear-button{
+	height: 18px;
+}
+
+.filter-button{
+	margin: 10px;
+}
+
+
+
+.pure-button-success,
+        .pure-button-error,
+        .pure-button-warning,
+        .pure-button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .pure-button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .pure-button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .pure-button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .pure-button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }

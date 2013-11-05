@@ -54,7 +54,7 @@ function css($str){
 }
 
 // insert url of uploaded image or thumbnail
-function thumb($str, $thumb_level = 0){
+function thumb($str, $thumb_level = -1){
 	if(is_array($str)){
 		if(isset($str['image'])){
 			$str = $str['image'];
@@ -63,6 +63,9 @@ function thumb($str, $thumb_level = 0){
 
 	if($thumb_level === 0){
 		return __APP__.'/Public/Uploaded/'.$str;
+	}
+	elseif($thumb_level == -1){
+		return __APP__.'/Public/Uploadedthumb/'.$str;
 	}
 	else{
 		return __APP__.'/Public/Uploadedthumb/'.$thumb_level.'_'.$str;

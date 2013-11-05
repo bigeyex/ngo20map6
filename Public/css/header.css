@@ -570,3 +570,26 @@ a.action-button{
     padding-top: 27px;
     text-align: center;
 }
+
+#list-view-link{
+    position: absolute;
+    left: 187px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #236c00;
+    text-shadow: 0 1px rgba(214,255,80,.75);
+    border: 1px solid;
+    padding: 8px 12px;
+    line-height: 12px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 0px 0px #c2e9a7, #c2e9a7 0px 1px 0px inset;
+    background: #b6d079; /* Old browsers */
+background: -moz-linear-gradient(top,  #b6d079 0%, #75b143 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b6d079), color-stop(100%,#75b143)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #b6d079 0%,#75b143 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b6d079', endColorstr='#75b143',GradientType=0 ); /* IE6-9 */
+
+}

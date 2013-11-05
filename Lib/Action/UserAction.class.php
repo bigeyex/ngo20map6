@@ -159,6 +159,13 @@ class UserAction extends Action {
         $this->display();
     }
 
+    public function ajax_suggest($q, $page=1){
+        $record_per_page = 10;
+        $user_model = new UsersModel();
+        $result = $user_model->field('id,name text')->where(array('name' => array('like', "%$q%")))->limit($record_per_page)->select();
+        echo json_encode($result);
+    }
+
     public function save() {
         $user=M('Users');
         $user->create();

@@ -171,10 +171,10 @@ var mapdata = {
 		if(key == this.key)return;
 		var self = this;
 		this.key = key;
-		$.get(app_path+'/Map/ajax_hotspots/key/'+key, function(result){
-			self.init(result);
-			list_control.change_viewport();
-		});
+		// $.get(app_path+'/Map/ajax_hotspots/key/'+key, function(result){
+		// 	self.init(result);
+		// 	list_control.change_viewport();
+		// });
 	},
 	set_field: function(field){
 		this.rec_field = field;
