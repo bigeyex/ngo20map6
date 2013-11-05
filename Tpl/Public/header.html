@@ -49,8 +49,11 @@
 		<div id="masthead">
 			<div id="main-nav">
 				<a href="{:U('Index/index')}"><div id="logo">公益地图</div></a>
+				<?php if(MODULE_NAME == 'Index' && ACTION_NAME == 'index'): ?>
+				<a href="{:U('Index/list_index')}" id="list-view-link">名录</a>
+				<?php endif; ?>
 				<ul id="main-nav-filters" class="title">
-				<?php if(MODULE_NAME != 'Index'): ?>
+				<?php if(MODULE_NAME != 'Index' || ACTION_NAME != 'index'): ?>
 					<li id="fields-filter" class="main-nav-filter">
 						<a class="filter-menu-button" href="{:U('Index/index')}">返回地图</a>
 					</li>

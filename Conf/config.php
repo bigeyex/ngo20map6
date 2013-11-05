@@ -20,6 +20,7 @@ return array(
     'LOAD_EXT_CONFIG' => 'db,content,profanity_words',
     'ADMIN_ROW_LIST' => 20,
     'PAGE_ROLLPAGE' => 10,
+    'LIST_RECORD_PER_PAGE' => 20,
     'VAR_PAGE' => 'p',
 );
 ?>

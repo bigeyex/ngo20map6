@@ -38,7 +38,7 @@
 		
 		//4. store into database	
 		foreach($arr['statuses'] as $status){
-			if($status['uid'] == 1998038407 || $status['user']['screen_name']=='乌宇'){
+			if($status['user']['uid'] == 1998038407 || $status['user']['screen_name']=='乌宇'){
 				//echo 'bad user';
 				break;
 			}

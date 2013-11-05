@@ -40,6 +40,10 @@ class NewsAction extends Action{
     	$news_model = new NewsModel();
     	$news = $news_model->find($id);
 
+        $user_model = new UsersModel();
+        $user = $user_model->find($news['user_id']);
+        $news['user_name'] = $user['name'];
+
     	$this->assign('news', $news);
     	$this->assign('action', 'save');
     	$this->display('add');
