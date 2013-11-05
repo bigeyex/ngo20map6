@@ -3,7 +3,9 @@
 <div id="bread-crumb">
 	<div id="bread-crumb-inner">
 		<a href="{:U('Index/index')}">首页</a> > 
+		<?php if(!$user['is_admin']): ?>
 		<a href="{:U('User/view')}/id/{$user.id}">{$user.name}</a> > 
+		<?php endif; ?>
 		<span>{$event.name}</span>
 	</div>
 </div>
@@ -12,7 +14,9 @@
 	<div id="left-column">
 		<div class="block">
 			<h3>{$event.name}</h3>
+			<?php if(!$user['is_admin']): ?>
 			<span class="sub-title">{$user.name}</span>
+			<?php endif; ?>
 		</div>
 		<div class="block">
 			<div class="content-brick">
@@ -73,12 +77,15 @@
 	</div>
 	<div id="right-column">
 		<div id="user-namecard" class="block">
+			<?php if(!$user['is_admin']): ?>
 			<div id="user-avatar">
 				<img src="{:upimage($user['image'])}" width="80" />
 				<h4>{$user.name}</h4>
 			</div>
+			<?php endif; ?>
 			<div id="map-zone" style="width:319px;height:281px;"></div>
 		</div>
+
 		<div class="block">
 			<div class="content-brick">
 				<h4>机构简介</h4>

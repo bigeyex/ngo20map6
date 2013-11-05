@@ -44,11 +44,12 @@ class AdminAction extends Action{
     }
 
     public function change_type(){
+        admin_only();
         $user_model = M('Users');
         $user_model->create();
         $del = $user_model->where(array('id'=>$_GET['id']));
         $del->type = $_GET['type'];
-        $del -> save();
+        $del->save();
 
         echo 'ok';
     }
