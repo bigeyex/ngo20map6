@@ -101,7 +101,7 @@
 			<div id="map-zone" style="width:319px;height:281px;"></div>
 		</div>
 		<div class="content-brick">
-			<h4>项目案例</h4>
+			<h4>公益活动</h4>
 			<div id="user-events">
 				<?php foreach ($events as $e): ?>
 					<a href="{:U('Event/view')}/id/{$e.id}">
@@ -109,11 +109,32 @@
 						<div class="event-title">{$e.name}</div>
 					</a>
 				<?php endforeach ?>
+				<?php if($user['id'] == user('id')): ?>
+					<a href="{:U('Event/add')}">
+						{:img('add-block.png', '新增公益活动', array('width'=>'160'))}
+					</a>
+				<?php endif; ?>
 				<div class="clearfix"></div>
 			</div>
 		</div>
 		<div class="content-brick">
-			<h4>更多相关组织</h4>
+			<h4>关联机构</h4>
+			<div id="recommend-users">
+				<?php foreach ($rec_users as $r): ?>
+					<a href="{:U('User/view')}/id/{$r.id}">
+						<img src="__APP__/Public/Uploaded/{$r.image}" width="102"/>
+					</a>
+				<?php endforeach ?>
+				<?php if($user['id'] == user('id')): ?>
+					<a id="add-related-ngo-link" href="javascript:void(0);">
+						{:img('add-block.png', '组织logo', array('width'=>'102'))}
+					</a>
+				<?php endif; ?>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="content-brick">
+			<h4>更多相关机构</h4>
 			<div id="recommend-users">
 				<?php foreach ($rec_users as $r): ?>
 					<a href="{:U('User/view')}/id/{$r.id}">
@@ -126,7 +147,19 @@
 	</div>
 </div>
 
+<div id="add-related-ngo-dialog" class="model-dialog" style="display:none;">
+	<h4>添加关联机构</h4>
+	<div class="form-field">
+		<label for="user_id">请输入关联机构的名称</label>
+		<input type="text" name="user_id" id="user_id" class="short" id="related-org" placeholder="关联机构名称"/>
+		<button class="action-button">添加</button>
+	</div>
+	<a href="javascript:void(0);" class="close-button"></a>
+	
+</div>
+
 {:css('event-view')}
+{:css('form-page')}
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
@@ -136,12 +169,16 @@
 	var map = new BMap.Map("map-zone");
 	var point = new BMap.Point(longitude, latitude);
 	map.centerAndZoom(point, 10);
-	var myIcon = new BMap.Icon(app_path+"/Public/Img/markers/green-event-marker.png", new BMap.Size(36, 26), {  
+	var myIcon = new BMap.Icon(app_path+"/Public/img/markers/green-event-marker.png", new BMap.Size(36, 26), {  
 		anchor: new BMap.Size(8, 26)
 	});
 	var point = new BMap.Point(longitude, latitude);
 	var marker = new BMap.Marker(point, {icon: myIcon}); 
 	map.addOverlay(marker);  
+
+	$('#add-related-ngo-link').click(function(){
+		$('#add-related-ngo-dialog').lightbox_me({centered: true});
+	});
 </script>
 
 <include file="Public:footer"/>

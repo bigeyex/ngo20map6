@@ -117,20 +117,20 @@
 </div>
 
 <div id="upload-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <a href="javascript:void(0);" class="close-button"></a>
     <h4>{:L('从本地上传图片')}</h4>
-    <div id="upload_button">{:L('选择本地图片')}</div>
+    <div id="upload_button" class="btn action">{:L('选择本地图片')}</div>
 </div>
 
 <div id="insert-link-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <a href="javascript:void(0);" class="close-button"></a>
     <h4>{:L('添加链接')}</h4>
     <input type="text" id="insert-link-text"/>
-    <a id="insert-link-button">{:L('添加链接')}</a>
+    <a id="insert-link-button" class="btn action">{:L('添加链接')}</a>
 </div>
 
 <div id="insert-video-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"><img src="__APP__/Public/Img/close-button.gif" alt="关闭"/></a>
+    <a href="javascript:void(0);" class="close-button"></a>
     <h4>{:L('添加在线视频')}</h4>
     <p>
         {:L('请填入网络视频地址。暂支持优酷、土豆、56网视频。')}<br/>
@@ -139,7 +139,7 @@
 
     </p>
     <input type="text" id="insert-video-text"/>
-    <a id="insert-video-button">{:L('添加视频')}</a>
+    <a id="insert-video-button" class="btn action">{:L('添加视频')}</a>
 </div>
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
@@ -153,7 +153,6 @@
 {:js('jquery-ui.sortable')}
 {:js('moment')}
 {:js('pikaday')}
-{:js('event-edit')}
 
 {:css('select2')}
 {:js('select2')}

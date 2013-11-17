@@ -14,11 +14,11 @@
 			
 			<h3>
 				<a href="{:U('Event/view')}/id/{$result.id}">
-					{$result.name}
+					{$result.name|strip_tags}
 				</a>
 			</h3>
 			<p class="content">
-				{$result.description|short=150}
+				{$result.description|short=150|strip_tags}
 			</p>
 			
 			

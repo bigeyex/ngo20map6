@@ -66,3 +66,59 @@ a{
 a:hover{
 	text-decoration: underline;
 }
+
+/* model dialog */
+
+#login-box, .model-dialog {
+    padding-top: 26px;
+    padding-right: 24px;
+    padding-bottom: 26px;
+    padding-left: 24px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 6px 10.392px 27px 0px rgba( 0, 0, 0, 0.28 );
+    position: absolute;
+    
+}
+
+#login-box p, .model-dialog p {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    color: #665f50;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+
+#login-box h4, .model-dialog h4 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    font-size: 14px;
+    color: #665f50;
+}
+
+.model-dialog label {
+    color: #999999;
+    font-size: 12px;
+    margin-top: 12px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.close-button{
+	display: block;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icons/close-button.gif) no-repeat;
+}

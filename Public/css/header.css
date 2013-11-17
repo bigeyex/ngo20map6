@@ -262,41 +262,8 @@ div.goog-te-gadget-simple img,
     top: 50px;
 }
 
-#login-box {
-    padding-top: 26px;
-    padding-right: 24px;
-    padding-bottom: 26px;
-    padding-left: 24px;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 6px 10.392px 27px 0px rgba( 0, 0, 0, 0.28 );
-    position: absolute;
-    width: 243px;
-    height: 251px;
-}
 
-#login-box h4 {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    font-size: 14px;
-    color: #665f50;
-}
 
-#login-box p {
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    color: #665f50;
-    font-size: 12px;
-    line-height: 16px;
-}
 
 #login-box form {
     padding-top: 4px;
@@ -331,6 +298,11 @@ div.goog-te-gadget-simple img,
     margin-bottom: 3px;
 }
 
+#login-box{
+    width: 243px;
+    height: 251px;
+}
+
 #login-remember {
     margin-top: 16px;
     font-size: 12px;
@@ -351,7 +323,7 @@ div.goog-te-gadget-simple img,
     height: 11px;
 }
 
-.action-button{
+.action-button, .btn.action{
     border-radius: 4px;
     background: url(../img/bg/gradients2.jpg) repeat-x;
     width: 116px;
@@ -380,7 +352,7 @@ a.action-button{
     margin-left: 10px;
 }
 
-#login-action {
+#login-action, .action-button {
     margin-top: 10px;
 }
 
