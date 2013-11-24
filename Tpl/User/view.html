@@ -120,12 +120,18 @@
 		<div class="content-brick">
 			<h4>关联机构</h4>
 			<div id="recommend-users">
-				<?php foreach ($rec_users as $r): ?>
-					<a href="{:U('User/view')}/id/{$r.id}">
-						<img src="__APP__/Public/Uploaded/{$r.image}" width="102"/>
+				<?php foreach ($related_ngos as $r): ?>
+					<?php if(!empty($r['related_user_id'])): ?>
+					<a href="{:U('User/view')}/id/{$r.related_user_id}">
+						<img src="__APP__/Public/Uploadedthumb/{$r.image}" width="102"/>
 					</a>
+					<?php else: ?>
+					<a href="javascript:void(0);">
+						{$r.user_name}
+					</a>
+					<?php endif; ?>
 				<?php endforeach ?>
-				<?php if($user['id'] == user('id')): ?>
+				<?php if($user['id'] == user('id') || user('is_admin')): ?>
 					<a id="add-related-ngo-link" href="javascript:void(0);">
 						{:img('add-block.png', '组织logo', array('width'=>'102'))}
 					</a>
@@ -134,11 +140,11 @@
 			</div>
 		</div>
 		<div class="content-brick">
-			<h4>更多相关机构</h4>
+			<h4>推荐机构</h4>
 			<div id="recommend-users">
 				<?php foreach ($rec_users as $r): ?>
 					<a href="{:U('User/view')}/id/{$r.id}">
-						<img src="__APP__/Public/Uploaded/{$r.image}" width="102"/>
+						<img src="__APP__/Public/Uploadedthumb/{$r.image}" width="102"/>
 					</a>
 				<?php endforeach ?>
 				<div class="clearfix"></div>
@@ -151,15 +157,23 @@
 	<h4>添加关联机构</h4>
 	<div class="form-field">
 		<label for="user_id">请输入关联机构的名称</label>
-		<input type="text" name="user_id" id="user_id" class="short" id="related-org" placeholder="关联机构名称"/>
-		<button class="action-button">添加</button>
+		<input type="text" name="user_id" id="related-org-name" class="short" placeholder="关联机构名称"/>
+		<div width="150" height="150" id="image-placeholder">
+			<img width="150" style="display:none;" id="related-org-form-image"/>
+		</div>
+		<button class="action-button" id="add-related-org-button">添加</button>
 	</div>
 	<a href="javascript:void(0);" class="close-button"></a>
 	
 </div>
 
+<script type="text/javascript">
+	var page_user_id = {$user.id};
+</script>
+
 {:css('event-view')}
 {:css('form-page')}
+{:js('jquery.autocomplete')}
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 
@@ -176,8 +190,53 @@
 	var marker = new BMap.Marker(point, {icon: myIcon}); 
 	map.addOverlay(marker);  
 
+	var related_org_user_id;
 	$('#add-related-ngo-link').click(function(){
+		$('#related-org-name').val('');
+		$('#related-org-form-image').hide();
+		related_org_user_id = 0;
 		$('#add-related-ngo-dialog').lightbox_me({centered: true});
+	});
+
+	$(function(){
+		$('#related-org-name').autocomplete(
+		{
+			serviceUrl: app_path+'/User/auto_complete_by_name', 
+			onSelect: function(value, data){
+				/* there is a problem in the autocomplete plugin */
+				/* no data is passed back */
+				// if(typeof data.id != 'undefined'){
+				// 	related_org_user_id = data.id;
+				// 	if(data.image){
+				// 		$('#related-org-form-image').attr('src', app_path+'/Public/Uploadedthumb/'+data.image);
+				// 		$('#related-org-form-image').show();
+				// 	}
+				// 	else{
+				// 		$('#related-org-form-image').hide();
+				// 	}
+				// }
+			}
+		});
+
+		$('#add-related-org-button').click(function(){
+			$.post(app_path+'/User/add_related_org_to_user', {
+				user_id: page_user_id,
+				related_org_name: $('#related-org-name').val()
+			},
+			function(data){
+				if(data.id){
+					$('<a href="'+app_path+'/User/view/id/'+data.id+'"><img src="__APP__/Public/Uploadedthumb/'+data.image+'" width="102"/></a>').insertBefore('#add-related-ngo-link');
+				}
+				else{
+					$('<a href="javascript:void(0);" class="related-ngo-item">'+data.name+'</a>').insertBefore('#add-related-ngo-link');
+				}
+				$('#add-related-ngo-dialog').trigger('close');
+			}, 'json');
+		});
+
+		$('.close-button').click(function(){
+			$('#add-related-ngo-dialog').trigger('close');
+		});
 	});
 </script>
 

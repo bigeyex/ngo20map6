@@ -10,6 +10,12 @@ function admin_only(){
 	}
 }
 
+function need_login(){
+	if(!user()){
+		die('需要登录才能访问此页面');
+	}
+}
+
 function check_profanity_words(){
     foreach(C('profanity_words') as $p_word){
         if(strpos($words, $p_word))

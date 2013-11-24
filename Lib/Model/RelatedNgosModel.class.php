@@ -1,23 +1,28 @@
 <?php
 
 class RelatedNgosModel extends Model{
-	public function associate($user_id_or_name){
-		if(!user())return false;
+	public function select_by_user_id($user_id){
+		$records = $this->where(array('user_id'=>$user_id))->select();
 		$user_model = new UsersModel();
-		if(is_numeric($user_id_or_name)){
-			$user = $user_model->find($user_id_or_name);
-			if($user){
-				return $this->add(array('user_id'=>user('id'), 'related_user_id'=>$user_id_or_name, 'user_name'=>$user['name']));
-			}
-			else{
-				return false;
-			}
+		$user_ids = array();
+		foreach($records as $r){
+			$user_ids[$r['related_user_id']] = true;
 		}
-		else{	// $user_id_or_name is not numeric => create by name
-			$this->add(array('user_id'=>user('id'), 'user_name'=>$user_id_or_name));
-			return true;
+		$sql = "select id,image from users where id in ('" . implode("','", array_keys($user_ids)) . "')";
+		$user_records = $this->query($sql);
+		foreach($user_records as $r){
+			$user_ids[$r['id']] = $r['image'];
 		}
 
+		for($i=0;$i<count($records);$i++){
+			if(isset($records[$i]['related_user_id'])){
+				$records[$i]['image'] = $user_ids[$records[$i]['related_user_id']];
+			}
+			else{
+				$records[$i]['image'] = null;
+			}
+		}
+		return $records;
 	}
 }
 
