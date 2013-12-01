@@ -82,9 +82,11 @@ class UserAction extends Action {
         $recommended_users = $recommend_model->users_by_user($id);
         $events = $event_model->select_by_user($id);
         $weibo = $weibo_model->select_weibo_by_user($id);
+        $related_ngo_model = new RelatedNgosModel();
         $this->assign('user', $user);
         $this->assign('events', $events);
         $this->assign('rec_users', $recommended_users);
+        $this->assign('related_ngos', $related_ngo_model->select_by_user_id($id));
         $this->assign('weibo', $weibo);
         $this->display();
     }
@@ -164,6 +166,57 @@ class UserAction extends Action {
         $user_model = new UsersModel();
         $result = $user_model->field('id,name text')->where(array('name' => array('like', "%$q%")))->limit($record_per_page)->select();
         echo json_encode($result);
+    }
+
+    public function auto_complete_by_name($query){
+        $suggestions = array();
+        $data = array();
+        $record_per_page = 10;
+        $user_model = new UsersModel();
+        $result = $user_model->field('id,name,image')->where(array('name' => array('like', "%$query%"), 'type' => array('in', array('csr', 'ngo', 'fund'))))->limit($record_per_page)->select();
+        foreach($result as $row){
+            $suggestions[] = $row['name'];
+            $data[] = array('id'=>$row['id'], 'image'=>$row['image']);
+        }
+        echo json_encode(array(
+                'query' => $query,
+                'suggestions' => $suggestions,
+                'data' => $data
+            ));
+    }
+
+    public function add_related_org_to_user($user_id, $related_org_name){
+        need_login();
+        if(!user('is_admin')) $user_id = user('id');
+        $user_model = new UsersModel();
+        $related_ngo_model = M('Related_ngos');
+        $result = $user_model->where(array('name'=>$related_org_name))->find();
+        if($result){
+            $related_ngo_model->add(array(
+                'user_id' => $user_id,
+                'user_name' => $result['name'],
+                'related_user_id' => $result['id'],
+                'type' => $result['type']
+            ));
+            echo json_encode(array('name'=>$related_org_name, 'id'=>$result['id'], 'image'=>$result['image']));
+            return;
+        }
+        else{
+            $related_ngo_model->add(array(
+                'user_id' => $user_id,
+                'user_name' => $related_org_name,
+            ));
+            echo json_encode(array('name'=>$related_org_name));
+            return;
+        }
+    }
+
+    public function remove_related_org_from_user($user_id, $related_org_name){
+        need_login();
+        if(!user('is_admin')) $user_id = user('id');
+        $related_ngo_model = M('Related_ngos');
+        $related_ngo_model->where(array('user_name'=>$related_org_name, 'user_id'=>$user_id))->delete();
+        echo json_encode(array('status'=>'ok'));
     }
 
     public function save() {

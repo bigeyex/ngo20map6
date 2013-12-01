@@ -75,7 +75,8 @@ select {
     line-height: 31px;
 }
 
-.form-field input[type=text], .form-field input[type=password], .form-field textarea {
+.form-field input[type=text], .form-field input[type=password], .form-field textarea,
+.model-dialog input[type=text], .model-dialog input[type=password], .model-dialog textarea {
     width: 265px;
     height: 26px;
     -webkit-border-radius: 4px;
@@ -340,76 +341,12 @@ select {
     background: url(../img/icons/event-link.png) no-repeat 2px;
 }
 
-.model-dialog {
-    background: white;
-    width: 400px;
-    height: 200px;
-}
-
 .close-button {
     position: absolute;
     right: 5px;
     top: 5px;
 }
 
-.model-dialog h4 {
-    margin-left: 10px;
-}
-
-#upload_button {
-    position: absolute;
-    top: 80px;
-    left: 150px;
-    background: #81B460;
-    height: 35px;
-    width: 100px;
-    color: white;
-    line-height: 35px;
-    text-align: center;
-}
-#insert-link-text {
-    display: block;
-    position: absolute;
-    top: 60px;
-    left: 45px;
-    width: 300px;
-    background: #e9e9e9;
-}
-
-#insert-link-button {
-    position: absolute;
-    display: block;
-    top: 120px;
-    left: 162px;
-    background: #85B552;
-    color: white;
-    padding: 8px 15px;
-    cursor: pointer;
-}
-
-#insert-video-text {
-    display: block;
-    position: absolute;
-    top: 80px;
-    left: 45px;
-    width: 300px;
-    background: #e9e9e9;
-}
-
-#insert-video-dialog p {
-    margin-left: 55px;
-}
-
-#insert-video-button {
-    position: absolute;
-    display: block;
-    top: 130px;
-    left: 162px;
-    background: #85B552;
-    color: white;
-    padding: 8px 15px;
-    cursor: pointer;
-}
 
 #newform a.hideable-section{
     background: url(../Img/fold-arrows.gif) no-repeat 59px 2px;
@@ -460,3 +397,12 @@ select {
     line-height: 20px;
     padding: 20px;
 }
+
+
+/* jquery.autocomplete */
+
+.autocomplete-w1 { background:url(img/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:6px 0 0 6px; /* IE6 fix: */ _background:none; _margin:1px 0 0 0; }
+.autocomplete-suggestions { border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
+.autocomplete-suggestions .autocomplete-selected { background:#F0F0F0; }
+.autocomplete-suggestions div { padding:2px 5px; white-space:nowrap; overflow:hidden; }
+.autocomplete-suggestions strong { font-weight:normal; color:#3399FF; }

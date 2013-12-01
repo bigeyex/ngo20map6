@@ -53,6 +53,15 @@ function css($str){
 	return '<link href="'.__APP__.'/Public/css/'.$str.'.css" rel="stylesheet"/>';
 }
 
+// insert image file
+function img($str, $alt='', $attr=array()){
+	$extra_attr = '';
+	foreach($attr as $k=>$v){
+		$extra_attr .= ' '.$k.'="'.$v.'"';
+	}
+	return '<img src="'.__APP__.'/Public/img/'.$str.'" alt="'.$alt.'"'.$extra_attr.'/>';
+}
+
 // insert url of uploaded image or thumbnail
 function thumb($str, $thumb_level = -1){
 	if(is_array($str)){

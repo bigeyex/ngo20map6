@@ -10,6 +10,12 @@ function admin_only(){
 	}
 }
 
+function need_login(){
+	if(!user()){
+		die('需要登录才能访问此页面');
+	}
+}
+
 function check_profanity_words(){
     foreach(C('profanity_words') as $p_word){
         if(strpos($words, $p_word))
@@ -32,19 +38,20 @@ function StopAttack($StrFiltKey,$StrFiltValue,$ArrFiltReq){
     {  
       $StrFiltValue=implode($StrFiltValue);  
     }  
-    if (preg_match("/".$ArrFiltReq."/is",$StrFiltValue)==1){  
+    if (preg_match("/".$ArrFiltReq."/is",$StrFiltValue, $matches)==1){  
         print "输入的内容不合适!Improper input!" ;  
+        print_r($matches);
         exit();  
     }
 } 
 foreach($_GET as $key=>$value){  
-  StopAttack($key,$value,$getfilter);  
+  //StopAttack($key,$value,$getfilter);  
 }
 foreach($_POST as $key=>$value){  
-  StopAttack($key,$value,$postfilter);  
+  //StopAttack($key,$value,$postfilter);  
 }
 foreach($_COOKIE as $key=>$value){  
-  StopAttack($key,$value,$cookiefilter);  
+  //StopAttack($key,$value,$cookiefilter);  
 }
 
 function auto_charset($fContents, $from='gbk', $to='utf-8')
