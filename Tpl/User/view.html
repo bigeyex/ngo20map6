@@ -119,15 +119,18 @@
 		</div>
 		<div class="content-brick">
 			<h4>关联机构</h4>
-			<div id="recommend-users">
+			<div id="related-orgs">
 				<?php foreach ($related_ngos as $r): ?>
 					<?php if(!empty($r['related_user_id'])): ?>
-					<a href="{:U('User/view')}/id/{$r.related_user_id}">
+					<a href="{:U('User/view')}/id/{$r.related_user_id}" class="related-org">
+						<span class="delete-related-org" title="删除" href="javascript:void(0);" onclick="delete_related_org(event)">删除</span>
 						<img src="__APP__/Public/Uploadedthumb/{$r.image}" width="102"/>
+						<p class="related-ngo-name">{$r.user_name}</p>
 					</a>
 					<?php else: ?>
-					<a href="javascript:void(0);">
-						{$r.user_name}
+					<a href="javascript:void(0);" class="related-org">
+						<span class="delete-related-org" title="删除" href="javascript:void(0);" onclick="delete_related_org(event)">删除</span>
+						<p class="related-ngo-name">{$r.user_name}</p>
 					</a>
 					<?php endif; ?>
 				<?php endforeach ?>
@@ -225,10 +228,10 @@
 			},
 			function(data){
 				if(data.id){
-					$('<a href="'+app_path+'/User/view/id/'+data.id+'"><img src="__APP__/Public/Uploadedthumb/'+data.image+'" width="102"/></a>').insertBefore('#add-related-ngo-link');
+					$('<a href="'+app_path+'/User/view/id/'+data.id+'" class="related-org"><span class="delete-related-org" title="删除" href="javascript:void(0);" onclick="delete_related_org(event)">删除</span><img src="__APP__/Public/Uploadedthumb/'+data.image+'" width="102"/><p class="related-ngo-name">'+data.name+'</p>	</a>').insertBefore('#add-related-ngo-link');
 				}
 				else{
-					$('<a href="javascript:void(0);" class="related-ngo-item">'+data.name+'</a>').insertBefore('#add-related-ngo-link');
+					$('<a href="javascript:void(0);" class="related-org"><span class="delete-related-org" title="删除" href="javascript:void(0);" onclick="delete_related_org(event)">删除</span><p class="related-ngo-name">'+data.name+'</p>	</a>').insertBefore('#add-related-ngo-link');
 				}
 				$('#add-related-ngo-dialog').trigger('close');
 			}, 'json');
@@ -238,6 +241,22 @@
 			$('#add-related-ngo-dialog').trigger('close');
 		});
 	});
+
+	function delete_related_org(event){
+		var elem = $(event.currentTarget).parent();
+		event.preventDefault();
+		var related_name = elem.find('.related-ngo-name').text();
+		$.get(app_path+'/User/remove_related_org_from_user',{
+				user_id: page_user_id,
+				related_org_name: related_name
+			},
+			function(data){
+				elem.remove();
+			}, 'json');
+
+		
+		return false;
+	}
 </script>
 
 <include file="Public:footer"/>

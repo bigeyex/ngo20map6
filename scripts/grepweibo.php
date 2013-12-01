@@ -53,6 +53,7 @@
 					",'weibo','".x($status['text'])."','".$status['geo']['coordinates'][1]."','".$status['geo']['coordinates'][0]."','".$status['bmiddle_pic']."',".
 					$status['reposts_count'].",".$status['comments_count'].",'" . date('Y-m-d H:i:s',strtotime($status['created_at'])). 
 					"','" . $status['user']['profile_image_url'] . "','".$status['user']['screen_name']."')";
+			echo $sql;
 			query($sql);
 		}
 	

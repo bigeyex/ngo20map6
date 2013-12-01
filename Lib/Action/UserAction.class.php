@@ -206,9 +206,17 @@ class UserAction extends Action {
                 'user_id' => $user_id,
                 'user_name' => $related_org_name,
             ));
-            echo json_encode(array('name'=>$related_org_name,));
+            echo json_encode(array('name'=>$related_org_name));
             return;
         }
+    }
+
+    public function remove_related_org_from_user($user_id, $related_org_name){
+        need_login();
+        if(!user('is_admin')) $user_id = user('id');
+        $related_ngo_model = M('Related_ngos');
+        $related_ngo_model->where(array('user_name'=>$related_org_name, 'user_id'=>$user_id))->delete();
+        echo json_encode(array('status'=>'ok'));
     }
 
     public function save() {
