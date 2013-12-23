@@ -21,20 +21,18 @@
 		<div class="block">
 			<div class="content-brick">
 				<h4>项目简介</h4>
-				<p>{$event.description|nl2br}</p>
-			</div>
-			<div class="content-brick">
-				<h4>项目成果</h4>
-				<p>{$event.outcome|nl2br}</p>
-			</div>
+				<p>{$event.description|nl2br}<br/>{$event.outcome|nl2br}</p>
+		</div>
 			<div class="content-brick">
 				<h4>项目需求</h4>
 				<p>{$event.res_tags}</p>
 			</div>
+			<?php if($event['type'] == 'ngo'): ?>
 			<div class="content-brick">
 				<h4>需求描述</h4>
 				<p>{$event.req_description}</p>
 			</div>
+			<?php endif; ?>
 			<div class="content-brick">
 				<h4>相关图片</h4>
 				<div id="image-slider">
@@ -76,13 +74,12 @@
 		</div>
 	</div>
 	<div id="right-column">
+		<?php if(!$user['is_admin']): ?>
 		<div id="user-namecard" class="block">
-			<?php if(!$user['is_admin']): ?>
 			<div id="user-avatar">
 				<img src="{:upimage($user['image'])}" width="80" />
 				<h4>{$user.name}</h4>
 			</div>
-			<?php endif; ?>
 			<div id="map-zone" style="width:319px;height:281px;"></div>
 		</div>
 
@@ -135,6 +132,7 @@
 				</div>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
 

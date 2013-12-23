@@ -35,16 +35,14 @@
 	<div class="preview-roller">
 		<div class="description">
 			<span class="title">项目简介</span>
-			<span>{$event.description|strip_tags|nl2br}</span>
+			<span>{$event.description|strip_tags|nl2br}<br/>{$event.outcome|nl2br}</span>
 		</div>
+		<?php if($event['type'] == 'ngo'): ?>
 		<div class="aim">
 			<span class="title">需求描述</span>
 			<span>{$event.req_description|nl2br}</span>
 		</div>
-		<div class="aim">
-			<span class="title">项目成果</span>
-			<span>{$event.outcome|nl2br}</span>
-		</div>
+		<?php endif; ?>
 		<div class="aim">
 			<span class="title">相关网址</span>
 			<span><a href="{$event.url}" target="_blank">{$event.url}</a></span>
