@@ -605,13 +605,21 @@ function expand_weibo_text(){
 	$('.weibo-content').text(weibo.content);
 }
 
+function add_curve(org, dst, color, width){
+	var pointa = new BMap.Point(org.longitude,org.latitude);
+	var pointb = new BMap.Point(dst.longitude,dst.latitude);
+	var curve = new BMapLib.CurveLine([pointa, pointb], {strokeColor:color, strokeWeight:width, strokeOpacity:0.4}); //创建弧线对象
+	map.addOverlay(curve); //添加到地图中
+	return curve;
+}
+
 /* SECTION: info-window */
 
 var info_window = {
 	overlay : null,
-	show: function(longitude, latitude, content){
+	curves : [],
+	_show: function(longitude, latitude, content){
 		var self = this;
-		if(self.overlay !== null)map.removeOverlay(self.overlay);
 		this.overlay = new HTMLOverlay(longitude, latitude, 186, 163, '<div class="info-window"><div class="info-window-bg"></div><div class="info-window-box">'+content+'<div class="info-window-close-button"></div><div class="info-window-triangle"></div></div></div>');
 		map.addOverlay(this.overlay);
 		$('.info-window-close-button').click(function(){map.removeOverlay(self.overlay);});
@@ -619,6 +627,11 @@ var info_window = {
 	hide: function(){
 		var self = this;
 		if(self.overlay !== null)map.removeOverlay(self.overlay);
+		if(self.curves.length > 0){
+			for(var i in curves){
+				map.removeOverlay(curves[i]);
+			}
+		}
 	},
 	load: function(data){
 		if(data.model == 'events'){
@@ -627,14 +640,36 @@ var info_window = {
 		else if(data.model == 'users'){
 			url_part = 'User';
 		}
+
+		if(data.model == 'users' && data.type == 'ngo'){
+			spider_link = '<div class="show-spider-link">展开公益网络</div>';
+		}
+		else{
+			spider_link = '';
+		}
 		var data_url = app_path+'/'+url_part+'/view/id/'+data.id;
-		this.show(data.longitude, data.latitude, '<div id="info-window-title"><a href="'+data_url+'" target="_blank">'+util.trim(data.name, 20)+'</a></div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>');
+		this.hide();
+		this._show(data.longitude, data.latitude, '<div id="info-window-title"><a href="'+data_url+'" target="_blank">'+util.trim(data.name, 20)+'</a></div><div id="info-window-place"><span id="info-window-place-label">位置: </span><span id="info-window-place-text">'+data.province+'</span></div><div id="info-window-detail"><span class="waiting-ball"></span></div>'+spider_link);
 		$('.info-window').addClass(data.type);
 		
 		$.get(app_path+'/'+url_part+'/get_detail/id/'+data.id, function(res){
 			if(!res)return;
 			$('#info-window-detail').text(util.trim(res.description, 112));
 		}, 'json');
+
+		$('.show-spider-link').click(function(){
+			$.get(app_path+'/Map/get_network_data/id/'+data.id, function(res){
+				for(var ei in res.events){
+					add_curve(data,res.events[ei],'#49820b',6);
+				}
+				for(var ei in res.related_user){
+					add_curve(data,res.events[ei],'#49820b',2);
+				}
+				for(var ei in res.related_csr){
+					add_curve(data,res.events[ei],'#008ec6',2);
+				}
+			}, 'json');
+		});
 	}
 };
 

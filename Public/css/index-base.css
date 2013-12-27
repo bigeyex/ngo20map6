@@ -885,3 +885,15 @@ span.part-time, span.volunteers{
 #medal-list i.triangle{
     left: 210px;
 }
+
+
+/* spider-network */
+
+.show-spider-link{
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #85b552;
+}
