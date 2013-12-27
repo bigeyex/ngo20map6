@@ -353,6 +353,7 @@ var list_control = {	//knockout.js model
 				end_lat : maxlat
 			}, function(data){
 				// store queried data into 3 categories
+				map.clearHotspots();
 				for(var di in data){
 					var d = data[di];
 					if(d.type == 'ngo' || d.type == 'fund'){
@@ -663,10 +664,10 @@ var info_window = {
 					add_curve(data,res.events[ei],'#49820b',6);
 				}
 				for(var ei in res.related_user){
-					add_curve(data,res.events[ei],'#49820b',2);
+					add_curve(data,res.related_user[ei],'#49820b',2);
 				}
 				for(var ei in res.related_csr){
-					add_curve(data,res.events[ei],'#008ec6',2);
+					add_curve(data,res.related_csr[ei],'#008ec6',2);
 				}
 			}, 'json');
 		});
