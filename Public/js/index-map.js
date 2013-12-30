@@ -232,17 +232,6 @@ var list_control = {	//knockout.js model
 			var data = ko.dataFor(this);
 			info_window.load(data);
 		});
-		$(document).on('mouseleave', '.map-list li', function(){
-			info_window.hide();
-		});
-		$(document).on('click', '.map-list li', function(){
-			var data = ko.dataFor(this);
-			$('.map-list li').removeClass('selected');
-			$(this).addClass('selected');
-			$('.item-highlighter').show();
-			$('.item-highlighter').css('top', this.offsetTop+8);
-			l2_panel.open(data);
-		});
 		$('.map-type-filters span').buttongroup(function(type){
 			mapdata.set_model(type);
 			list_control.change_viewport();
@@ -356,6 +345,12 @@ var list_control = {	//knockout.js model
 				map.clearHotspots();
 				for(var di in data){
 					var d = data[di];
+					if(d.model == 'users'){
+						d.href = app_path+'/User/view/id/'+d.id;
+					}
+					else{
+						d.href = app_path+'/Event/view/id/'+d.id;
+					}
 					if(d.type == 'ngo' || d.type == 'fund'){
 						self.ngo_in_view.push(d);
 					}
@@ -471,140 +466,6 @@ $(function(){
 	});
 });
 
-/* SECTION: weibo stuff */
-/* weibo variables */
-var weibo_data;
-var weibo_data_index = 0;
-var weibo_data_last_index = 0;
-var weibo_timer;
-var weibo_marker = null;
-
-/* load weibo content */
-$.get(app_path+'/Index/load_weibo', function(result){
-	weibo_data = result;
-	switch_weibo_marker();
-	weibo_timer = window.setInterval(switch_weibo_marker, 10000);
-}, 'json');
-
-
-$('#weibo-box').hover(function(){
-	window.clearInterval(weibo_timer);
-}, function(){
-	weibo_timer = window.setInterval(switch_weibo_marker, 10000);
-});
-
-var WeiboUtil = {
-    // 62进制字典
-    str62keys: [
-        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-    ],
-};
-
-
-/**
- * 62进制值转换为10进制
- * @param {String} str62 62进制值
- * @return {String} 10进制值
- */
-WeiboUtil.str62to10 = function(str62) {
-	var i10 = 0;
-	for (var i = 0; i < str62.length; i++)
-	{
-		var n = str62.length - i - 1;
-		var s = str62[i];
-		i10 += this.str62keys.indexOf(s) * Math.pow(62, n);
-	}
-	return i10;
-};
- 
-/**
- * 10进制值转换为62进制
- * @param {String} int10 10进制值
- * @return {String} 62进制值
- */
-WeiboUtil.int10to62 = function(int10) {
-	var s62 = '';
-	var r = 0;
-	while (int10 != 0 && s62.length < 100) {
-		r = int10 % 62;
-		s62 = this.str62keys[r] + s62;
-		int10 = Math.floor(int10 / 62);
-	}
-	return s62;
-};
- 
-/**
- * mid转换为URL字符
- * @param {String} mid 微博mid，如 "201110410216293360"
- * @return {String} 微博URL字符，如 "wr4mOFqpbO"
- */
-WeiboUtil.mid2url = function(mid) {
-    if(!mid) {
-        return mid;
-    }
-    mid = String(mid); //mid数值较大，必须为字符串！
-	if(!/^\d+$/.test(mid)){ return mid; }
-	var url = '';
-	
-	for (var i = mid.length - 7; i > -7; i = i - 7)	//从最后往前以7字节为一组读取mid
-	{
-		var offset1 = i < 0 ? 0 : i;
-		var offset2 = i + 7;
-		var num = mid.substring(offset1, offset2);
-		
-		num = this.int10to62(num);
-		url = num + url;
-	}
-	
-	return url;
-};
-
-/* switch weibo marker according to weibo list */
-function switch_weibo_marker(){
-	if(weibo_marker != null){
-		map.removeOverlay(weibo_marker);
-	}
-	if(weibo_data_index >= weibo_data.length){
-		weibo_data_index = 0;
-	}
-	var weibo = weibo_data[weibo_data_index];
-	weibo_marker = new HTMLOverlay(weibo.longitude, weibo.latitude, 21, 46, '<div class="weibo-marker"><div class="weibo-marker-bg"><img width="30" src="'+weibo.avatar_img+'"/></div><div class="weibo-marker-shadow"></div></div>');
-	map.addOverlay(weibo_marker);
-	$('.weibo-marker-bg').animate({top:0});
-	$('.weibo-marker-shadow').animate({top:40});
-	$('#weibo-box').fadeOut(function(){
-		$('.weibo-user-name').text("@"+weibo.weibo_name);
-		$('#weibo-user-avatar img').attr('src', weibo.avatar_img);
-		$('#weibo-time-past').text(moment(weibo.post_time).fromNow());
-		var weibo_content = util.trim(weibo.content, 40, '<a href="javascript:void(0)" onclick="expand_weibo_text()" class="expand-weibo-text">[展开]</a>');
-		if(weibo.image == ''){
-			$('.weibo-img').hide();
-		}
-		else{
-			// $('.weibo-img').show();
-			// $('.weibo-img').attr('src', weibo.image);
-			weibo_content = '<img class="weibo-img" src="'+weibo.image+'" width="50"/>' + weibo_content;
-		}
-		$('.weibo-content').html(weibo_content);
-		$('#weibo-box').fadeIn();
-	});
-	weibo_data_last_index = weibo_data_index;
-	weibo_data_index++;
-}
-
-function expand_weibo_text(){
-	var weibo = weibo_data[weibo_data_last_index];
-	var weibo_content;
-	if(weibo.image == ''){
-		weibo_content = weibo.content;
-	}
-	else{
-		weibo_content = weibo.content + '<img class="weibo-img-big" src="'+weibo.image+'" width="200"/>';
-	}
-	$('.weibo-content').text(weibo.content);
-}
 
 function add_curve(org, dst, color, width){
 	var pointa = new BMap.Point(org.longitude,org.latitude);
@@ -678,37 +539,6 @@ map.addEventListener('hotspotclick', function(e){
 	var data = e.spots[0].getUserData();
 	info_window.load(data);
 });
-
-var l2_panel = {
-	init: function(){
-		var self = this;
-		$('#l2-close-button').click(function(){
-			self.close();
-		});
-	},
-	open: function(data){
-		$('#l2-panel').height($(window).height() - 98);
-		$('#l2-content').html('<div class="waiting-ball"></div>');
-		if(data.model == 'users'){
-			$('#l2-content').load(app_path+'/User/preview/id/'+data.id, this.calc_height);
-		}
-		else if(data.model == 'events'){
-			$('#l2-content').load(app_path+'/Event/preview/id/'+data.id, this.calc_height);
-		}
-		$('#l2-panel').show().removeClass().addClass('animated fadeInRight');
-		$('#l2-panel').addClass(data.type);
-	},
-	calc_height: function(){
-		$('.preview-roller').height($('#l2-panel').height()-38-$('.preview-header').height()-20);
-	},
-	close: function(){
-		$('#l2-panel').hide();
-		$('.map-list li').removeClass('selected');
-	}
-
-};
-
-l2_panel.init();
 
 var story_board = {
   story_board_default_top : 0,

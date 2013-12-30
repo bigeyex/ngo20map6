@@ -136,7 +136,7 @@ img.weibo-img {
     color: #777164;
 }
 
-#map-list li span{
+#map-list li a{
     margin: 0 14px;
     padding: 16px 10px 16px 32px;
     font-size: 12px;
@@ -146,6 +146,7 @@ img.weibo-img {
     display: block;
     height: 12px;
     overflow: hidden;
+    color: rgb(119,113,100);
 }
 
 #map-list li.selected{
@@ -157,7 +158,7 @@ img.weibo-img {
     color: #fdf2ef;
 }
 
-#map-list li.selected span{
+#map-list li.selected a{
     border: none;
     padding-bottom: 17px;
     background-image: url(../img/markers/markers-ngo-highlight.png);
@@ -189,7 +190,7 @@ img.weibo-img {
 }
 
 
-#ngo-list-section li span{
+#ngo-list-section li a{
     background-image: url(../img/markers/markers-ngo.png);
     background-repeat: no-repeat;
 }
@@ -198,7 +199,7 @@ img.weibo-img {
     color: #358a10;
 }
 
-#ngo-list-section li.selected span{
+#ngo-list-section li.selected a{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
@@ -207,7 +208,7 @@ img.weibo-img {
     color: #008ec6;
 }
 
-#csr-list-section li span{
+#csr-list-section li a{
     background-image: url(../img/markers/markers-csr.png);
     background-repeat: no-repeat;
 }
@@ -216,7 +217,7 @@ img.weibo-img {
     color: #008ec6;
 }
 
-#csr-list-section li.selected span{
+#csr-list-section li.selected a{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
@@ -230,7 +231,7 @@ img.weibo-img {
     color: #e14b08;
 }
 
-#case-list-section li span{
+#case-list-section li a{
     background-image: url(../img/markers/markers-case.png);
     background-repeat: no-repeat;
 }
@@ -239,7 +240,7 @@ img.weibo-img {
     color: #e14b08;
 }
 
-#case-list-section li.selected span{
+#case-list-section li.selected a{
     background-image: url(../img/markers/markers-ngo-highlight.png);
     background-repeat: no-repeat;
 }
