@@ -2,7 +2,7 @@
 
 class WeChatAction extends Action {
 
-	function endpoint(){
+	public function endpoint(){
 		$signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];	
@@ -22,3 +22,5 @@ class WeChatAction extends Action {
 
 
 }
+
+?>
