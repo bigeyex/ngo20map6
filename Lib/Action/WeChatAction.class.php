@@ -14,6 +14,7 @@ class WeChatAction extends Action {
 		$tmpStr = sha1( $tmpStr );
 		
 		if( $tmpStr == $signature ){
+			echo $_GET['echostr'];
 			return true;
 		}else{
 			return false;
