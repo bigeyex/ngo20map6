@@ -1,6 +1,6 @@
 <?php
 
-class WechatAction extends Action {
+class WeChatAction extends Action {
 
 	function endpoint(){
 		$signature = $_GET["signature"];
