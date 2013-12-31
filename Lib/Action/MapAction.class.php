@@ -15,7 +15,7 @@ class MapAction extends Action {
     public function get_onscreen_data(){
         $map_data_model = D('MapData');
 
-        $query_param = $_GET;
+        $query_param = x($_GET);
         $user_fields="id, name, longitude, latitude, type, 'users' model, province, create_time";
         $event_fields="id, name, longitude, latitude, type, 'events' model, province, create_time";
         if(!empty($_GET['model'])){
