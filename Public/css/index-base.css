@@ -323,7 +323,7 @@ img.weibo-img {
 }
 
 #csr-list-section .pager-number.current{
-    background-color: #0097c8;
+    background-color: #e98f02;
     color: white;
 }
 
@@ -600,9 +600,33 @@ img.weibo-img {
     color: #666666;
 }
 
+#info-window-detail-list{
+    font-size: 13px;
+    line-height: 14px;
+    margin-top: 8px;
+    height: 103px;
+    overflow: auto;
+}
+
+#info-window-detail-list .ind a{
+    color: #e98f02;
+}
+
+#info-window-detail-list .case a{
+    color: #e65f03;
+}
+
+.zoom-in-link{
+    position: absolute;
+    font-size: 12px;
+    top: 11px;
+    left: 110px;
+    color: #9c9c9c;
+}
+
 .info-window.csr #info-window-title a, .info-window.csr #info-window-place-label,
 .info-window.ind #info-window-title a, .info-window.ind #info-window-place-label{
-    color: #0097c8;
+    color: #e98f02;
 }
 
 .info-window.case #info-window-title a, .info-window.case #info-window-place-label{

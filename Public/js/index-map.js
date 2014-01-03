@@ -363,7 +363,7 @@ var list_control = {	//knockout.js model
 
 					//refresh hotsopt
 					var hotspot = new BMap.Hotspot(new BMap.Point(d.longitude, d.latitude),
-			          {text:d.name, minZoom: 2, maxZoom: 18, userData: d});
+			          { minZoom: 2, maxZoom: 18, userData: d, offsets: [10,10,10,10]});
 			     	map.addHotspot(hotspot);
 				}
 
@@ -495,6 +495,29 @@ var info_window = {
 			}
 		}
 	},
+	load_menu: function(){
+		if(saved_hotspots.length == 1){
+			this.load(saved_hotspots[0].getUserData());
+		}
+		else{
+			var menu_list = '';
+			for(var spoti in saved_hotspots){
+				var data = saved_hotspots[spoti].getUserData();
+				if(!data)continue;
+				if(data.model == 'events'){
+					url_part = 'Event';
+				}
+				else if(data.model == 'users'){
+					url_part = 'User';
+				}
+				var data_url = app_path+'/'+url_part+'/view/id/'+data.id;
+				menu_list += '<li class="'+data.type+'"><a target="_blank" href="'+data_url+'">'+util.trim(data.name, 20)+'</a></li>'
+			}
+			var popup_position = saved_hotspots[0].getPosition();
+			this.hide();
+			this._show(popup_position.lng, popup_position.lat, '<div id="info-window-title">共有'+saved_hotspots.length+'条信息</div><a class="zoom-in-link" onclick="map.zoomIn();map.panTo(new BMap.Point('+popup_position.lng+','+popup_position.lat+'));">放大区域</a><div id="info-window-detail-list"><ul>'+menu_list+'</ul></div>');
+		}
+	},
 	load: function(data){
 		if(data.model == 'events'){
 			url_part = 'Event';
@@ -535,9 +558,31 @@ var info_window = {
 	}
 };
 
-map.addEventListener('hotspotclick', function(e){
-	var data = e.spots[0].getUserData();
-	info_window.load(data);
+var hotspot_hover_marker = null;
+var saved_hotspots = null;
+map.addEventListener('hotspotover', function(e){
+	if(hotspot_hover_marker == null){
+		var myIcon = new BMap.Icon(app_path+"/Public/img/spinner.gif", new BMap.Size(24, 24), {  
+			anchor: new BMap.Size(12, 12)
+		});
+		var point = e.spots[0].getPosition();
+		hotspot_hover_marker = new BMap.Marker(point, {icon: myIcon}); 
+
+		hotspot_hover_marker.addEventListener('click', function(){
+			info_window.load_menu();
+		});
+		map.addOverlay(hotspot_hover_marker);
+	}
+	else{
+		map.addOverlay(hotspot_hover_marker);
+		hotspot_hover_marker.setPosition(e.spots[0].getPosition());
+	}
+	saved_hotspots = e.spots;
+	
+});
+map.addEventListener('hotspotout', function(e){
+	map.removeOverlay(hotspot_hover_marker);
+	// info_window.load(data);
 });
 
 var story_board = {
