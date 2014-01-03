@@ -279,8 +279,8 @@ var list_control = {	//knockout.js model
 			record.class_id = 'record-' + (i+1);
 			record.t_text = util.trim(record.name, 12);
 			//put a marker on the map
-			var myIcon = new BMap.Icon(app_path+"/Public/img/markers/markers-"+record_type+".png", new BMap.Size(22, 30), {  
-				anchor: new BMap.Size(11, 30),  
+			var myIcon = new BMap.Icon(app_path+"/Public/img/markers/markers-"+record_type+".png", new BMap.Size(18, 25), {  
+				anchor: new BMap.Size(10, 25),  
 				imageOffset: new BMap.Size(0, 0 - i * 40)
 			});
 			var point = new BMap.Point(record.longitude, record.latitude);
