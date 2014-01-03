@@ -87,7 +87,7 @@ class Wechat
 	public $errMsg = "no access";
 	private $_logcallback;
 	
-	public function __construct($options)
+	public function __construct($options=array())
 	{
 		$this->token = isset($options['token'])?$options['token']:'';
 		$this->appid = isset($options['appid'])?$options['appid']:'';

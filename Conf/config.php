@@ -17,7 +17,7 @@ return array(
          '__UPLOAD__' => '/Uploads', 
     ),
     
-    'LOAD_EXT_CONFIG' => 'db,content,profanity_words',
+    'LOAD_EXT_CONFIG' => 'db,content,profanity_words,credentials',
     'ADMIN_ROW_LIST' => 20,
     'PAGE_ROLLPAGE' => 10,
     'LIST_RECORD_PER_PAGE' => 20,
