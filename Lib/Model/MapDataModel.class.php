@@ -163,6 +163,10 @@ class MapDataModel extends Model{
                 $users_where[] = $events_where[] = "province like '%". $param['province'] ."%'";
         }
 
+        if(!empty($param['medal_name'])){
+            $users_where[] = "medals like '%".x($param['medal_name'])."%'";
+        }
+
         if(!empty($param['medal'])){
             $medal_model = new MedalModel();
             $user_ids = $medal_model->select_user_ids_by_medal_id($param['medal']);
@@ -259,6 +263,7 @@ class MapDataModel extends Model{
     public function query_number($query_param=array()){
         $user_fields="count(*) cnt";
         $event_fields="count(*) cnt";
+        $query_param = x($query_param);
         if(!empty($query_param['model'])){
             if($query_param['model'] == 'users'){
                 $query_param['user_fields'] = $user_fields;

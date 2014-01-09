@@ -123,11 +123,11 @@
                         <span id="login-menu-zone">
                             <?php if(user('is_admin')): ?>
                             <a href="{:U('Admin/users')}" id="register-buttons" class="masthead-button">
-                                <div class="inner-chrome">管理</div>
+                                管理
                             </a>
                             <?php else: ?>
                             <a href="{:U('User/home')}" id="register-buttons" class="masthead-button">
-                                <div class="inner-chrome">我的页面</div>
+                                我的页面
                             </a>	
                             <?php endif; ?>
                             <div id="login-menu" style="display:none;">
@@ -149,9 +149,7 @@
                         </span>
                     <?php else: ?>
                         <a href="javascript:void(0);" id="register-buttons" class="masthead-button">
-                            <div class="inner-chrome">
                                 登录 | 注册
-                            </div>
                          </a>
                     <?php endif; ?>
 					<div id="language-box"></div>
@@ -198,8 +196,8 @@
 				<a href="{:U('User/forget_password')}" id="forget-password-link">忘记密码?</a>
 			</div>
 			<div id="login-action">
-				<input class="action-button" type="submit" value="登录"/>
-				<a class="action-button" href="{:U('User/register')}">注册</a>
+				<input class="action-button" type="submit" value="登 录"/>
+				<a class="action-button" href="{:U('User/register')}">注 册</a>
 			</div>
 			<div id="api-login-links">
 				用第三方帐号直接登录:  

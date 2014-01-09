@@ -16,6 +16,10 @@ function need_login(){
 	}
 }
 
+function diehard($var){
+	print_r($var);die();
+}
+
 //read config from db
 function CC($key, $val=null){
 	$model = new Model();

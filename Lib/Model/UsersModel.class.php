@@ -22,6 +22,7 @@ class UsersModel extends Model{
         }
         return round($completeness);
     }
+    
 }
 
 ?>

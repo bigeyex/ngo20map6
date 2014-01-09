@@ -1,170 +1,133 @@
 <include file="Public:header"/>
-{:css('pure-min')}
-{:css('index-list')}
-<script src="http://yui.yahooapis.com/3.13.0/build/yui/yui-min.js"></script>
+{:css('bootstrap')}
+{:css('user-home')}
+{:css('admin')}
+{:js('bootstrap')}
+{:css('jquery.fastconfirm')}
+{:js('jquery.fastconfirm')}
+{:js('admin')}
 
-<div id="container">
-    <div class="pure-g">
-        <div class="pure-u-1-5">
-            
-            <div id="demo-horizontal-menu">
-                <ul id="std-menu-items">
-                    <li>
-                        <a href="#">显示类型</a>
-                        <ul>
-                            <li>
-                                <a href="{:U('Index/list_index')}/type/ngo">公益组织</a>
-                                <ul>
-                                    <li><a href="{:U('Index/list_index')}/type/ngo/model/users">组织名录</a></li>
-                                    <li><a href="{:U('Index/list_index')}/type/ngo/model/events">公益活动</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{:U('Index/list_index')}/type/csr">企业社会责任</a>
-                                <ul>
-                                    <li><a href="{:U('Index/list_index')}/type/csr/model/users">企业名录</a></li>
-                                    <li><a href="{:U('Index/list_index')}/type/csr/model/events">企业资源</a></li>
-                                </ul>
-                            </li>
-                            <a href="{:U('Index/list_index')}/type/case">对接案例</a>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">项目领域</a>
-                        <ul class="wide-menu">
-                            <?php foreach(C('ORG_FIELDS') as $field): ?>
-                            <li>
-                                <a href="{:U('Index/list_index')}/field/{$field}" val="{$field}">{$field}</a>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">地区</a>
-                        <ul class="wide-menu">
-                            <?php foreach(C('PROVINCES') as $field): ?>
-                            <li>
-                                <a href="{:U('Index/list_index')}/province/{$field}" val="{$field}">{$field}</a>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- horizonal menu -->
-        </div><!-- pure-u-1-5 -->
-        <div class="pure-u-4-5">
-            <form class="pure-form" id="search-form">
-                <input type="text" name="key" class="" value="{$params.key}">
-                <button type="submit" class="pure-button">搜索</button>
-                <a href="{:U('Index/list_index')}/clear_all/1" class="pure-button clear-button">清除搜索条件</a>
-            </form>
-            <div id="tag-place">
-                <?php if(isset($params['key'])): ?>
-                <?php endif; ?>
-            </div>
-            <?php if(isset($params['key'])): ?>
-                <a href="{:U('Index/list_index')}/key/0" class="pure-button pure-button-secondary filter-button">取消关键词：{$params.key}</a>
+
+<div id="main-container">
+<div id="main-content">
+<div id="right-content">
+    <div class="btn-toolbar">
+		<ul class="btn-group">
+			<li class="btn {:active_if($params['type'] == 'ngo' && $params['model'] == 'users')}"><a href="{:U('Index/list_index')}/type/ngo/model/users">
+				{:L('公益机构')}</a></li>
+			<li class="btn {:active_if($params['type'] == 'ngo' && $params['model'] == 'events')}"><a href="{:U('Index/list_index')}/type/ngo/model/events">
+				{:L('公益活动')}</a></li>
+			<li class="btn {:active_if($params['type'] == 'csr' && $params['model'] == 'events')}"><a href="{:U('Index/list_index')}/type/csr/model/events">
+				{:L('企业资源')}</a></li>
+			<li class="btn {:active_if($params['type'] == 'case' && $params['model'] == 'events')}"><a href="{:U('Index/list_index')}/type/case/model/events">
+				{:L('对接案例')}</a></li>
+		</ul>
+        <ul class="btn-group">
+            <select id="work-fields">
+                <option value="0">全部项目领域</option>
+                <?php foreach(C('ORG_FIELDS') as $field): ?>
+                    <option val="{$field}" {:selected_if($field==$params['field'])}>{$field}</option>
+                <?php endforeach; ?>
+            </select>
+        </ul>
+        <ul class="btn-group">
+            <select id="provinces">
+                <option value="0">全部地区</option>
+                <?php foreach(C('PROVINCES') as $field): ?>
+                    <option val="{$field}" {:selected_if($field==$params['province'])}>{$field}</option>
+                <?php endforeach; ?>
+            </select>
+        </ul>
+		<ul class="btn-group">
+			<li>
+				<form id="admin-search-form" method="get">
+					<input class="input" class="text" type="text" name="key" value="{$params.key}"/>
+					<input class="btn" type="submit" value="{:L('搜索')}"/>
+					<a class="btn btn-warning" href="{:U('Index/list_index')}/clear_all/1">复原</a>
+				</form>
+			</li>
+		</ul>
+	</div>
+    <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
+    <div class="medal-filters">
+        <?php foreach ($medal_map as $medal): ?>
+            <a class="medal-stab" style="background:url(<?php echo __APP__; ?>/Public/img/medals/{$medal.code_name}.png) no-repeat;" data-toggle="tooltip" data-placement="bottom" title="{$medal.description}" href="{:U('Index/list_index')}/medal_name/{$medal.code_name}">{$medal.name}</a>
+        <?php endforeach ?> 
+        <?php if(isset($params['medal_name'])): ?>
+            <a class="medal-stab" style="background:url(<?php echo __APP__; ?>/Public/img/medals/cross.png) no-repeat;" data-toggle="tooltip" data-placement="bottom" title="取消按勋章筛选" href="{:U('Index/list_index')}/medal_name/0">显示全部机构</a>
+        <?php endif; ?> 
+    </div>
+    <?php endif; ?>
+    <div class="page-show">
+        {$pager}
+    </div>
+    <table class="table table-hover syllabus-table">
+        <tr>
+            <th>标题</th>
+            <th width="150">类型</th>
+            <th width="150">省份</th>
+            <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
+            <th width="200">勋章</th>
             <?php endif; ?>
-            <?php if(isset($params['field'])): ?>
-                <a href="{:U('Index/list_index')}/field/0" class="pure-button pure-button-secondary filter-button">取消领域筛选：{$params.field}</a>
-            <?php endif; ?>
-            <?php if(isset($params['province'])): ?>
-                <a href="{:U('Index/list_index')}/province/0" class="pure-button pure-button-secondary filter-button">取消地区筛选：{$params.province}</a>
-            <?php endif; ?>
-            <?php if(isset($params['type'])): ?>
-                <a href="{:U('Index/list_index')}/type/0/model/0" class="pure-button pure-button-secondary filter-button">取消筛选：
-                    <?php if($params['type'] == 'ngo'): ?>
-                        <?php if(!isset($params['model'])): ?>
-                            公益组织
-                        <?php elseif($params['model'] == 'events'): ?>
+        </tr>
+        <?php foreach($result as $row): ?>
+            <tr>
+                <td>
+                    <?php if($row['model'] == 'events'): ?>
+                    <a href="{:U('Event/view')}/id/{$row.id}" target="_blank">{$row.name}</a>
+                    <?php else: ?>
+                    <a href="{:U('User/view')}/id/{$row.id}" target="_blank">{$row.name}</a>  
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if($row['type'] == 'ngo' || $row['type'] == 'fund'): ?>
+                        <?php if($row['model'] == 'events'): ?>
                             公益活动
                         <?php else: ?>
                             公益机构
                         <?php endif; ?>
-                    <?php elseif($params['type'] == 'case'): ?>
+                    <?php elseif($row['type'] == 'case'): ?>
                         对接案例
                     <?php else: ?>
-                        <?php if(!isset($params['model'])): ?>
-                            企业
-                        <?php elseif($params['model'] == 'events'): ?>
+                        <?php if($row['model'] == 'events'): ?>
                             企业资源
                         <?php else: ?>
-                            企业名录
+                            企业
                         <?php endif; ?>
                     <?php endif; ?>
-                </a>
-            <?php endif; ?>
-            {$pager}
-            <table class="pure-table" id="result-table">
-                <thead>
-                    <tr>
-                        <th>标题</th>
-                        <th width="65">类型</th>
-                        <th style="min-width: 100px;">省份</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($result as $row): ?>
-                    <tr>
-                        <td>
-                            <?php if($row['model'] == 'events'): ?>
-                            <a href="{:U('Event/view')}/id/{$row.id}" target="_blank">{$row.name}</a>
-                            <?php else: ?>
-                            <a href="{:U('User/view')}/id/{$row.id}" target="_blank">{$row.name}</a>  
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?php if($row['type'] == 'ngo' || $row['type'] == 'fund'): ?>
-                                <?php if($row['model'] == 'events'): ?>
-                                    公益活动
-                                <?php else: ?>
-                                    公益机构
-                                <?php endif; ?>
-                            <?php elseif($row['type'] == 'case'): ?>
-                                对接案例
-                            <?php else: ?>
-                                <?php if($row['model'] == 'events'): ?>
-                                    企业资源
-                                <?php else: ?>
-                                    企业
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </td>
-                        <td>{$row.province}</td>
-                    </tr>
+                </td>
+                <td>
+                    {$row.province}
+                </td>
+                <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
+                <?php $medals = explode(',', $row['medals']) ?>
+                <td>
+                    <?php foreach($medals as $medal): ?>
+                    <span class="medal-{$medal} medal-icon" style="background-image:url(<?php echo __APP__; ?>/Public/img/medals/{$medal}.png);" data-toggle="tooltip" title="{$medal_map[$medal]['description']}"></span>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-            {$pager}
-        </div>
-    </div><!-- pure-g -->
-</div><!-- container -->
-<script>
+                </td>
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <div class="page-show">
+        {$pager}
+    </div>
+</div> <!-- right-content -->
+</div> <!-- main-content -->
+</div><!-- main-container -->
 
-
-
-    YUI({
-        classNamePrefix: 'pure'
-    }).use('gallery-sm-menu', function (Y) {
-
-        var horizontalMenu = new Y.Menu({
-            container         : '#demo-horizontal-menu',
-            sourceNode        : '#std-menu-items',
-            orientation       : 'vertical',
-            hideOnOutsideClick: false,
-            hideOnClick       : false
-        });
-
-        horizontalMenu.render();
-        horizontalMenu.show();
-        var ul_elements = $('.pure-menu-children ul.pure-menu-children');
-        $(ul_elements[3]).css('width', 500).find('li').css('width', 100).css('display', 'inline-block');
-        $(ul_elements[4]).css('width', 500).find('li').css('width', 100).css('display', 'inline-block');
-
-
+<script type="text/javascript">
+$(function(){
+    $('#work-fields').change(function(){
+        window.location.href = "{:U('Index/list_index')}/field/"+$('#work-fields').val();
     });
+    $('#provinces').change(function(){
+        window.location.href = "{:U('Index/list_index')}/province/"+$('#provinces').val();
+    });
+    $('.medal-icon,.medal-stab').tooltip();
+});
 
 </script>
-
 
 <include file="Public:footer"/>

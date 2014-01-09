@@ -75,7 +75,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     top: 48px;
     left: 14px;
     position: absolute;
-    width: 679px;
+    width: 500px;
     background-color: rgba(255,255,255,100);
     -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
     -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
@@ -210,56 +210,6 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     float: right;
 }
     
-.masthead-button{
-    display: block;
-    font-size: 14px;
-    line-height:14px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba( 60, 115, 0, .6 );
-    border-radius: 4px;
-    background-image: -moz-linear-gradient( 90deg, rgb(124,182,43) 0%, rgb(184,215,112) 100%);
-    background-image: -webkit-linear-gradient( 90deg, rgb(124,182,43) 0%, rgb(184,215,112) 100%);
-    background-image: -ms-linear-gradient( 90deg, rgb(124,182,43) 0%, rgb(184,215,112) 100%);
-    box-shadow: inset 0px -1px 0px 0px #77b12a;
-    height: 28px;
-    margin-left: 5px;
-    text-decoration: none;
-    font-size: 14px;
-    color: #236c00;
-    text-shadow: 0 1px rgba(214,255,80,.60);
-}
-
-
-.masthead-button .inner-chrome{
-    padding: 8px 12px;
-    box-shadow: inset 0px 1px 0px 0px rgba( 255, 255, 255, .43 );
-}
-
-
-a.masthead-button:hover{
-    background-image: -moz-linear-gradient( 90deg, #aad66f 0%, #abce6b 100%);
-    background-image: -webkit-linear-gradient( 90deg, #aad66f 0%, #abce6b 100%);
-    background-image: -ms-linear-gradient( 90deg, #aad66f 0%, #abce6b 100%);
-    border-color: #aec890;
-    box-shadow: inset 0px -1px 0px 0px #abce6b;
-}
-
-a.masthead-button:hover .inner-chrome{
-    box-shadow: inset 0px 1px 0px 0px #c6e4a0;
-}
-
-a.masthead-button:active{
-    background-image: -moz-linear-gradient( -90deg, rgb(92,166,26) 0%, rgb(123,191,28) 100%);
-    background-image: -webkit-linear-gradient( -90deg, rgb(92,166,26) 0%, rgb(123,191,28) 100%);
-    background-image: -ms-linear-gradient( -90deg, rgb(92,166,26) 0%, rgb(123,191,28) 100%);
-    border-color: rgb( 47, 88, 2 );
-    box-shadow: none;
-}
-
-a.masthead-button:active .inner-chrome{
-    box-shadow: inset 0px 2px 4px 0px rgba( 47, 88, 2, .43 );
-}
 
 
 
@@ -373,30 +323,7 @@ div.goog-te-gadget-simple img,
     height: 11px;
 }
 
-.action-button, .btn.action{
-    border-radius: 4px;
-    background: url(../img/bg/gradients2.jpg) repeat-x;
-    width: 116px;
-    height: 28px;
-    border: none;
-    display: block;
-    float: left;
-    font-size: 14px;
-    font-family: "Microsoft YaHei";
-    color: rgb( 255, 255, 255 );
-    text-align: center;
-    text-shadow: 0.8px 0.8px 1px rgb( 0, 0, 0 );
-    line-height: 28px;
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    cursor: pointer;
-}
 
-a.action-button{
-    color: white;
-    text-decoration: none;
-}
 
 #login-action a.action-button {
     margin-left: 10px;
@@ -452,8 +379,9 @@ a.action-button{
     box-shadow: 0 2px 5px rgba(49,81,29,.3);
     border: solid 1px #a9a9a9;
     padding: 5px 0;
-    position: relative;
-    top: 12px;
+    position: absolute;
+    top: 42px;
+    right: 16px;
 }
 
 #login-menu li a{
