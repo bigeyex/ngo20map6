@@ -17,10 +17,15 @@ return array(
          '__UPLOAD__' => '/Uploads', 
     ),
     
-    'LOAD_EXT_CONFIG' => 'db,content,profanity_words',
+    'LOAD_EXT_CONFIG' => 'db,content,profanity_words,credentials',
     'ADMIN_ROW_LIST' => 20,
     'PAGE_ROLLPAGE' => 10,
     'LIST_RECORD_PER_PAGE' => 20,
     'VAR_PAGE' => 'p',
+    
+    'OAUTH2_CODES_TABLE'=>'oauth_code',  
+    'OAUTH2_CLIENTS_TABLE'=>'oauth_client',  
+    'OAUTH2_TOKEN_TABLE'=>'oauth_token',  
+    'OAUTH2_DB_DSN'=>'mysql://root:@localhost:3306/ngo20map'  
 );
 ?>

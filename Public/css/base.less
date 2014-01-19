@@ -1,4 +1,5 @@
 /* css reset */
+@font-base: 1em;
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -87,7 +88,8 @@ a:hover{
     margin-bottom: 0;
     margin-left: 0;
     color: #665f50;
-    font-size: 12px;
+
+    font-size: @font-base;
     line-height: 16px;
 }
 
@@ -121,60 +123,4 @@ a:hover{
 	width: 16px;
 	height: 16px;
 	background: url(../img/icons/close-button.gif) no-repeat;
-}
-
-/* buttons */
-.masthead-button{
-    display: block;
-    font-size: 14px;
-    line-height:14px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba( 60, 115, 0, .6 );
-    border-radius: 4px;
-    background: url(../img/bg/gradients.jpg) repeat-x 0 -230px;
-    height: 14px;
-    margin-left: 5px;
-    text-decoration: none;
-    font-size: 14px;
-    color: #236c00;
-    padding: 7px 12px;
-    text-shadow: 0 1px rgba(214,255,80,.60);
-}
-
-a.masthead-button:hover{
-    border-color: #adc88f;
-    background-position: 0 -258px;
-}
-
-a.masthead-button:active{
-    border-color: #7b935d;
-    background-position: 0 -286px;
-}
-
-.action-button, .btn.action{
-    border-radius: 4px;
-    background: url(../img/bg/gradients.jpg) repeat-x 0 -314px;
-    width: 100px;
-    height: 27px;
-    border: none;
-    display: block;
-    float: left;
-    font-size: 14px;
-    color: rgb( 255, 255, 255 );
-    text-align: center;
-    text-shadow: 0.8px 0.8px 1px rgb( 0, 0, 0 );
-    line-height: 27px;
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    cursor: pointer;
-}
-.action-button:hover, .btn.action:hover{
-    background-position: 0 -341px;
-    text-decoration:none;
-}
-.action-button:active, .btn.action:active{
-    background-position: 0 -368px;
-    text-decoration:none;
 }

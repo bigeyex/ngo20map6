@@ -22,6 +22,15 @@ class MedalModel extends Model{
 		}
 		return $user_ids;
 	}
+
+	public function select_as_assoc_array(){
+		$medals = $this->select();
+		$assoc_array = array();
+		foreach($medals as $medal){
+			$assoc_array[$medal['code_name']] = $medal;
+		}
+		return $assoc_array;
+	}
 }
 
 ?>

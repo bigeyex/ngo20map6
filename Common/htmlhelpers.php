@@ -26,6 +26,15 @@ function active_if($condition){
 	}
 }
 
+function selected_if($condition){
+	if($condition){
+		return 'selected';
+	}
+	else{
+		return '';
+	}
+}
+
 function class_if($class, $condition){
 	if($condition){
 		return $class;

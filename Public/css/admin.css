@@ -18,3 +18,20 @@
 #top-action-buttons {
 	width: 267px;
 }
+
+select{margin-bottom: 0; width: 150px;}
+
+.medal-icon{
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    margin-left: 5px;
+}
+
+.medal-stab{
+    line-height: 29px;
+    padding-left: 19px;
+    padding-right: 10px;
+    color: #0077b2;
+}

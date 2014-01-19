@@ -16,6 +16,35 @@ function need_login(){
 	}
 }
 
+function diehard($var){
+	print_r($var);die();
+}
+
+//read config from db
+function CC($key, $val=null){
+	$model = new Model();
+	$sql = "select from settings where k=$key";
+	$result = $model->query($sql);
+	if($val === null){	// get a existing setting
+		if(empty($result)){
+			return null;
+		}
+		return $result[0]['v'];
+	}
+	else{	// create a setting or modify a setting
+		$val = x($val);
+		if(empty($result)){	// create a setting
+			$sql = "insert into settings (k,v) values ('$key','$val')";
+			$model->query($sql);
+		}
+		else{
+			$sql = "update setting set v='$val' where k='$key'";
+			$model->query($sql);
+		}
+	}
+
+}
+
 function check_profanity_words(){
     foreach(C('profanity_words') as $p_word){
         if(strpos($words, $p_word))
@@ -24,34 +53,22 @@ function check_profanity_words(){
     return true;
 }
 
-function check_model(){
-    $model_words = implode('',$_POST);
-    return check_profanity_words($model_words);
+function x($var){
+	if(is_array($var)){
+		foreach($var as $key=>$value) {
+	      if(is_array($value)) { x($value); }
+	      else { $var[$key] = mysql_real_escape_string($value); }
+	   }
+	   return $var;
+	}
+	else{
+		return mysql_real_escape_string($var);
+	}
 }
 
-//security check procedure
-$getfilter="'|(and|or)\\b.+?(>|<|=|in|like)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?Select|Update.+?SET|Insert\\s+INTO.+?VALUES|(Select|Delete).+?FROM|(Create|Alter|Drop|TRUNCATE)\\s+(TABLE|DATABASE)" ;  
-$postfilter="\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?Select|Update.+?SET|Insert\\s+INTO.+?VALUES|(Select|Delete).+?FROM|(Create|Alter|Drop|TRUNCATE)\\s+(TABLE|DATABASE)" ;  
-$cookiefilter="\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?Select|Update.+?SET|Insert\\s+INTO.+?VALUES|(Select|Delete).+?FROM|(Create|Alter|Drop|TRUNCATE)\\s+(TABLE|DATABASE)" ;  
-function StopAttack($StrFiltKey,$StrFiltValue,$ArrFiltReq){  
-    if(is_array($StrFiltValue))  
-    {  
-      $StrFiltValue=implode($StrFiltValue);  
-    }  
-    if (preg_match("/".$ArrFiltReq."/is",$StrFiltValue, $matches)==1){  
-        print "输入的内容不合适!Improper input!" ;  
-        print_r($matches);
-        exit();  
-    }
-} 
-foreach($_GET as $key=>$value){  
-  //StopAttack($key,$value,$getfilter);  
-}
-foreach($_POST as $key=>$value){  
-  //StopAttack($key,$value,$postfilter);  
-}
-foreach($_COOKIE as $key=>$value){  
-  //StopAttack($key,$value,$cookiefilter);  
+function stop_injection(){
+	$_GET = x($_GET);
+	$_POST = x($_POST);
 }
 
 function auto_charset($fContents, $from='gbk', $to='utf-8')

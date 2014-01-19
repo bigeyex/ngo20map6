@@ -75,7 +75,7 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     top: 48px;
     left: 14px;
     position: absolute;
-    width: 679px;
+    width: 500px;
     background-color: rgba(255,255,255,100);
     -webkit-box-shadow: 0 2px 5px rgba(49,81,29,.3);
     -moz-box-shadow: 0 2px 5px rgba(49,81,29,.3);
@@ -148,8 +148,8 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
 }
 
 #search-box{
-    width: 243px;
-    height: 29px;
+    width: 241px;
+    height: 28px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -159,6 +159,10 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     box-shadow: 0 1px rgba(255,255,255,.2), inset 0 2px 1px rgba(56,52,43,.1);
     border: solid 1px rgba(103,98,81,.4);
     padding: 0;
+}
+
+#search-box.focus{
+    border: solid 1px rgba(65,64,61,.65);
 }
 
 #search-box input{
@@ -189,24 +193,25 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     position: absolute;
     right: 0px;
     top: 1px;
-    background:  url(../img/sprites-all.png) no-repeat 0px -151px;
+    background:  url(../img/sprites-all.png) no-repeat 1px -151px;
     padding: 0;
     cursor: pointer;
 }
 
+#search-box.focus #search-action-button{
+    background-position: 0px -592px;
+}
 
 #register-buttons{
-    font-size: 14px;
-    background: url(../img/bg/register-buttons.jpg) no-repeat;
-    width: 90px;
-    height: 15px;
-    margin-left: 5px;
-    padding: 8px 12px;
+    margin-right: 15px;
 }
 
-#register-buttons:hover{
-    background: url(../img/bg/register-buttons-hover.jpg) no-repeat;
+#register-buttons{
+    float: right;
 }
+    
+
+
 
 #register-buttons a{
     display: block;
@@ -217,11 +222,6 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     width: auto;
     padding: 0;
     margin: 0;
-}
-
-#register-buttons #login-button{
-    padding-left: 4px;
-    padding-top: 1px;
 }
 
 #register-buttons #register-button{
@@ -323,30 +323,7 @@ div.goog-te-gadget-simple img,
     height: 11px;
 }
 
-.action-button, .btn.action{
-    border-radius: 4px;
-    background: url(../img/bg/gradients2.jpg) repeat-x;
-    width: 116px;
-    height: 28px;
-    border: none;
-    display: block;
-    float: left;
-    font-size: 14px;
-    font-family: "Microsoft YaHei";
-    color: rgb( 255, 255, 255 );
-    text-align: center;
-    text-shadow: 0.8px 0.8px 1px rgb( 0, 0, 0 );
-    line-height: 28px;
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    cursor: pointer;
-}
 
-a.action-button{
-    color: white;
-    text-decoration: none;
-}
 
 #login-action a.action-button {
     margin-left: 10px;
@@ -402,8 +379,9 @@ a.action-button{
     box-shadow: 0 2px 5px rgba(49,81,29,.3);
     border: solid 1px #a9a9a9;
     padding: 5px 0;
-    position: relative;
-    top: 12px;
+    position: absolute;
+    top: 42px;
+    right: 16px;
 }
 
 #login-menu li a{
@@ -546,22 +524,5 @@ a.action-button{
 #list-view-link{
     position: absolute;
     left: 187px;
-    text-decoration: none;
-    font-size: 14px;
-    color: #236c00;
-    text-shadow: 0 1px rgba(214,255,80,.75);
-    border: 1px solid;
-    padding: 8px 12px;
-    line-height: 12px;
-    border-radius: 5px;
-    box-shadow: 0px 1px 0px 0px #c2e9a7, #c2e9a7 0px 1px 0px inset;
-    background: #b6d079; /* Old browsers */
-background: -moz-linear-gradient(top,  #b6d079 0%, #75b143 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b6d079), color-stop(100%,#75b143)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #b6d079 0%,#75b143 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #b6d079 0%,#75b143 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b6d079', endColorstr='#75b143',GradientType=0 ); /* IE6-9 */
 
 }

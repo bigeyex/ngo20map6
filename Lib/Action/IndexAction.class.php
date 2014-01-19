@@ -31,6 +31,8 @@ class IndexAction extends Action {
         $map_data_model = D('MapData');
         $record_per_page = C('LIST_RECORD_PER_PAGE');
 
+        if(!isset($query_param)) $query_param = array();
+
         if(isset($_GET['clear_all'])){
             unset($_SESSION['list_queries']);
             $query_param = array();
@@ -40,7 +42,7 @@ class IndexAction extends Action {
         }
 
         foreach($_GET as $k=>$v){
-            if(isset($query_param[$k]) && $v == 0){
+            if(isset($query_param[$k]) && $v === '0'){
                 unset($query_param[$k]);
             }
             else{
@@ -48,15 +50,18 @@ class IndexAction extends Action {
             }
         }
 
+        if(!isset($query_param['model'])) $query_param['model']='users';
+        if(!isset($query_param['type'])) $query_param['type']='ngo';
+
         $_SESSION['list_queries'] = $query_param;
 
-        $user_fields="id, name, type, 'users' model, province, create_time";
+        $user_fields="id, name, type, 'users' model, medals, province, create_time";
         $event_fields="id, name, type, 'events' model, province, create_time";
-        if(!empty($_GET['model'])){
-            if($_GET['model'] == 'users'){
+        if(!empty($query_param['model'])){
+            if($query_param['model'] == 'users'){
                 $query_param['user_fields'] = $user_fields;
             }
-            else if($_GET['model'] == 'events'){
+            else if($query_param['model'] == 'events'){
                 $query_param['event_fields'] = $event_fields;
             }
         }
@@ -74,12 +79,19 @@ class IndexAction extends Action {
         }
         $limit_start = ($page-1)*$record_per_page;
         $query_param['limit'] = $limit_start . ',' . $record_per_page;
-        $query_param['order'] = "create_time desc";
-        import("ORG.Util.PurePage");
-        $Page = new PurePage($total_number,$record_per_page);
+        if($query_param['model'] == 'users'){
+            $query_param['order'] = "medal_score desc, create_time desc";
+        }
+        else{
+            $query_param['order'] = "create_time desc";
+        }
+        import("ORG.Util.TBPage");
+        $Page = new TBPage($total_number,$record_per_page);
         $page_bar = $Page->show();
-
         $data = $map_data_model->query_map($query_param);
+        
+        $medal_model = new MedalModel();
+        $this->assign('medal_map', $medal_model->select_as_assoc_array());
         $this->assign('pager', $page_bar);
         $this->assign('params', $query_param);
         $this->assign('page', $page);

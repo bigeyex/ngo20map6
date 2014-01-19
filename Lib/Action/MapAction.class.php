@@ -7,10 +7,15 @@ class MapAction extends Action {
         $this->ajaxReturn($map_data_model->get_all_data($key), 'JSON');
     }
 
+    public function get_network_data($id){
+        $map_data_model = D('MapData');
+        $this->ajaxReturn($map_data_model->get_ngo_network_data($id), 'JSON');
+    }
+
     public function get_onscreen_data(){
         $map_data_model = D('MapData');
 
-        $query_param = $_GET;
+        $query_param = x($_GET);
         $user_fields="id, name, longitude, latitude, type, 'users' model, province, create_time";
         $event_fields="id, name, longitude, latitude, type, 'events' model, province, create_time";
         if(!empty($_GET['model'])){

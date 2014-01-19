@@ -15,6 +15,41 @@ class MapDataModel extends Model{
         return $model->query($sql);
     }
 
+    public function get_ngo_network_data($ngo_id){
+        $user_model = new UsersModel();
+        $event_model = new EventsModel();
+        $ngo_id = intval($ngo_id);  //defense against exploit
+
+        //select the events of the user
+        $events_of_user = $event_model->field('id,longitude,latitude')
+            ->where(array('user_id'=>$ngo_id))->select();
+        $user = $user_model->find($ngo_id);
+
+        //select the related ngo of the user
+        $fields = explode(',', $user['work_field']);
+        $sql = "select id,longitude,latitude, 0";
+        foreach($fields as $field){
+            $sql .= "-10*if(work_field like '%$field%',1,0)";
+        }
+        $sql .= " score from users where type='ngo' and is_checked=1 order by score limit 5";
+        $ngo_of_user = $this->query($sql);
+
+        //select the related csr with the same work field with the user
+        $sql = "select id,longitude,latitude, 0";
+        foreach($fields as $field){
+            $sql .= "-10*if(item_field like '%$field%',1,0)";
+        }
+        $sql .= " score from events where type='csr' and is_checked=1 order by score limit 5";
+        $csr_of_user = $this->query($sql);
+
+        return array(
+            'events' => $events_of_user,
+            'related_user' => $ngo_of_user,
+            'related_csr' => $csr_of_user
+            );
+
+    }
+
     public function invalidate_tile($lon, $lat){
         $lon = floatval($lon);
         $lat = floatval($lat);
@@ -128,6 +163,10 @@ class MapDataModel extends Model{
                 $users_where[] = $events_where[] = "province like '%". $param['province'] ."%'";
         }
 
+        if(!empty($param['medal_name'])){
+            $users_where[] = "medals like '%".x($param['medal_name'])."%'";
+        }
+
         if(!empty($param['medal'])){
             $medal_model = new MedalModel();
             $user_ids = $medal_model->select_user_ids_by_medal_id($param['medal']);
@@ -224,6 +263,7 @@ class MapDataModel extends Model{
     public function query_number($query_param=array()){
         $user_fields="count(*) cnt";
         $event_fields="count(*) cnt";
+        $query_param = x($query_param);
         if(!empty($query_param['model'])){
             if($query_param['model'] == 'users'){
                 $query_param['user_fields'] = $user_fields;

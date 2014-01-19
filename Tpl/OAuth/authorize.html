@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>NGO20第三方应用授权</title>
+</head>
+<body>
+    <form method="post" action="authorize.php">
+      <?php foreach ($auth_params as $k => $v) { ?>
+      <input type="hidden" name="<?php echo $k ?>" value="<?php echo $v ?>" />
+      <?php } ?>
+      Do you authorize the app to do its thing?
+      <p>
+        <input type="submit" name="accept" value="Yep" />
+        <input type="submit" name="accept" value="Nope" />
+      </p>
+    </form>
+</body>
+</html>

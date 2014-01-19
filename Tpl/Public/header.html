@@ -22,7 +22,7 @@
     <script type="text/javascript">
 		app_path='__APP__';
 		$(function(){
-			$('#login-button, #register-button').click(function(e){
+			$('#register-buttons').click(function(e){
 				$('#login-box').lightbox_me({
 			        centered: true, 
 			        onLoad: function() { 
@@ -40,6 +40,12 @@
 			}).mouseleave(function(){
 				$('#login-menu').stop().fadeOut();
 			});
+			
+			$('#search-box input').focus(function(){
+                $('#search-box').addClass('focus');
+            }).blur(function(){
+                $('#search-box').removeClass('focus');
+            });
 		});
 		
 	</script>
@@ -50,7 +56,7 @@
 			<div id="main-nav">
 				<a href="{:U('Index/index')}"><div id="logo">公益地图</div></a>
 				<?php if(MODULE_NAME == 'Index' && ACTION_NAME == 'index'): ?>
-				<a href="{:U('Index/list_index')}" id="list-view-link">名录</a>
+				<a href="{:U('Index/list_index')}" id="list-view-link" class="masthead-button"><div class="inner-chrome">名录</div></a>
 				<?php endif; ?>
 				<ul id="main-nav-filters" class="title">
 				<?php if(MODULE_NAME != 'Index' || ACTION_NAME != 'index'): ?>
@@ -112,35 +118,40 @@
 				<?php endif; ?>
 				</ul>
 				<div id="main-nav-controls">
-					<div id="register-buttons">
-						<?php if(user()): ?>
-							<span id="login-menu-zone">
-								<?php if(user('is_admin')): ?>
-								<a href="{:U('Admin/users')}" id="my-page-button" class="title">管理</a>
-								<?php else: ?>
-								<a href="{:U('User/home')}" id="my-page-button" class="title">我的页面</a>	
-								<?php endif; ?>
-								<div id="login-menu" style="display:none;">
-									<div class="masker"></div>
-									<div id="login-menu-triangle"></div>
-									<ul id="login-menu-list">
-										<?php if(user('is_admin')): ?>
-											<li><a href="{:U('Event/add')}/type/csr">发布CSR新闻</a></li>
-											<li><a href="{:U('Event/add')}/type/case">发布对接案例</a></li>
-											<li><a href="{:U('Account/logout')}">注销</a></li>
-										<?php else: ?>
-											<li><a href="{:U('User/edit')}">更新资料</a></li>
-											<li><a href="{:U('User/home')}/show/project">活动管理</a></li>
-											<li><a href="{:U('Event/add')}">发布活动</a></li>
-											<li><a href="{:U('Account/logout')}">注销</a></li>
-										<?php endif; ?>
-									</ul>
-								</div>
-							</span>
-						<?php else: ?>
-							<a href="javascript:void(0);" id="login-button" class="title"> 登录 | 注册</a>
-						<?php endif; ?>
-					</div>
+				        
+                    <?php if(user()): ?>
+                        <span id="login-menu-zone">
+                            <?php if(user('is_admin')): ?>
+                            <a href="{:U('Admin/users')}" id="register-buttons" class="masthead-button">
+                                管理
+                            </a>
+                            <?php else: ?>
+                            <a href="{:U('User/home')}" id="register-buttons" class="masthead-button">
+                                我的页面
+                            </a>	
+                            <?php endif; ?>
+                            <div id="login-menu" style="display:none;">
+                                <div class="masker"></div>
+                                <div id="login-menu-triangle"></div>
+                                <ul id="login-menu-list">
+                                    <?php if(user('is_admin')): ?>
+                                        <li><a href="{:U('Event/add')}/type/csr">发布CSR新闻</a></li>
+                                        <li><a href="{:U('Event/add')}/type/case">发布对接案例</a></li>
+                                        <li><a href="{:U('Account/logout')}">注销</a></li>
+                                    <?php else: ?>
+                                        <li><a href="{:U('User/edit')}">更新资料</a></li>
+                                        <li><a href="{:U('User/home')}/show/project">活动管理</a></li>
+                                        <li><a href="{:U('Event/add')}">发布活动</a></li>
+                                        <li><a href="{:U('Account/logout')}">注销</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                        </span>
+                    <?php else: ?>
+                        <a href="javascript:void(0);" id="register-buttons" class="masthead-button">
+                                登录 | 注册
+                         </a>
+                    <?php endif; ?>
 					<div id="language-box"></div>
 					<?php if(MODULE_NAME == 'Index'): ?>
 					<div id="search-box">
@@ -185,8 +196,8 @@
 				<a href="{:U('User/forget_password')}" id="forget-password-link">忘记密码?</a>
 			</div>
 			<div id="login-action">
-				<input class="action-button" type="submit" value="登录"/>
-				<a class="action-button" href="{:U('User/register')}">注册</a>
+				<input class="action-button" type="submit" value="登 录"/>
+				<a class="action-button" href="{:U('User/register')}">注 册</a>
 			</div>
 			<div id="api-login-links">
 				用第三方帐号直接登录:  

@@ -10,7 +10,7 @@
 	    				<span class="last" value="events">公益活动</span>
 	    			</div>
 					<ul data-bind="foreach: ngo_list">
-						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -35,7 +35,7 @@
 	    				<span class="last" value="events">企业资源</span>
 	    			</div>
 					<ul data-bind="foreach: csr_list">
-						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -55,7 +55,7 @@
         		<h4><i class="gradient"></i>对接案例<span class="item-count"></span><i class="triangle sprite-icons-case-arrow-right"></i></h4>
         		<div class="map-list">
 					<ul data-bind="foreach: case_list">
-						<li data-bind='attr: {"data_id": id, "data_type": type}'><span class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id,}'></span></li>
+						<li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
 					</ul>
 					<div class="pager">
 						<span class="prev-page">&lt;</span>
@@ -73,15 +73,6 @@
 			
 		</div>
 		<div id="detail-panel"></div>
-		<div id="weibo-box">
-			<h4 class="weibo-user-name"></h4>
-			<span id="weibo-time-past"></span>
-			<p class="weibo-content">
-				<img class="weibo-img" src="" width="50"/>
-			</p>
-			
-			
-		</div>
 		<div id="story-zone-bottom"></div> 
 		<div id="story-zone">
 			<div id="story-zone-handle">
@@ -113,6 +104,7 @@
 		</div><!-- L2 panel -->
 	</div> <!-- master-box -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
 {:css('index-base')}
 {:js('jsrender')}
 {:js('knockout-2.2.1')}

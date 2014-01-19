@@ -86,7 +86,7 @@ $(document).ready(function(){
 	        <th width="200">{:L('操作')}</th>
 	    </tr>
 	    <volist name="event_result" id="vo">
-	        <tr <?php if($key%2!=0)echo 'class="odd"'; ?> onmouseover="over(this);" onmouseout="out(this);">
+	        <tr>
 	            <td><input type="checkbox" value="{$vo.id}" name="key"></td>
 	            <td><a class="{:class_if('uncheck', !$vo['is_checked'])}" target="_blank" href="{:U('Event/view')}/id/{$vo.id}">{$vo.name}</a></td>
 	            <td><a target="_blank" href="{:U('User/home')}/id/{$vo.user_id}">{$vo.creator_name}</a></td>
