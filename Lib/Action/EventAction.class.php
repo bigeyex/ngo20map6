@@ -117,8 +117,9 @@ class EventAction extends Action {
             return;
         }
 
-        if(!user('is_admin')){
-            $event_model->type = user('type');
+        $event_model->type = user('type');
+        if(user('is_admin') && isset($_GET['type'])){
+            $event_model->type = $_GET['type'];
         }
         
         
