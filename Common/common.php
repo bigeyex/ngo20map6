@@ -20,6 +20,10 @@ function diehard($var){
 	print_r($var);die();
 }
 
+function check_model(){
+	return true;
+}
+
 //read config from db
 function CC($key, $val=null){
 	$model = new Model();
