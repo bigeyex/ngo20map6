@@ -18,28 +18,20 @@
         <?php endif; ?>
           <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
         <p class="after-title">以下信息将显示在公益项目页中，发布一个项目即可获得10个积分，这将影响到你的排名，让大家看看你的事迹与故事。</p>
-        <div id="editor-zone">
-            <div id="editor-toolbar">
-                <span>{:L('插入')}: </span>
-                <a href="javascript:void(0);" id="insert-image">照片</a>
-                <a href="javascript:void(0);" id="insert-video">视频</a>
-                <a href="javascript:void(0);" id="insert-link">链接</a>
-            </div>
-            <p id="editor-help">{:L('为了确保资料完整请添加相关的<strong>照片</strong>和<strong>视频</strong>。')}</p>
-            <div id="editor-body">
-                <div id="title-part"><input type="text" name="name" id="editor-title" value="<?php if(isset($event['description'])): ?>{$event.name}<?php else: ?>在这里输入标题<?php endif; ?>"></div>
-                <div id="rte-part">
-                    <textarea name="description" id="editor" cols="115" rows="29">
-                        <?php if(isset($event['description'])): ?>
-                        {$event.description}
-                        <?php else: ?>
-                        项目简介： （插入相关照片,你的项目将会展示在首页中）
-                        <?php endif; ?>
-                    </textarea>
-                </div>
-                
-            </div>
+        
+        <div class="form-field">
+            <span class="title"><span class="required">*</span> {:L('活动名称')}</span>
+            <input type="text" name="name" class="validate[required]" value="{$event.name}"/>
         </div>
+
+        <div class="form-field">
+            <textarea name="description" id="description" style="display:none;"></textarea>
+            <span class="title"><span class="required">*</span> {:L('活动简介')}</span>
+        </div>
+
+        <div class="form-field">
+        <script type="text/plain" id="editor" style="width:100%;height:500px;"></script>
+    </div>
 
         <div class="form-field">
             <span class="title"><span class="required">*</span> {:L('相关机构')}</span>
@@ -123,33 +115,6 @@
     </div> <!-- form-section -->
     </form>
 </div>
-
-<div id="upload-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"></a>
-    <h4>{:L('从本地上传图片')}</h4>
-    <div id="upload_button" class="btn action">{:L('选择本地图片')}</div>
-</div>
-
-<div id="insert-link-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"></a>
-    <h4>{:L('添加链接')}</h4>
-    <input type="text" id="insert-link-text"/>
-    <a id="insert-link-button" class="btn action">{:L('添加链接')}</a>
-</div>
-
-<div id="insert-video-dialog" class="model-dialog" style="display:none;">
-    <a href="javascript:void(0);" class="close-button"></a>
-    <h4>{:L('添加在线视频')}</h4>
-    <p>
-        {:L('请填入网络视频地址。暂支持优酷、土豆、56网视频。')}<br/>
-        <span class="error" id="video-error-message"></span>
-
-
-    </p>
-    <input type="text" id="insert-video-text"/>
-    <a id="insert-video-button" class="btn action">{:L('添加视频')}</a>
-</div>
-
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 {:css('pikaday')}
 {:css('validationEngine.jquery')}
@@ -157,7 +122,6 @@
 {:js('ajaxupload')}
 {:js('jquery.validationEngine')}
 {:js('jquery.validationEngine-zh_CN')}
-{:js('jquery.rte')}
 {:js('jquery-ui.sortable')}
 {:js('moment')}
 {:js('pikaday')}
@@ -173,11 +137,23 @@ default_province = '{$event.province}';
 default_city = '{$event.city}';
 default_county = '{$event.county}';
 </script>
+
 <?php endif; ?>
 {:js('event-edit')}
 
-<script type="text/javascript">
+<link rel="stylesheet" href="__APP__/Public/um/themes/default/css/umeditor.css" type="text/css">
 
+<script type="text/javascript" charset="utf-8" src="__APP__/Public/um/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Public/um/umeditor.min.js"></script>
+<script type="text/javascript" src="__APP__/Public/um/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+var ue = UM.getEditor('editor', {
+        imagePath:"http://",
+        lang:/^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
+        langPath:UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
+        focus: true
+    });
 
 $('#item-field').select2({
 	data: [
@@ -234,12 +210,10 @@ function validate_item_field(){
 }
 
 </script>
+
 <?php if($target_url == 'save'): ?>
 <script type="text/javascript">
-//disable default status for rte
-touched_editor_title = true;
-touched_editor_content = true;
-$('iframe#editor-rte').contents().find('body').css('color','#000');
+
 
 //handle province selector
 $('#province option[value="{$event.province}"]').attr('selected', true);
