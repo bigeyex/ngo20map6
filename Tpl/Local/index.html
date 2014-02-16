@@ -20,16 +20,34 @@
 
 <div id="main-container">
     <div class="row">
-    <div class="span8 widget-block" style="height: 300px;background:green;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:blue;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:blue;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:blue;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:blue;"></div>
+    <div id="allmap" class="span8 widget-block" style="height: 300px;width:620px;"></div>
+    <div class="span4 widget-block" style="height: 300px;background:#34495e;">
+        <h3>最新动态</h3>
+        <div class="action"></div>
+        <div class="widget-content">
+            <ul>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+                <li><a href="#">最美中国梦，衣旧传真情</a></li>
+            </ul>
+            <p class="more">更多...</p>
+        </div>
     </div>
+    <div class="span4 widget-block" style="height: 300px;background:#8e44ad;"></div>
+    <div class="span4 widget-block" style="height: 300px;background:#95a5a6;"></div>
+    <div class="span4 widget-block" style="height: 300px;background:#d35400;"></div>
+    </div> <!--row  -->
 </div>
 
 {:css('bootstrap')}
 {:js('bootstrap')}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+{:js('local-map')}
 <script type="text/javascript">
 $(function(){
 	
