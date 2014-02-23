@@ -1,50 +1,143 @@
 <include file="Public:header"/>
 
 <style>
-#main-container{
+
+h1 {
+    font-size: 21px;
+    color: #c1272d;
+    font-weight: normal;
+    margin: 15px 0 15px;
+
+}
+
+h1 span {
+    font-size: 14px;
+    color: #4d4d4d;
+}
+
+#main-container {
     margin-left: auto;
     margin-right: auto;
-    width: 960px;
+    width: 900px;
+    padding: 20px;
     padding-top: 60px;
+    background-color: white;
 }
 
-.widget-block{
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+.widget-row {
+    margin-left: -35px;
+}
+
+.widget-block {
     margin-bottom: 20px;
+    margin-left: 35px;
+    min-height: 300px;
+    position: relative;
+    float: left;
+    width: 275px;
 }
 
+.widget-action {
+    position: absolute;
+    right: 0px;
+    margin: 0;
+    top: 13px;
+}
+
+.widget-action a {
+    display: block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    color: #4d4d4d;
+}
+
+.widget-action a:hover{
+    background-color: rgba(0,0,0,.3);
+    color: white;
+}
+
+.widget-title {
+    font-size: 17px;
+    margin: 15px 20px 10px 0;
+}
+
+.widget-block ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.widget-block ul a {
+    color: #4d4d4d;
+    font-size: 14px;
+}
+
+a.more{
+    text-align: right;
+    color: #4d4d4d;
+    font-size: 12px;
+    margin-top: 12px;
+    display: block;
+}
+
+
+    
 </style>
 
 
 <div id="main-container">
-    <div class="row">
-    <div id="allmap" class="span8 widget-block" style="height: 300px;width:620px;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:#34495e;">
-        <h3>最新动态</h3>
-        <div class="action"></div>
-        <div class="widget-content">
-            <ul>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-                <li><a href="#">最美中国梦，衣旧传真情</a></li>
-            </ul>
-            <p class="more">更多...</p>
+    <h1>湖南公益地图 <span>湖南公益联盟</span></h1>
+    <div id="allmap" style="height: 230px;"></div>
+    <div class="widget-row">
+        <div class="span4 widget-block" style="height: 300px;">
+            <h3 class="widget-title" style="color:#f15a24">发布/公告</h3>
+            <div class="widget-action">
+                <div class="btn btn-small"><a href="">发布</a></div>
+            </div>
+            <div class="widget-content">
+                <ul>
+                    <li><a href="#">壹基金温暖包怀化沅陵发放准备就绪，明天发放，感谢沅陵爱心人士及企业的付出!</a></li>
+                    <li><a href="#">长沙雨花群英会七大QQ群简介</a></li>
+                    <li><a href="#">2012年湖南公益沙龙第一期工作汇报</a></li>
+                    <li><a href="#">举办2012'湖南百公里大型公益环保活动的公告</a></li>
+                </ul>
+                <a class="more">更多...</a>
+            </div>
         </div>
-    </div>
-    <div class="span4 widget-block" style="height: 300px;background:#8e44ad;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:#95a5a6;"></div>
-    <div class="span4 widget-block" style="height: 300px;background:#d35400;"></div>
+        <div class="span4 widget-block" style="height: 300px;">
+            <h3 class="widget-title" style="color:#f15a24">资源</h3>
+            <div class="widget-action">
+                <div class="btn btn-small"><a href="">发布</a></div>
+            </div>
+            <div class="widget-content">
+                <ul>
+                    <li><a href="#">“我的美丽湖南”公益广告大赛</a></li>
+                    <li><a href="#">关于协助革命老区申报教育公益项目的通知</a></li>
+                    <li><a href="#">湖南省福彩中心将向全社会征集公益救助项目</a></li>
+                    <li><a href="#">2012年水环保公益人物奖</a></li>
+                </ul>
+                <a class="more">更多...</a>
+            </div>
+        </div>
+        <div class="span4 widget-block" style="height: 300px;">
+            <h3 class="widget-title" style="color:#f15a24">活动</h3>
+            <div class="widget-action">
+                <div class="btn btn-small"><a href="">发布</a></div>
+            </div>
+            <div class="widget-content">
+                <ul>
+                    <li><a href="#">湖南永州留守儿童支教</a></li>
+                    <li><a href="#">爱心物品（衣物文具及一切干净可用之物）收集捐赠行动</a></li>
+                    <li><a href="#">乡村小学慈善图书室</a></li>
+                    <li><a href="#">为贫困学子募捐新鞋子袜子保暖内衣</a></li>
+                </ul>
+                <a class="more">更多...</a>
+            </div>
+        </div>
     </div> <!--row  -->
 </div>
 
-{:css('bootstrap')}
-{:js('bootstrap')}
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
 {:js('local-map')}

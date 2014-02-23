@@ -29,7 +29,7 @@ class LocalMap{
         
         if(count($result) == 0) return false;
         if(count($result) == 1){
-            $content = json_decode($result[0]['local_content']);
+            $content = $result[0]['local_content'];
             $content['id'] = $result[0]['id'];
             $content['create_time'] = $result[0]['create_time'];
             $content['update_time'] = $result[0]['update_time'];

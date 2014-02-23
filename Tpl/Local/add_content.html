@@ -1,0 +1,118 @@
+<include file="Public:header"/>
+
+<style>
+
+#main-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    padding: 20px;
+    padding-top: 60px;
+    background-color: white;
+}
+/* Sidenav for Docs
+-------------------------------------------------- */
+
+.bs-docs-sidenav.nav-list {
+  width: 190px;
+  margin: 30px 0 0;
+  padding: 0;
+  background-color: #fff;
+  padding-left: 0px;
+}
+.bs-docs-sidenav > li > a {
+  display: block;
+  width: 190px \9;
+  margin: 0 0 -1px;
+  padding: 8px 14px !important;
+  border: 1px solid #e5e5e5;
+}
+.bs-docs-sidenav > .active {
+  border-left: 3px solid #DD4B39;
+}
+.bs-docs-sidenav > .active > a {
+  position: relative;
+  margin-left: 0px;
+  z-index: 2;
+  padding: 8px 14px 8px 12px !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+  border-left: 0 !important;
+}
+/* Chevrons */
+.bs-docs-sidenav .icon-chevron-right {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px !important;
+  opacity: .25;
+}
+.bs-docs-sidenav > li > a:hover {
+  background-color: #f5f5f5;
+}
+.bs-docs-sidenav a:hover .icon-chevron-right {
+  opacity: .5;
+}
+.bs-docs-sidenav.affix {
+  top: 40px;
+}
+.bs-docs-sidenav.affix-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 270px;
+}
+.editor-div{
+    margin-bottom: 20px;
+}
+
+
+</style>
+
+<div id="main-container">
+
+    <div class="row">
+        <div class="span3">
+            <div class="bs-docs-sidebar">
+                <ul class="nav nav-list bs-docs-sidenav affix">
+                    <li class="active"><a href="#responsive"><i class="icon-chevron-right"></i>发布/公告</a></li>
+                    <li><a href="#responsive"><i class="icon-chevron-right"></i>资源</a></li>
+                    <li><a href="#responsive"><i class="icon-chevron-right"></i>活动</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="span7">
+            <form>
+              <fieldset>
+                <legend>新建 发布/公告</legend>
+                <label>标题</label>
+                <input type="text" class="input-xxlarge" placeholder="在这里输入文章的标题">
+                <label>文章内容：</label>
+                <div class="editor-div">
+                    <script type="text/plain" id="editor" style="width:100%;height:500px;"></script>
+                </div>
+               
+                <button type="submit" class="btn btn-primary">发布</button>
+              </fieldset>
+            </form>
+        </div>
+    </div>
+    
+    {:css('bootstrap')}
+    {:css('todc-bootstrap')}
+    
+<link rel="stylesheet" href="__APP__/Public/um/themes/default/css/umeditor.css" type="text/css">
+
+<script type="text/javascript" charset="utf-8" src="__APP__/Public/um/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Public/um/umeditor.min.js"></script>
+<script type="text/javascript" src="__APP__/Public/um/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+var ue = UM.getEditor('editor', {
+        imagePath:"http://",
+        lang:/^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
+        langPath:UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
+        focus: true
+    });
+</script>
+
+</div> <!-- main-container -->
+
+<include file="Public:footer"/>
