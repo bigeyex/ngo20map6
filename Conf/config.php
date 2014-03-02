@@ -21,6 +21,7 @@ return array(
     'ADMIN_ROW_LIST' => 20,
     'PAGE_ROLLPAGE' => 10,
     'LIST_RECORD_PER_PAGE' => 20,
+    'RECORD_PER_POST_WIDGET' => 5,
     'VAR_PAGE' => 'p',
     
     'OAUTH2_CODES_TABLE'=>'oauth_code',  

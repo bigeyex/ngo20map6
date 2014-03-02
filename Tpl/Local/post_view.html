@@ -1,0 +1,26 @@
+<include file="Public:header"/>
+
+<div id="main-container">
+
+    <div class="row">
+        <div class="span3">
+            {:R('Local/_content_sidebar', array($_GET['local_id']))}
+        </div>
+        <div class="span7">
+            
+                <legend>{$post.name}</legend>
+                <div id="post-content">
+                {$post.content}
+                </div>
+                
+              
+        </div>
+    </div>
+    {:css('local-inner')}
+    {:css('bootstrap')}
+    {:css('todc-bootstrap')}
+    
+
+</div> <!-- main-container -->
+
+<include file="Public:footer"/>

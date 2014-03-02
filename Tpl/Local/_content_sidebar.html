@@ -1,0 +1,8 @@
+<div class="bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav affix">
+        <li><a href="{:U('Local/index')}/name/{$local_map.identifier}"><i class="icon-chevron-right"></i>返回{$local_map.name}</a></li>
+        <?php foreach($modules as $module): ?>
+        <li class="{:active_if($_GET['content_id']==$module['id'])}"><a href="#responsive"><i class="icon-chevron-right"></i>{$module.name}</a></li>
+        <?php endforeach; ?>
+    </ul>
+</div>

@@ -1,0 +1,47 @@
+<include file="Public:header"/>
+
+<div id="main-container">
+
+    <div class="row">
+        <div class="span3">
+            {:R('Local/_content_sidebar', array($_GET['local_id']))}
+        </div>
+        <div class="span7">
+            <div class="btn-toolbar">
+                <ul class="btn-group">
+                    <li class="btn {:active_if($check == 'all')}"><a href="{:U('Admin/events')}/check/all">
+                        {:L('全部')}</a></li>
+                    <li class="btn {:active_if($check == 'pending')}"><a href="{:U('Admin/events')}/check/pending">
+                        {:L('待审核')}</a></li>
+                    <li class="btn {:active_if($check == 'checked')}"><a href="{:U('Admin/events')}/check/checked">
+                        {:L('已审核')}</a></li>
+                    <li class="btn {:active_if($check == 'deleted')}"><a href="{:U('Admin/events')}/check/deleted">
+                        {:L('已删除')}</a></li>
+                </ul>
+                <ul class="btn-group">
+                    <li>
+                        <form id="admin-search-form" action="{:U('Admin/events')}" method="get">
+                            <input class="input-small" class="text" type="text" name="q" value="{$q}"/>
+                            <input class="btn" type="submit" value="{:L('筛选')}"/>
+                            <a href="{:U('Admin/events')}/q/all">{:L('清除条件')}</a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            
+                <legend>{$post.name}</legend>
+                <div id="post-content">
+                {$post.content}
+                </div>
+                
+              
+        </div>
+    </div>
+    {:css('local-inner')}
+    {:css('bootstrap')}
+    {:css('todc-bootstrap')}
+    
+
+</div> <!-- main-container -->
+
+<include file="Public:footer"/>

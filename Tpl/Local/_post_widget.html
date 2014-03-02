@@ -1,0 +1,20 @@
+<div class="span4 widget-block">
+    <h3 class="widget-title" style="color:#f15a24">{$module_info.name}</h3>
+    <div class="widget-action">
+        <div class="btn btn-small"><a href="{:U('Local/post_add')}/local_id/{$local_id}/content_id/{$module_info.id}">发布</a></div>
+    </div>
+    <div class="widget-content">
+        <?php if(empty($results)): ?>
+        <p class="no-content-stab">
+            还没有发布内容；现在<a href="{:U('Local/add_content')}/local_id/{$local_id}/content_id/{$module_info.id}">发布{$module_info.name}</a>
+        </p>
+        <?php else: ?>
+        <ul>
+            <?php foreach($results as $result): ?>
+            <li><a href="{:U('Local/post_view')}/local_id/{$local_id}/post_id/{$result.id}/content_id/{$module_info.id}" target="_blank">{$result.name}</a></li>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+        <a class="more">更多...</a>
+    </div>
+</div>

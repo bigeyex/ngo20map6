@@ -1,16 +1,22 @@
 <?php
+use NGO20Map\Local;
+
 class LocalAction extends Action{
-    function index(){
+    function index($name=0){
+        $local_map_model = new LocalMapModel();
+        $user_model = new UsersModel();
+        $local_map = $local_map_model->where(array(
+            'identifier' => $name,
+        ))->find();
+        $admin_user = $user_model->find($local_map['admin_id']);
+        $map_config = json_decode($local_map['config'], true);
+        $this->assign('local_map', $local_map);
+        $this->assign('map_config', $map_config);
+        $this->assign('admin_user', $admin_user);
         $this->display();
     }
     
-    function add_content(){
-        $this->display();
-    }
     
-    function insert_content(){
-        
-    }
     
     
     public function manage(){
@@ -37,6 +43,7 @@ class LocalAction extends Action{
     public function insert(){
     	$local_map_model = new LocalMapModel();
 		$local_map_model->create();
+		$local_map_model->config = json_encode(C('DEFAULT_LOCAL_CONFIG'));
 		$local_map_model->add();
 
 		$this->redirect('manage');
@@ -63,13 +70,73 @@ class LocalAction extends Action{
 		$this->redirect('manage');
 	}
 
-    public function delete($id){
-        $news_model = new NewsModel();
-        $news_model->delete($id);
+    public function delete_map($id){
+        $local_map_model = new LocalMapModel();
+        $local_map_model->delete($id);
 
         $this->redirect('manage');
     }
+    
+    // post content
+    
+    function post_add(){
+        $local_map_model = new LocalMapModel();
+    	$local_map = $local_map_model->find($id);
+        
+        $this->assign('local_map', $local_map);
+        $this->display();
+    }
+    
+    function post_insert(){
+        $local_content_model = new LocalContentModel();
+        $local_content_model->add(array(
+            'local_id' => $_POST['local_id'],
+            'name' => $_POST['name'],
+            'content' => $_POST['description'],
+            'key' => $_POST['key'],
+            'create_time' => date('Y-m-d H:i:s'),
+            'update_time' => date('Y-m-d H:i:s'),
+        ));
+        $this->redirect('post_view');
+    }
+    
+    function post_view($local_id, $post_id){
+        $local_content_model = new LocalContentModel();
+        $post = $local_content_model->find($post_id);
+        
+        $this->assign('local_id', $local_id);
+        $this->assign('post', $post);
+        $this->display();
+    }
+    
+    public function _post_widget($local_id, $module_info){
+        $local_content_model = new LocalContentModel();
+        $results = $local_content_model->where(array(
+            'local_id'=>$local_id,
+            'key'=>$module_info['id'],
+        ))->limit(C('RECORD_PER_POST_WIDGET'))->select();
+        
+        $this->assign('local_id', $local_id);
+        $this->assign('module_info', $module_info);
+        $this->assign('results', $results);
+        $this->display('_post_widget');
+        
+    }
+    
+    public function post_list(){
+        $this->display();
+    }
 
+
+    public function _content_sidebar($local_id){
+        $local_map_model = new LocalMapModel();
+        $local_map = $local_map_model->find($local_id);
+        $map_config = json_decode($local_map['config'], true);
+        
+        $this->assign('modules', $map_config['modules']);
+        $this->assign('local_map', $local_map);
+        $this->display('_content_sidebar');
+    }
 
 }
 ?>

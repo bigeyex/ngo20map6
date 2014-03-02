@@ -65,30 +65,15 @@ var mapdata = {
 	key: '',
 	rec_field : '',
 	model : '',
-	type : '',
+	type : 'exngo',
 	medal : '',
 
 	
-	change_numbers: function(){
-		var self = this;
-		$.get(app_path+'/Map/get_numbers', {
-				type : self.type,
-				field : self.rec_field,
-				model : self.model,
-				key : self.key,
-			}, function(data){
-				$('.item-count').hide();
-				if(this.current_type != ''){
-					$('#'+self.type+'-list-section .item-count').show();
-					$('#'+self.type+'-list-section .item-count').text('('+data.num+')');
-				}
-			}
-		);
-	},
 	init: function(){
 	},
 	set_province: function(province){
 		this.province = province;
+        map_control.refresh_tilelayer();
 	},
 	set_key: function(key){
 		if(key == this.key)return;
@@ -102,22 +87,19 @@ var mapdata = {
 	set_field: function(field){
 		this.rec_field = field;
 		map_control.refresh_tilelayer();
-		this.change_numbers();
+        list_control.filter_by_view();
 	},
 	set_type: function(type){
 		this.type = type;
 		map_control.refresh_tilelayer();
-		this.change_numbers();
 	},
 	set_model: function(model){
 		this.model = model;
 		map_control.refresh_tilelayer();
-		this.change_numbers();
 	},
 	set_medal: function(model){
 		this.medal = model;
 		map_control.refresh_tilelayer();
-		this.change_numbers();
 	}
 };
 
@@ -132,33 +114,18 @@ var util = {
 }
 
 var list_control = {	//knockout.js model
-	detailed_page_size : 10,
-	page_size: 3,
+	detailed_page_size : 7,
+	page_size: 7,
 	ngo_in_view : [],
-	csr_in_view : [],
-	case_in_view : [],
 	ngo_list: ko.observableArray(),
-	csr_list: ko.observableArray(),
-	case_list: ko.observableArray(),
 	current_type: '',
 	pager: ko.observableArray([1,2,3,4,5,6,7,8]),
 	page: 1,
 	init: function(){
 		var self = this;
 		this.change_viewport();
-		$('#ngo-list-section h4, #ngo-list-section .list-more-link').click(function(){self.zoom_in_list('ngo')});
-		$('#csr-list-section h4, #csr-list-section .list-more-link').click(function(){self.zoom_in_list('csr')});
-		$('#case-list-section h4, #case-list-section .list-more-link').click(function(){self.zoom_in_list('case')});
-		$('.prev-page').click(function(){map.clearOverlays();self.gotoPage(self.page-1)});
-		$('.next-page').click(function(){map.clearOverlays();self.gotoPage(self.page+1)});
-		$(document).on('mouseenter', '.map-list li', function(){
-			var data = ko.dataFor(this);
-			info_window.load(data);
-		});
-		$('.map-type-filters span').buttongroup(function(type){
-			mapdata.set_model(type);
-			list_control.change_viewport();
-		});
+		$('.prev-page-mini').click(function(){if(self.page==1)return;map.clearOverlays();self.gotoPage(self.page-1)});
+		$('.next-page-mini').click(function(){if(self.page==self.total_page)return;map.clearOverlays();self.gotoPage(self.page+1)});
 	},
 	change_viewport: function(){
 		this.filter_by_view();
@@ -170,26 +137,14 @@ var list_control = {	//knockout.js model
 		if(record_type == undefined){
 			record_type = this.current_type;
 		}
-		var record_base = this[record_type+'_in_view'];
-		var records = this[record_type+'_list'];
+		var record_base = this.ngo_in_view;
+		var records = this.ngo_list;
 
 		var page_size = this.page_size;
 		var count = record_base.length;
 		var total_page = Math.floor(count/page_size)+1;
+        self.total_page = Math.floor(count/page_size)+1;
 
-		if(total_page<=1){
-			$('.pager').hide();
-		}
-		else{
-			$('.pager').show();
-		}
-		
-		if(page>total_page){
-			page = total_page;
-		}
-		else if(page<1){
-			page = 1;
-		}
 		records.removeAll();
 		this.page = page;
 		// this loop does 2 things:
@@ -200,9 +155,9 @@ var list_control = {	//knockout.js model
 			if(record_id >= count) break;
 			var record = record_base[record_id];
 			record.class_id = 'record-' + (i+1);
-			record.t_text = util.trim(record.name, 12);
+			record.t_text = String.fromCharCode(65+i)+'. '+util.trim(record.name, 12);
 			//put a marker on the map
-			var myIcon = new BMap.Icon(app_path+"/Public/img/markers/markers-"+record_type+".png", new BMap.Size(18, 25), {  
+			var myIcon = new BMap.Icon(app_path+"/Public/img/markers/markers-ngo.png", new BMap.Size(18, 25), {  
 				anchor: new BMap.Size(10, 25),  
 				imageOffset: new BMap.Size(0, 0 - i * 40)
 			});
@@ -251,11 +206,10 @@ var list_control = {	//knockout.js model
 		var item_count=0;
 		var self = this;
 		this.ngo_in_view = [];
-		this.csr_in_view = [];
-		this.case_in_view = [];
 		$.get(app_path+'/Map/get_onscreen_data', {
 				type : mapdata.type,
 				field : mapdata.rec_field,
+                province : mapdata.province,
 				model : mapdata.model,
 				medal : mapdata.medal,
 				key : mapdata.key,
@@ -277,13 +231,6 @@ var list_control = {	//knockout.js model
 					if(d.type == 'ngo' || d.type == 'fund'){
 						self.ngo_in_view.push(d);
 					}
-					else if(d.type == 'csr' || d.type == 'ind'){
-						self.csr_in_view.push(d);
-					}
-					else if(d.type == 'case'){
-						self.case_in_view.push(d);
-					}
-
 					//refresh hotsopt
 					var hotspot = new BMap.Hotspot(new BMap.Point(d.longitude, d.latitude),
 			          { minZoom: 2, maxZoom: 18, userData: d, offsets: [10,10,10,10]});
@@ -293,15 +240,10 @@ var list_control = {	//knockout.js model
 				//reverse the order of 3 lists
 				//so can display in temporal order, from newest to oldest.
 				self.ngo_in_view.reverse();
-				self.csr_in_view.reverse();
-				self.case_in_view.reverse();
-
 				//set the content of left list
 				map.clearOverlays();
 				if(self.current_type == ''){
 					self.gotoPage(1, 'ngo');
-					self.gotoPage(1, 'csr');
-					self.gotoPage(1, 'case');
 				}
 				else{	
 					self.gotoPage(1, this.current_type);
@@ -310,45 +252,6 @@ var list_control = {	//knockout.js model
 			}
 
 		,'json');
-
-	},
-	zoom_in_list: function(list_name){
-		//slide list sections
-		
-		$('.list-more').slideUp();
-		$('.item-highlighter').hide();
-		var other_lists = $('.map-list-section').not('#'+list_name+'-list-section');
-		other_lists.find('.map-list').slideUp();
-		$('#'+list_name+'-list-section .map-list').slideDown().animate({height:$(window).height()-162}, function(){
-			$('.map-list').css('overflow', 'auto');
-		});
-		$('#'+list_name+'-type-filter').show();
-		$('.map-type-filters').show();
-		//refresh map markers
-		mapdata.set_type(list_name);
-		this.page_size = this.detailed_page_size;
-		this.current_type = list_name;
-		this.change_viewport();
-
-		$('#'+list_name+'-type-filter span.all').click();
-		
-		// change the appearance of little triangles
-		var type_list = ['ngo', 'csr', 'case'];
-		for(var type_id in type_list){
-			var type = type_list[type_id];
-			if(type == list_name){
-				// change the direction of triangle to "down"
-				var item = $('.sprite-icons-'+type+'-arrow-right');
-				item.addClass('sprite-icons-'+type+'-arrow-down');
-				item.removeClass('sprite-icons-'+type+'-arrow-right');
-			}
-			else{
-				// change the direction of triangle to "right"
-				var item = $('.sprite-icons-'+type+'-arrow-down');
-				item.addClass('sprite-icons-'+type+'-arrow-right');
-				item.removeClass('sprite-icons-'+type+'-arrow-down');
-			}
-		}
 
 	}
 }
@@ -364,7 +267,7 @@ var map_control = {
 		this.tileLayer.getTilesUrl = function(tileCoord, zoom) {
 			var x = tileCoord.x;
 			var y = tileCoord.y;
-			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'-'+mapdata.model+'-'+mapdata.medal+'.gif';
+			return app_path+'/Runtime/Cache/tile-' + zoom + '-' + x + '-' + y + '-'+mapdata.key+'-'+mapdata.rec_field+'-'+mapdata.type+'-'+mapdata.model+'-'+mapdata.medal+'-'+mapdata.province+'.gif';
 		};
 		map.addTileLayer(this.tileLayer);
 	}
@@ -450,7 +353,8 @@ var info_window = {
 		}
 
 		if(data.model == 'users' && data.type == 'ngo'){
-			spider_link = '<div class="show-spider-link">展开公益网络</div>';
+			//spider_link = '<div class="show-spider-link">展开公益网络</div>';
+            spider_link = '';
 		}
 		else{
 			spider_link = '';
