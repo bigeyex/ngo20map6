@@ -108,6 +108,36 @@ class LocalAction extends Action{
         $this->assign('post', $post);
         $this->display();
     }
+
+    /*
+        @param $local_id: the id of local map in local_map table;
+        @param $content_id: the category of the content: the "key" field of the local_content table
+    */
+     public function post_list($local_id, $content_id){
+        $local_map_model = new LocalMapModel();
+        $local_content_model = new LocalContentModel();
+
+        $local_map = $local_map_model->find($local_id);
+        $query_map = array(
+                'local_id' => $local_id,
+                'key' => $content_id,
+            );
+        if($local_map['admin_id'] != user('id')){
+            $is_local_admin = true;
+            $query_map['is_checked'] = 1;   // if the user is not the admin, only display checked results.
+        }
+        else{
+            $is_local_admin = false;
+        }
+        import("ORG.Util.TBPage");
+		$listRows = C('ADMIN_ROW_LIST');
+        $post_count = $local_content_model->where($query_map)->count();
+        $posts = $local_content_model->where($query_map)->select();
+        
+        
+        $this->assign('local_map', $local_map);
+        $this->display();
+    }
     
     public function _post_widget($local_id, $module_info){
         $local_content_model = new LocalContentModel();
@@ -122,11 +152,6 @@ class LocalAction extends Action{
         $this->display('_post_widget');
         
     }
-    
-    public function post_list(){
-        $this->display();
-    }
-
 
     public function _content_sidebar($local_id){
         $local_map_model = new LocalMapModel();

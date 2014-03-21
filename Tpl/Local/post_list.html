@@ -8,6 +8,7 @@
         </div>
         <div class="span7">
             <div class="btn-toolbar">
+                <?php if($is_local_admin): ?>
                 <ul class="btn-group">
                     <li class="btn {:active_if($check == 'all')}"><a href="{:U('Admin/events')}/check/all">
                         {:L('全部')}</a></li>
@@ -18,11 +19,12 @@
                     <li class="btn {:active_if($check == 'deleted')}"><a href="{:U('Admin/events')}/check/deleted">
                         {:L('已删除')}</a></li>
                 </ul>
+                <?php endif; ?>
                 <ul class="btn-group">
                     <li>
                         <form id="admin-search-form" action="{:U('Admin/events')}" method="get">
                             <input class="input-small" class="text" type="text" name="q" value="{$q}"/>
-                            <input class="btn" type="submit" value="{:L('筛选')}"/>
+                            <input class="btn" type="submit" value="{:L('搜索')}"/>
                             <a href="{:U('Admin/events')}/q/all">{:L('清除条件')}</a>
                         </form>
                     </li>

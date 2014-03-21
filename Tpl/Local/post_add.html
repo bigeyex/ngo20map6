@@ -9,9 +9,9 @@
         <div class="span7">
             <form action="__URL__/post_insert" method="post">
               <fieldset>
-                <legend>新建{$local_map.name}</legend>
+                <legend>发布{$local_map.name}</legend>
                 <label>标题</label>
-                <input type="text" class="input-xxlarge" placeholder="在这里输入文章的标题" name="name">
+                <input type="text" class="input-xxlarge" placeholder="在这里写标题" name="name">
                 <input type="hidden" name="local_id" value="{$_GET.local_id}"/>
                 <input type="hidden" name="key" value="{$_GET.content_id}"/>
                 <label>文章内容：</label>

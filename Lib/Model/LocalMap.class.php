@@ -19,6 +19,14 @@ class LocalMap{
         $user_model = M('Users');
         $this->admin_user = $user_model->find($admin_id);
     }
+
+    public static function withID($id){
+        $local_map_model = new LocalMapModel();
+        $local_map = $local_map_model->find($id);
+        if($local_map === FALSE) return FALSE;
+        $instance = new self($local_map);
+        return $instance;
+    }
     
     public function get_content($key){
         $local_content_model = M('LocalContent');
