@@ -1,0 +1,50 @@
+<include file="Public:header"/>
+<div id="main-container">
+
+    <div class="row">
+        <div class="span2">
+            {:R('Local/_content_sidebar', array($local_id))}
+        </div>
+        <div class="span9">
+              <fieldset>
+                <legend>嵌入地图</legend>
+                <div class="control-group">
+                    <label>宽度</label>
+                    <input type="text" id="widget-width" value="700"/>
+                </div>
+                <div class="control-group">
+                    <label>高度</label>
+                    <input type="text" id="widget-height" value="300"/>
+                </div>
+                <div class="control-group">
+                <a href="javascript:void(0);" class="btn btn-primary" onclick="generate_embed_code();">生成嵌入代码</a>
+                </div>
+                <div class="control-group">
+                <label>嵌入代码（请复制到其他网站上）</label>
+                <textarea cols="100" rows="7" id="embed-code"><iframe src="{$pre_path}/Local/map_widget/local_id/{$local_id}" width="700" height="300"></iframe></textarea>
+                </div>
+                <label>预览</label>
+                <div id="widget-preview">
+                    <iframe src="{$pre_path}/Local/map_widget/local_id/{$local_id}" width="700" height="300"></iframe>
+                    
+                </div>
+              </fieldset>
+        </div>
+    </div>
+    {:css('local-inner')}
+    {:css('bootstrap')}
+    {:css('todc-bootstrap')}
+    
+    <script type="text/javascript">
+        function generate_embed_code(){
+            var width = $('#widget-width').val();
+            var height = $('#widget-height').val();
+            var new_code = '<iframe src="{$pre_path}/Local/map_widget/local_id/{$local_id}" width="'+width+'" height="'+height+'"></iframe>'
+            
+            $('#embed-code').text(new_code);
+            $('#widget-preview').html(new_code);
+        }
+    </script>	
+</div> <!-- main-container -->
+
+<include file="Public:footer"/>

@@ -1,0 +1,228 @@
+<include file="Public:header"/>
+
+<div id="main-container">
+    <input type="hidden" id="local-id" value="{$local_map.id}"/>
+    <div class="row">
+        <div class="span2">
+            {:R('Local/_content_sidebar', array($_GET['local_id']))}
+        </div>
+        <div class="span9">
+            <h1><a href="{:U('Local/index')}/name/{$local_map.identifier}">{$local_map.name}</a> - 板块设定</h1>
+            <div id="post-content">
+            <div class="page-show">
+                {$page_bar}
+            </div>
+            <table class="table table-hover syllabus-table">
+            <tr>
+                <th width="20"></th>
+                <th width="350">名称</th>
+                <th width="100">类型</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td></td>
+                <td>区域机构地图</td>
+                <td>地图</td>
+                <td>
+                    <a href="{:U('Local/embed_map')}/local_id/{$local_map.id}" class="btn btn-mini">嵌入</a>
+                </td>
+            </tr>
+            <tbody id="real-modules">
+            <?php foreach($modules as $module): ?>
+                <tr class="local-module" module-id="{$module.id}">
+                    <td><i class="icon-move move-handler"></i></td>
+                    <td class="module-name">{$module.name}</td>
+                    <td class="module-type" type-val="{$module.type}">{$module_types[$module['type']]}</td>
+                    <td>
+<!--                        <a href="{:U('Local/iframe_link')}/module_id/{$module.id}" class="btn-edit btn btn-mini">嵌入</a>-->
+                        <a href="javascript:void(0);" onclick="edit_module(event)" class="btn-edit btn btn-mini">编辑</a>
+                        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger">删除</a>
+                        
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            <tr> <!-- create new item link  -->
+                <td></td>
+                <td><a href="javascript:void(0);" onclick="add_module()">+新建板块</a></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </table>
+            <div class="page-show">
+                {$page_bar}
+            </div>
+            </div>
+              
+        </div>
+    </div>
+    {:css('local-inner')}
+    {:css('bootstrap')}
+    {:css('todc-bootstrap')}
+    {:js('local-manage')}
+    {:js('jquery-ui.sortable')}
+
+    
+
+
+<!-- templates  -->
+
+<div style="display:none;">
+<table>
+<tr class="tmpl-module-edit local-module" module-id="0">
+    
+    <td></td>
+    <td><input type="text" placeholder="板块名称" class="module-name"/></td>
+    <td width="100">
+        <select class="module-type" style="width:100px;">
+            <?php foreach($module_types as $module_type=>$module_type_name): ?>
+                <option value="{$module_type}">{$module_type_name}</option>
+            <?php endforeach; ?>
+        </select>
+    </td>
+    <td>
+        <a href="javascript:void(0);" class="btn btn-primary btn-mini" onclick="add_module_action(event)">保存</a>
+        <a href="javascript:void(0);" class=" btn btn-mini" onclick="cancel_action(event)">取消</a>
+    </td>
+</tr>
+
+<tr class="tmpl-module local-module" module-id="0">
+    <td><i class="icon-move move-handler"></i></td>
+    <td class="module-name"></td>
+    <td class="module-type" type-val=""></td>
+    <td>
+        <a href="" class="btn-edit btn btn-mini iframe-link">嵌入</a>
+        <a href="javascript:void(0);" class="btn-edit btn btn-mini" onclick="edit_module(event)">编辑</a>
+        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger">删除</a>
+    </td>
+</tr>
+</table>
+</div>
+
+
+<script>
+       $( "#real-modules" ).sortable({
+            handle: '.move-handler',
+            update: function(event, ui){
+                var trs = $('#real-modules .local-module');
+                var module_ids = [];
+                for(var i=0;i<trs.length;i++){
+                    module_ids.push($(trs[i]).attr('module-id'));
+                }
+                $.get(app_path+'/Local/act_module_change_order', {
+                    'new_order': module_ids.join(',')
+                }, function(result){
+                    if(result == 'ok'){
+
+                    }
+                });
+                console.log(module_ids.join(','));
+            }
+       });
+       
+       function add_module(){
+            var editor_tr = $('.tmpl-module-edit').clone();
+            editor_tr.removeClass('tmpl-module-edit');
+            editor_tr.appendTo('#real-modules');
+       }
+       
+       function edit_module(e){
+            var tr = $(e.currentTarget).parent().parent();
+            var module_id = tr.attr('module-id');
+            var module_name = tr.find('.module-name').text();
+            var module_type = tr.find('.module-type').attr('type-val');
+            var module_type_name = tr.find('.module-type').text();
+            
+            var editor_tr = $('.tmpl-module-edit').clone();
+            editor_tr.removeClass('tmpl-module-edit');
+            editor_tr.attr('module-id', module_id);
+            editor_tr.attr('old-name', module_name);    // same old info in case of cancel
+            editor_tr.attr('old-type', module_type);
+            editor_tr.attr('old-type-name', module_type_name);
+            editor_tr.find('.module-name').val(module_name);
+            editor_tr.find('.module-type').val(module_type);
+            
+            tr.replaceWith(editor_tr);
+       }
+       
+       function cancel_action(e){
+            var editor_tr = $(e.currentTarget).parent().parent();
+            if(editor_tr.attr('module-id') == 0){   // it is a new module
+                
+            }
+            else{   // it is an existing module
+                var old_id = editor_tr.attr('module-id');
+                var old_name = editor_tr.attr('old-name');
+                var old_type = editor_tr.attr('old-type');
+                var old_type_name = editor_tr.attr('old-type-name');
+                
+                var tr = build_module_tr(old_id, old_name, old_type, old_type_name);
+                editor_tr.replaceWith(tr);
+            }
+            editor_tr.remove();
+       }
+       
+       function add_module_action(e){
+            var editor_tr = $(e.currentTarget).parent().parent();
+            var local_id = $('#local-id').val();
+            var name = editor_tr.find('.module-name').val();
+            if(name == ''){
+                editor_tr.find('.module-name').addClass('error');
+                editor_tr.find('.module-name').attr('placeholder', '请输入板块名称');
+                return;
+            }
+            
+            var new_id = editor_tr.attr('module-id');
+            var new_name = editor_tr.find('.module-name').val();
+            var new_type = editor_tr.find('.module-type').val();
+            var new_type_name = editor_tr.find('.module-type option:selected').text();
+            
+            if(new_id == 0){   // add new module
+                $.get(app_path+'/Local/act_module_add', {
+                        'local_id': local_id,
+                        'name': new_name,
+                        'type': new_type
+                    }, function(result){
+                        if($.isNumeric(result)){
+                            var name = new_name;
+                            var type = new_type;
+                            var type_name = new_type_name;
+                            
+                            var local_tr = build_module_tr(result, name, type, type_name);
+                            local_tr.appendTo('#real-modules');
+                            
+                            editor_tr.remove();
+                        }
+                    }); 
+            }
+            else{       // modify existing module
+                $.get(app_path+'/Local/act_module_save', {
+                    'id': new_id, 
+                    'name': new_name,
+                    'type': new_type
+                }, function(result){
+                    if(result == 'ok'){
+                        var local_tr = build_module_tr(new_id, new_name, new_type, new_type_name);
+                        editor_tr.replaceWith(local_tr);
+                    }
+                });
+            }
+       }
+       
+       function build_module_tr(id, name, type, type_name){
+            var local_tr = $('.tmpl-module').clone();
+            local_tr.removeClass('tmpl-module');
+            local_tr.attr('module-id', id);
+            local_tr.find('.module-type').attr('type-val', type);
+            local_tr.find('.module-name').text(name);
+            local_tr.find('.module-type').text(type_name);
+            local_tr.find('.iframe-link').attr('href', app_path+'/Local/iframe_link/module_id/'+id);
+            
+            return local_tr;
+       }
+       
+   </script>  
+<!-- end of templates`  -->
+</div> <!-- main-container -->
+
+<include file="Public:footer"/>

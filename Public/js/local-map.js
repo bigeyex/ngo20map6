@@ -236,7 +236,10 @@ var list_control = {	//knockout.js model
 			          { minZoom: 2, maxZoom: 18, userData: d, offsets: [10,10,10,10]});
 			     	map.addHotspot(hotspot);
 				}
-
+                
+                // change the number
+                $('.ngo-count').text(data.length);
+                
 				//reverse the order of 3 lists
 				//so can display in temporal order, from newest to oldest.
 				self.ngo_in_view.reverse();

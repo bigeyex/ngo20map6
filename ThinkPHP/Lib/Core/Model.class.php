@@ -1522,6 +1522,5 @@ class Model {
         if(property_exists($this,$name))
             $this->$name = $value;
         return $this;
-    }
-
+    }   
 }

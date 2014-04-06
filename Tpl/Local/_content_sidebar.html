@@ -1,8 +1,20 @@
 <div class="bs-docs-sidebar">
-    <ul class="nav nav-list bs-docs-sidenav affix">
-        <li><a href="{:U('Local/index')}/name/{$local_map.identifier}"><i class="icon-chevron-right"></i>返回{$local_map.name}</a></li>
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="{:U('Local/index')}/name/{$local_map.identifier}">返回</a></li>
+        <li><a href="{:U('Index/list_index')}/province/{$local_map.province}/type/ngo/model/users" target="_blank"><i class="icon-chevron-right"></i>机构名录</a></li>
+        <li><a href="{:U('Index/list_index')}/province/{$local_map.province}/type/ngo/model/events" target="_blank"><i class="icon-chevron-right"></i>活动目录</a></li>
+    </ul>
+    <ul class="nav nav-list bs-docs-sidenav">
+        
         <?php foreach($modules as $module): ?>
-        <li class="{:active_if($_GET['content_id']==$module['id'])}"><a href="#responsive"><i class="icon-chevron-right"></i>{$module.name}</a></li>
+        <?php if($module['type'] == 'post'): ?>
+        <li class="{:active_if($content_id==$module['id'] || $_GET['content_id']==$module['id'])}"><a href="{:U('Local/post_list')}/local_id/{$local_map.id}/content_id/{$module.id}"><i class="icon-chevron-right"></i>{$module.name}</a></li>
+        <?php endif; ?>
         <?php endforeach; ?>
     </ul>
+    <?php if(is_local_admin()): ?>
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li class="{:active_if(ACTION_NAME=='module_edit')}"><a href="{:U('Local/module_edit')}/local_id/{$local_map.id}"><i class="icon-chevron-right"></i>板块设置</a></li>
+    </ul>
+    <?php endif; ?>
 </div>

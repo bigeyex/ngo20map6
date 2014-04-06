@@ -15,10 +15,17 @@ return array(
     'VOLUNTEER_SKILLS' => array('外语', 'IT基础设施维护', '网络编程', '美工', '营销', '法律','摄影摄像','文字创作','口语表达'),
     'DEFAULT_LOCAL_CONFIG' => array(
         'modules' => array(
-            array('id' => 'announcement', 'name' => '公告', 'type' => 'post'),
-            array('id' => 'resource', 'name' => '资源', 'type' => 'post'),
-            array('id' => 'activities', 'name' => '活动', 'type' => 'post'),
+            array('name' => '公告', 'type' => 'post'),
+            array('name' => '资源', 'type' => 'post'),
+            array('name' => '活动', 'type' => 'post'),
         ),
+    ),
+    'LOCAL_MODULES' => array(
+        'post' => '文章',
+        'ngo' => '公益机构',
+        'csr' => '企业公益活动',
+        'event' => '公益活动',
+        'case' => '对接案例',
     ),
     'TERM' => <<<EndOfFile
 

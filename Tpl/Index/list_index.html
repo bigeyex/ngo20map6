@@ -34,7 +34,7 @@
             <select id="provinces">
                 <option value="0">全部地区</option>
                 <?php foreach(C('PROVINCES') as $field): ?>
-                    <option val="{$field}" {:selected_if($field==$params['province'])}>{$field}</option>
+                    <option val="{$field}" {:selected_if(province_equal($field,$params['province']))}>{$field}</option>
                 <?php endforeach; ?>
             </select>
         </ul>
@@ -58,9 +58,15 @@
         <?php endif; ?> 
     </div>
     <?php endif; ?>
+    <?php if($is_expert_mode): ?>
+    <div class="btn-toolbar">
+        <a class="btn" href="{:U('Index/list_index')}/export/1">下载Excel</a>
+    </div>
+    <?php endif; ?>
     <div class="page-show">
         {$pager}
     </div>
+    <?php if(!$is_expert_mode): ?>
     <table class="table table-hover syllabus-table">
         <tr>
             <th>标题</th>
@@ -92,6 +98,69 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <?php else: // if it is expert mode ?>
+    <table class="table table-hover syllabus-table">
+        <tr>
+            <th>名称</th>
+            <th width="100">联系人</th>
+            <th>电子邮件</th>
+            <th width="120">电话</th>
+            <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
+            <th width="150">勋章</th>
+            <?php endif; ?>
+        </tr>
+        <?php foreach($result as $row): ?>
+            <tr>
+                <td>
+                    <?php if($row['model'] == 'events'): ?>
+                    <a href="{:U('Event/view')}/id/{$row.id}" target="_blank">{$row.name}</a>
+                    <?php else: ?>
+                    <a href="{:U('User/view')}/id/{$row.id}" target="_blank">{$row.name}</a>  
+                    <?php endif; ?>
+                </td>
+                <?php if(!$row['is_checked']): // if not checked, show check link ?>
+                    <?php if($row['model'] == 'users'): ?>
+                    <td colspan="4">
+                        请在核实后
+                        <a href="javascript:void(0);" class="btn btn-mini" user-id="{$row.id}" onclick="approve_user(event)">审核通过</a>
+                    </td>
+                    <?php else: // for events ?>
+                    <td colspan="3">
+                        请在核实后
+                        <a href="javascript:void(0);" class="btn btn-mini"  onclick="approve_event(event)">审核通过</a>
+                    </td>
+                    <?php endif; ?>
+                <?php else: // a checked row ?>
+                <td>
+                    {$row.contact_name}
+                </td>
+                <td>
+                    <?php if($row['model'] == 'events'): ?>
+                    <a href="mailto:{$row.contact_email}" target="_blank">{$row.contact_email}</a>
+                    <?php else: ?>
+                    <a href="mailto:{$row.public_email}" target="_blank">{$row.public_email}</a>  
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if($row['model'] == 'events'): ?>
+                        {$row.contact_phone}
+                    <?php else: ?>
+                        {$row.phone}
+                    <?php endif; ?>
+                </td>
+                <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
+                <?php $medals = explode(',', $row['medals']) ?>
+                <td>
+                    <?php foreach($medals as $medal): ?>
+                    <span class="medal-{$medal} medal-icon" style="background-image:url(<?php echo __APP__; ?>/Public/img/medals/{$medal}.png);" data-toggle="tooltip" title="{$medal_map[$medal]['description']}"></span>
+                    <?php endforeach; ?>
+                </td>
+                <?php endif; // if is user - display medal ?>
+                <?php endif; // if is checked ?>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <?php endif; ?>
     <div class="page-show">
         {$pager}
     </div>
@@ -109,6 +178,46 @@ $(function(){
     });
     $('.medal-icon,.medal-stab').tooltip();
 });
+
+function approve_user(e){
+    var a_tag = $(e.currentTarget);
+    var user_id = a_tag.attr('user-id');
+    $.get(app_path+'/Index/act_approve_user/user_id/'+user_id, function(result){
+        if(result == 'ok'){
+            a_tag.replaceWith('<a href="javascript:void(0);" class="btn btn-mini btn-success" user-id="'+user_id+'" onclick="disapprove_user(event)">已审核</a>');
+        }
+    });
+}
+
+function disapprove_user(e){
+    var a_tag = $(e.currentTarget);
+    var user_id = a_tag.attr('user-id');
+    $.get(app_path+'/Index/act_disapprove_user/user_id/'+user_id, function(result){
+        if(result == 'ok'){
+            a_tag.replaceWith('<a href="javascript:void(0);" class="btn btn-mini" user-id="'+user_id+'" onclick="approve_user(event)">审核通过</a>');
+        }
+    });
+}
+
+function approve_event(e){
+    var a_tag = $(e.currentTarget);
+    var event_id = a_tag.attr('event-id');
+    $.get(app_path+'/Index/act_approve_event/event_id/'+event_id, function(result){
+        if(result == 'ok'){
+            a_tag.replaceWith('<a href="javascript:void(0);" class="btn btn-mini btn-success" event-id="'+event_id+'" onclick="disapprove_event(event)">已审核</a>');
+        }
+    });
+}
+
+function disapprove_event(e){
+    var a_tag = $(e.currentTarget);
+    var event_id = a_tag.attr('event-id');
+    $.get(app_path+'/Index/act_disapprove_event/event_id/'+event_id, function(result){
+        if(result == 'ok'){
+            a_tag.replaceWith('<a href="javascript:void(0);" class="btn btn-mini" event-id="'+event_id+'" onclick="approve_event(event)">审核通过</a>');
+        }
+    });
+}
 
 </script>
 

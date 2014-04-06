@@ -3,48 +3,75 @@
 <div id="main-container">
 
     <div class="row">
-        <div class="span3">
+        <div class="span2">
             {:R('Local/_content_sidebar', array($_GET['local_id']))}
         </div>
-        <div class="span7">
+        <div class="span9">
+            <h1><a href="{:U('Local/index')}/name/{$local_map.identifier}">{$local_map.name}</a> - {$module.name}</h1>
             <div class="btn-toolbar">
-                <?php if($is_local_admin): ?>
-                <ul class="btn-group">
-                    <li class="btn {:active_if($check == 'all')}"><a href="{:U('Admin/events')}/check/all">
-                        {:L('全部')}</a></li>
-                    <li class="btn {:active_if($check == 'pending')}"><a href="{:U('Admin/events')}/check/pending">
-                        {:L('待审核')}</a></li>
-                    <li class="btn {:active_if($check == 'checked')}"><a href="{:U('Admin/events')}/check/checked">
-                        {:L('已审核')}</a></li>
-                    <li class="btn {:active_if($check == 'deleted')}"><a href="{:U('Admin/events')}/check/deleted">
-                        {:L('已删除')}</a></li>
-                </ul>
-                <?php endif; ?>
+                
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="{:U('Local/post_add')}/local_id/{$_GET.local_id}/content_id/{$_GET.content_id}">投稿</a>
+                </div>
+                
                 <ul class="btn-group">
                     <li>
-                        <form id="admin-search-form" action="{:U('Admin/events')}" method="get">
-                            <input class="input-small" class="text" type="text" name="q" value="{$q}"/>
+                        <form id="admin-search-form" action="{:U('Local/post_list')}" method="get">
+                            <input type="hidden" name="local_id" value="{$_GET.local_id}"/>
+                            <input type="hidden" name="content_id" value="{$_GET.content_id}"/>
+                            <input class="input-small" class="text" type="text" name="q" value="{$_GET.q}"/>
                             <input class="btn" type="submit" value="{:L('搜索')}"/>
-                            <a href="{:U('Admin/events')}/q/all">{:L('清除条件')}</a>
+                            <a href="{:U('Local/post_list')}/local_id/{$_GET.local_id}/content_id/{$_GET.content_id}/q/all">{:L('清除条件')}</a>
                         </form>
                     </li>
                 </ul>
             </div>
-            
-                <legend>{$post.name}</legend>
-                <div id="post-content">
-                {$post.content}
-                </div>
-                
+            <div id="post-content">
+            <div class="page-show">
+                {$page_bar}
+            </div>
+            <table class="table table-hover syllabus-table">
+            <tr>
+                <th width="200">{:L('标题')}</th>
+                <th width="200">{:L('发布者')}</th>
+                <th width="200">{:L('发布时间')}</th>
+                <?php if(is_local_admin()): ?>
+                <th width="230"></th>
+                <?php endif; ?>
+            </tr>
+            <?php foreach($posts as $post): ?>
+                <tr>
+                    <td><a href="{:U('Local/post_view')}/local_id/{$post.local_id}/post_id/{$post.id}">{$post.name}</td>
+                    <td><a href="{:U('User/view')}/id/{$post.users.id}">{$post.users.name}</a></td>
+                    <td>{$post.create_time}</td>
+                    <?php if(is_local_admin()): ?>
+                    <td>
+                        
+                        <a href="{:U('Local/post_delete')}/id/{$post.id}" class="btn-delete btn btn-mini btn-danger">删除</a>
+                        <a href="{:U('Local/post_edit')}/content_id/{$post.key}/id/{$post.id}" class="btn-edit btn btn-mini">编辑</a>
+                        <a post-id="{$post.id}" href="javascript:void(0);" class="btn-stick btn btn-mini {:text_if($post['sortkey']>0, 'btn-warning')}">{:text_if($post['sortkey']>0, '还原', '置顶')}</a>
+                        <a post-id="{$post.id}" href="javascript:void(0);" class="btn-audit btn btn-mini {:text_if($post['is_checked'], 'btn-success')}">{:text_if($post['is_checked'], '撤下', '审核')}</a>
+                        
+                    </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+            </table>
+            <div class="page-show">
+                {$page_bar}
+            </div>
+            </div>
               
         </div>
     </div>
     {:css('local-inner')}
     {:css('bootstrap')}
     {:css('todc-bootstrap')}
-<style>
+    {:js('local-manage')}
 
-</style>   
+   <script>
+       
+   </script>   
 
 </div> <!-- main-container -->
 

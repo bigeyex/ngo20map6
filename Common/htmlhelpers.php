@@ -44,6 +44,15 @@ function class_if($class, $condition){
 	}
 }
 
+function text_if($condition, $text, $default=''){
+    if($condition){
+        return $text;
+    }
+    else{
+        return $default;
+    }
+}
+
 
 function addhttp($url) {
     if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {

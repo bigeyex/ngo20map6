@@ -145,6 +145,7 @@ class UserAction extends Action {
         $account_id = $account_model->add_user($_POST);
         if($account_id){
         	$user_model->account_id = $account_id;
+        	$user_model->password = '******';  // hide password - the real hashed password is stored in account model
         	$user_model->add();
             $account_model->login($_POST['email'], $_POST['password']);
         	$this->redirect('home');

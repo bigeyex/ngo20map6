@@ -27,7 +27,7 @@ $(document).ready(function(){
 			<?php foreach ($local_result as $local): ?>
 			<tr>
 				<td>{$local.id}</td>
-				<td><a href="{$news.url}">{$local.name}</a></td>
+				<td><a href="{:U('Local/index')}/name/{$local.identifier}">{$local.name}</a></td>
 
 				<td>
 					<a class="btn btn-mini" href="{:U('Local/edit')}/id/{$local.id}">编辑</a>

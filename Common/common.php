@@ -10,6 +10,43 @@ function admin_only(){
 	}
 }
 
+// translate list (eg. [['id'=>1, 'name'=>'joe'], ['id'=>2, 'name'=>'doe']] )
+// to map (eg. [ 1=>['name'=>'joe'], 2=>['name'=>'doe'] ] )
+// @param list: the list to be translated
+// @param $by_field: the field serves as key of the map
+function list_to_map($list, $by_field = 'id'){
+    $result = array();
+    if(!is_array($list)) return null;
+    foreach($list as $item){
+        $result[$item[$by_field]] = $item;
+    }
+    return $result;
+}
+
+function province_equal($pro1, $pro2){
+    if(strpos($pro1, $pro2) !== false) return true;
+    if(strpos($pro2, $pro1) !== false) return true;
+    return false;
+}
+
+// get the current local map
+function local_map($field = null){
+    static $local_map = null;
+    if($local_map === null || $local_map['id']!=$_GET['local_id']){
+        $local_map = M('local_map')->find($_GET['local_id']);
+    }
+    if($field === null) return $local_map;
+    else return $local_map[$field];
+}
+
+// find if currently logged in user is the admin of local map
+function is_local_admin(){
+    if(user('is_admin')) return true;   // if the user is sys admin, return true;
+    if(user('id') == local_map('admin_id')) return true;   // if the user is the admin of the local map
+    
+    return false;
+}
+
 function need_login(){
 	if(!user()){
 		die('需要登录才能访问此页面');

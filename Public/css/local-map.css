@@ -41,13 +41,17 @@ h1 span {
     top: 13px;
 }
 
-.widget-action a {
+.widget-action a, h1 a {
     display: block;
     font-size: 12px;
     padding: 3px 10px;
     border: 1px solid #b3b3b3;
     border-radius: 5px;
     color: #4d4d4d;
+}
+
+h1 a{
+    display: inline-block;
 }
 
 .widget-action a:hover{
@@ -315,7 +319,6 @@ a.more{
     background-image: url(../img/loading.gif);
 }
 
-    
 /* spider-network */
 
 .show-spider-link{
@@ -327,3 +330,10 @@ a.more{
     color: #85b552;
 }
     
+.ngo-count-display{
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    color: #999;
+    text-align: right;
+}

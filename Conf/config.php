@@ -1,6 +1,6 @@
 <?php
 return array(
-    "LOAD_EXT_FILE"=>"htmlhelpers,auth",
+    "LOAD_EXT_FILE"=>"htmlhelpers,auth,qndmodel",
     'URL_MODEL' => 2,
     'APP_DEBUG' => true,
         

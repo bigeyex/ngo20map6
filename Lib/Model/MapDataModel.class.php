@@ -234,7 +234,10 @@ class MapDataModel extends Model{
             }
         }
         
-        $events_where[] = $users_where[] = 'is_checked=1';
+        // if it is not expert mode, only show checked items
+        if(!isset($param['expert_mode'])){
+            $events_where[] = $users_where[] = 'is_checked=1';
+        }
         $events_where[] = $users_where[] = 'enabled=1';
         
         $order = "";
@@ -255,7 +258,7 @@ class MapDataModel extends Model{
             $sql_list[] = '(select '.$param['event_fields'].' from events where '.implode(" and ", $events_where).')';
         }
         $sql = implode(' union ', $sql_list) . $order . $limit; 
-
+        
         $result = $this->query($sql);
         if(!$result) $result = array();
         return $result;
