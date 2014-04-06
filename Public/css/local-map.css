@@ -1,0 +1,339 @@
+
+h1 {
+    font-size: 21px;
+    color: #c1272d;
+    font-weight: normal;
+    margin: 15px 0 15px;
+
+}
+
+h1 span {
+    font-size: 14px;
+    color: #4d4d4d;
+}
+
+#main-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    padding: 20px;
+    padding-top: 60px;
+    background-color: white;
+}
+
+.widget-row {
+    margin-left: -35px;
+    clear: both;
+}
+
+.widget-block {
+    margin-bottom: 20px;
+    margin-left: 35px;
+    position: relative;
+    float: left;
+    width: 275px;
+}
+
+.widget-action {
+    position: absolute;
+    right: 0px;
+    margin: 0;
+    top: 13px;
+}
+
+.widget-action a, h1 a {
+    display: block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    color: #4d4d4d;
+}
+
+h1 a{
+    display: inline-block;
+}
+
+.widget-action a:hover{
+    background-color: rgba(0,0,0,.3);
+    color: white;
+}
+
+.widget-title {
+    font-size: 17px;
+    margin: 15px 20px 10px 0;
+}
+
+.widget-block ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.widget-block ul a {
+    color: #4d4d4d;
+    font-size: 14px;
+}
+
+a.more{
+    text-align: right;
+    color: #4d4d4d;
+    font-size: 12px;
+    margin-top: 12px;
+    display: block;
+}
+
+.no-content-stab{
+    color: #777;
+    font-size: 13px;
+    margin: 20px;
+}
+#map-panel{
+    height: 248px;
+    float: left;
+    width: 190px;
+    border: solid 1px #f5f3f0;
+    border-right: 0;
+    background: #fdfdfc ;
+    padding: 15px;
+    position: relative;
+}
+
+/* The CSS */
+#field-select-box  select,.shaded-button {
+    padding:5px;
+    font-size: 13px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f3f2f1 ;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    width:114px;
+}
+.shaded-button{
+    width: 80px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    line-height: 16px;
+    padding: 5px 7px;
+    width: 53px;
+    display: block;
+}
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    #field-select-box select {padding-right:18px}
+}
+
+#field-select-box  {position:relative;width:114px;}
+#field-select-box:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+#field-select-box:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f3f2f1 ;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+    
+.prev-page-mini,.next-page-mini,.mark-ngo-button{
+    font-size: 12px;
+    line-height: 14px;
+    top: auto;
+    width: 26px;
+    bottom: 15px;
+}
+
+.mark-ngo-button{
+    left: 15px;
+    width: 50px;
+}
+    
+.prev-page-mini{
+    right: 60px;
+}
+    
+.next-page-mini{
+    right: 15px;
+}
+
+#map-panel ul{
+    margin-top: 7px;
+}
+#map-panel li a{
+    color: black;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px dashed #ddd;
+    display: block;
+}
+    
+    
+    
+    
+
+/* info-window */
+.info-window{
+    z-index: 1;
+}
+
+.info-window-box{
+    width: 347px;
+    height: 126px;
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background-color: white;
+    -webkit-box-shadow: 0 0 21px rgba(80,80,80,.08);
+    -moz-box-shadow: 0 0 21px rgba(80,80,80,.08);
+    box-shadow: 0 0 21px rgba(80,80,80,.08);
+    border: solid 1px #8c8c8c;
+    background-image: -webkit-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -moz-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -o-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: -ms-linear-gradient(bottom, #f7f7f7, #fff);
+    background-image: linear-gradient(to top, #f7f7f7, #fff);
+    position: absolute;
+    top: 0px;
+}
+
+.info-window-bg{
+    background: url(../img/bg/info-window-shadow.png) no-repeat;
+    width: 445px;
+    height: 140px;
+    position: absolute;
+    top: 42px;
+}
+
+.info-window-triangle{
+    background: url(../img/bg/info-window-shadow.png) no-repeat 0 -160px;
+    width: 30px;
+    height: 15px;
+    position: absolute;
+    top: 146px;
+    left: 169px;
+}
+
+.info-window-close-button{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: url(../img/bg/info-window-shadow.png) no-repeat 0 -200px;
+    cursor: pointer;
+}
+
+#info-window-title{
+    font-size: 14px;
+    width: 320px;
+    color: #378f05;
+}
+
+#info-window-place{
+    margin-top: 9px;
+    height: 26px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+#info-window-place-label{
+    color: #378f05;
+}
+
+#info-window-place-text{
+    color: #666666;
+}
+
+#info-window-detail{
+    height: 61px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
+}
+
+#info-window-detail-list{
+    font-size: 13px;
+    line-height: 14px;
+    margin-top: 8px;
+    height: 103px;
+    overflow: auto;
+}
+
+#info-window-detail-list .ind a{
+    color: #e98f02;
+}
+
+#info-window-detail-list .case a{
+    color: #e65f03;
+}
+
+.zoom-in-link{
+    position: absolute;
+    font-size: 12px;
+    top: 11px;
+    left: 110px;
+    color: #9c9c9c;
+}
+
+.info-window.csr #info-window-title a, .info-window.csr #info-window-place-label,
+.info-window.ind #info-window-title a, .info-window.ind #info-window-place-label{
+    color: #e98f02;
+}
+
+.info-window.case #info-window-title a, .info-window.case #info-window-place-label{
+    color: #d14100;
+}
+
+.waiting-ball{
+    width: 15px;
+    height: 15px;
+    display: block;
+    background-image: url(../img/loading.gif);
+}
+
+/* spider-network */
+
+.show-spider-link{
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #85b552;
+}
+    
+.ngo-count-display{
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    color: #999;
+    text-align: right;
+}

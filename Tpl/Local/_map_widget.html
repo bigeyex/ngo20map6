@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>公益地图 - 区域</title>
+</head>
+
+<body>
+    <div id="map-zone">
+        <div id="map-panel">
+            <label id="field-select-box">
+                <select id="set-field">
+                    <option selected value=""> 全部领域 </option>
+                    <?php foreach(C('ORG_FIELDS') as $field): ?>
+                        <option val="{$field}">
+                            {$field}
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            <a class="shaded-button" href="{:U('Index/list_index')}">查看名录</a>
+            <ul data-bind="foreach: ngo_list">
+                <li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
+            </ul>
+            <span class="ngo-count-display">共有<span class="ngo-count"></span>家机构</span>
+            <a class="shaded-button mark-ngo-button" href="{:U('User/register')}">注册地图</a>
+            <a class="shaded-button prev-page-mini">上页</a>
+            <a class="shaded-button next-page-mini">下页</a>
+        </div>
+        <div id="allmap" style="height: 280px;"></div>
+    </div>
+    <script type="text/javascript">
+        app_path='__APP__';
+    </script>	
+    
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+    {:js('jquery-1.9.1')}
+    {:js('knockout-2.2.1')}
+    {:js('local-map')}
+    {:css('base')}
+    {:css('local-map')}
+    <script type="text/javascript">
+    mapdata.province='{$local_map.province}';
+    map.centerAndZoom(mapdata.province);
+    $(function(){
+        $('#set-field').change(function(){
+           mapdata.set_field($('#set-field').val());
+        });
+//        mapdata.set_province(mapdata.province);
+    });	
+    </script>
+</body>
+
+</html>
+
+

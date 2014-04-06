@@ -21,6 +21,7 @@ class AccountsModel extends Model{
             //fetch other user information
             $user_model = new UsersModel();
             $user_data = $user_model->where(array('account_id'=>$result['id']))->find();
+            $user_data['local_maps'] = T('local_map')->with('admin_id', $user_data['id'])->select();
 
             $_SESSION['login_user'] = array_merge($user_data, $result);
             $_SESSION['login_user']['id'] = $user_data['id'];

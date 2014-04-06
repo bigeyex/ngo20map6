@@ -1,0 +1,41 @@
+<layout name="admin_layout" />
+
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<br/><div>
+			<a href="{:U('Local/add_map')}" class="btn">{:L('新建二级地图')}</a>
+			
+		</div><br/>
+		<table class="table table-striped">
+			<tr>
+				<th>#</th>
+				<th>{:L('标题')}</th>
+				<th>{:L('操作')}</th>
+			</tr>
+			<?php foreach ($local_result as $local): ?>
+			<tr>
+				<td>{$local.id}</td>
+				<td><a href="{:U('Local/index')}/name/{$local.identifier}">{$local.name}</a></td>
+
+				<td>
+					<a class="btn btn-mini" href="{:U('Local/edit')}/id/{$local.id}">编辑</a>
+					<a class="btn btn-danger btn-mini fast-confirm" href="{:U('Local/delete_map')}/id/{$local.id}" ques="{:L('确实要永久删除该二级地图吗？')}">删除</a>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</table>
+	</div>
+</div>
+

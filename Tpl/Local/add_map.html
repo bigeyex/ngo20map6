@@ -1,0 +1,97 @@
+<layout name="admin_layout" />
+
+<script language="javascript">
+
+$(document).ready(function(){
+    var url='__SELF__';
+    window.check_word = "{:L('请选择需操作的事件！')}";
+    window.lock_word = "{:L('确实要对所选事件执行此操作吗？')}"
+
+
+});
+
+
+</script>
+<div class="row">
+	<div class="span10">
+		<form class="form-horizontal" action="{:U('Local/'.$action)}" method="POST">
+			<?php if($action == "save"): ?>
+			<input type="hidden" name="id" value="{$local_map.id}"/>
+			<?php endif; ?>
+			<fieldset>
+				<legend>{:L('新建二级地图页面')}</legend>
+				<div class="control-group">
+					<label class="control-label" for="input01">{:L('标题')}</label>
+					<div class="controls">
+						<input type="text" name="name" class="input-large" id="input01" value="{$local_map.name}" placeholder="安徽公益地图">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('管理员')}</label>
+					<div class="controls">
+						<input type="text" name="admin_id" class="input-large" id="related-org" value="{$news.admin_id}" username="{$local_map.user_name}">
+						<p class="help-block" id="org-validate"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input02">{:L('英文短名')}</label>
+					<div class="controls">
+						<input type="text" name="identifier" class="input-large" id="input02" value="{$local_map.identifier}" placeholder="显示在网址上的内容,如anhui">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input03">{:L('省份')}</label>
+					<div class="controls">
+						<input type="text" name="identifier" class="input-large" id="input03" value="{$local_map.province}" placeholder="安徽">
+						<p class="help-block"></p>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">
+						{:L('保存二级地图')}
+					</button>
+					<button class="btn"><a href="{:U('News/index')}">{:L('取消')}</a></button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+{:css('select2')}
+{:js('select2')}
+{:js('select2_locale_zh-CN')}
+<include file="Public:image-cropper"/>
+<script type="text/javascript">
+$('#upload-avatar-button').click(function(){
+        init_cropper(438, 438, function(img){
+            $('#avatar-preview-img').attr('src', app_path+'/Public/Uploadedthumb/'+img);
+            $('#avatar-preview-div').show();
+            $('#avatar-hidden').val(img);
+        });
+    });   
+
+$('#related-org').select2({
+	minimumInputLength: 2,
+	placeholder: "请输入公益组织名称",
+	ajax: {
+                url: app_path+"/User/ajax_suggest",
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        q: term
+                    };
+                },
+                results: function (data, page) { 
+                    return {results: data};
+                }
+            },
+    initSelection : function (element, callback) {
+        callback({id: element.val(), text: element.attr('username')});
+    }
+});
+
+function formatResult(item) {
+        return item['text'];
+    }
+</script>

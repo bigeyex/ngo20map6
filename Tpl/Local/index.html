@@ -1,0 +1,75 @@
+<include file="Public:header"/>
+
+
+<div id="main-container">
+    <h1 id="local_title">{$local_map.name} <span>{$admin_user.name}</span>
+        <?php if($is_local_admin): ?>
+        <a href="{:U('Local/module_edit')}/local_id/{$local_map.id}">板块设置</a>
+        <?php endif; ?>
+        </h1>
+    <div id="map-zone">
+        <div id="map-panel">
+            <label id="field-select-box">
+                <select id="set-field">
+                    <option selected value=""> 全部领域 </option>
+                    <?php foreach(C('ORG_FIELDS') as $field): ?>
+                        <option val="{$field}">
+                            {$field}
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            <a class="shaded-button" href="{:U('Index/list_index')}">查看名录</a>
+            <ul data-bind="foreach: ngo_list">
+                <li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
+            </ul>
+            <span class="ngo-count-display">共有<span class="ngo-count"></span>家机构</span>
+            <a class="shaded-button mark-ngo-button" href="{:U('User/register')}">注册地图</a>
+            <a class="shaded-button prev-page-mini">上页</a>
+            <a class="shaded-button next-page-mini">下页</a>
+        </div>
+        <div id="allmap" style="height: 280px;"></div>
+    </div>
+    <div class="widget-row">
+        <?php 
+            $i=0;
+            foreach($modules as $module){
+                if($i % 3 == 0){
+                    echo '<div class="clearfix">';
+                }
+                switch($module['type']){
+                    case 'post':
+                        R('Local/_post_widget', array($local_map['id'], $module));
+                        break;
+                    case 'ngo':
+                    case 'event':
+                    case 'csr':
+                    case 'case':
+                        R('Local/_mapdata_widget', array($local_map['id'], $module));
+                        break;
+                }
+                if($i % 3 == 0){
+                    echo '</div>';
+                }
+                $i++;
+            }
+        ?>
+    </div> <!--row  -->
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+{:js('knockout-2.2.1')}
+{:js('local-map')}
+{:css('local-map')}
+<script type="text/javascript">
+mapdata.province='{$local_map.province}';
+map.centerAndZoom(mapdata.province);
+$(function(){
+	$('#set-field').change(function(){
+	   mapdata.set_field($('#set-field').val());
+    });
+	//mapdata.set_province('安徽');
+});	
+</script>
+<include file="Public:footer"/>

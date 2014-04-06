@@ -55,7 +55,7 @@ class MapAction extends Action {
         $model = $_GET['model'];
         $medal = $_GET['medal'];
 
-        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['key'], $_GET['type'], $_GET['model'], $_GET['medal']);
+        $data = $map_data_model->get_tile_data($tilex, $tiley, $zoom, $_GET['field'], $_GET['key'], $_GET['type'], $_GET['model'], $_GET['medal'], $_GET['province']);
 
         header("content-type:image/png");  
         $img=imagecreatetruecolor(256,256);  
