@@ -38,6 +38,9 @@ function user($attr=null, $value=null){
 	if(!isset($_SESSION['login_user'])){
 		return false;
 	}
+	if($attr == 'local_map' && !isset($_SESSION['login_user']['local_map'])){
+        $_SESSION['login_user']['local_map'] = T('local_map')->with('admin_id', user('id'))->select();
+    }
 	if($attr === null){
 		return true;
 	}
