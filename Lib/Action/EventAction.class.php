@@ -49,9 +49,16 @@ class EventAction extends Action {
             'begin_time' => date('Y-m-d'),
             'end_time' => date('Y-m-d'),
             );
+            
+        if(isset($_GET['type'])){
+            $event_type = $_GET['type'];
+        }
+        else{
+            $event_type = user('type');
+        }
 
         $this->assign('event', $event);
-        $this->assign('event_type', user('type'));
+        $this->assign('event_type', $event_type);
         $this->assign('target_url', 'insert');
 		$this->display();
 	}
@@ -61,8 +68,11 @@ class EventAction extends Action {
         $event = $event_model->find($id);
         $event['begin_time'] = date('Y-m-d',strtotime($event['begin_time']));
         $event['end_time'] = date('Y-m-d',strtotime($event['end_time']));
+        
+        $event_type = $event['type'];
 
         $this->assign('event', $event);
+        $this->assign('event_type', $event_type);
         $this->assign('target_url', 'save');
         $this->display('add');
     }
@@ -117,12 +127,15 @@ class EventAction extends Action {
             return;
         }
 
-        $event_model->type = user('type');
-        if(user('is_admin') && isset($_GET['type'])){
-            $event_model->type = $_GET['type'];
+        if(!isset($_POST['type'])){
+            $event_model->type = user('type');
         }
+//        $event_model->type = user('type');
+//        if(user('is_admin') && isset($_POST['type'])){
+//            $event_model->type = $_POST['type'];
+//        }
         
-        
+//        print_r($_POST);die();
         // case: the admin want to assign this event to another person (rare)
         if($_POST['creator'] && user('is_admin')){
         	

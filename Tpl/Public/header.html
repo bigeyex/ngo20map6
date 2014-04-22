@@ -135,7 +135,7 @@
                                 <div id="login-menu-triangle"></div>
                                 <ul id="login-menu-list">
                                     <?php foreach(user('local_map') as $local_map): ?>
-                                        <li><a href="{:U('Local/index')}/name/{local_map.identifier}">{$local_map.name}</a></li>
+                                        <li><a href="{:U('Local/index')}/name/{$local_map.identifier}">{$local_map.name}</a></li>
                                     <?php endforeach; ?>
                                     <?php if(user('is_admin')): ?>
                                         <li><a href="{:U('Event/add')}/type/csr">发布CSR新闻</a></li>
