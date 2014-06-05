@@ -4,8 +4,12 @@ return array(
     'URL_MODEL' => 2,
     'APP_DEBUG' => true,
         
-    'LOG_RECORD' => true, // 开启日志记录
+    // debugging related
+    'LOG_RECORD' => true,
     'SESSION_AUTO_START' => true, 
+    'OUTPUT_ENCODE' => false,
+    'TMPL_CACHE_ON' => false,
+    'HTML_CACHE_ON'=>false,
     
     'URL_CASE_INSENSITIVE' =>false,
     

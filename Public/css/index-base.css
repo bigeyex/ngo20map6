@@ -817,7 +817,7 @@ span.part-time, span.volunteers{
     display: inline-block;
     background: url(../img/bg/type-filter-button-bg.jpg);
     border: 1px solid #c9c5bc;
-    width: 80px;
+    width: 75px;
     height: 30px;
     border-top: none;
     margin-left: -5px;
@@ -835,7 +835,7 @@ span.part-time, span.volunteers{
     background: none;
     border: none;
     height: 31px;
-    width: 83px;
+    width: 75px;
 }
 
 #keywords-filter{

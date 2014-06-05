@@ -23,11 +23,11 @@ if(!isset($_SESSION['login_user']) && isset($_COOKIE['ngo20_login_email'])){
 }
 
 /* check for admin zone */
-if(!$_SESSION['login_user']['is_admin'] && ( in_array(strtolower(MODULE_NAME), $admin_zone) ||
-    in_array(strtolower(MODULE_NAME) . '/' . strtolower(ACTION_NAME), $admin_zone) )){
-    setflash('error','','您的权限不足');
-    $pass=false;
-}
+//if(!$_SESSION['login_user']['is_admin'] && ( in_array(strtolower(MODULE_NAME), $admin_zone) ||
+//    in_array(strtolower(MODULE_NAME) . '/' . strtolower(ACTION_NAME), $admin_zone) )){
+//    setflash('error','','您的权限不足');
+//    $pass=false;
+//}
 if(!$pass){
     $_SESSION['last_page'] = $_SERVER["REQUEST_URI"];
     redirect(__APP__.'/Index/index');

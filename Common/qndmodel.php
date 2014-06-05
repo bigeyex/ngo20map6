@@ -94,7 +94,7 @@ class QnDModel extends Model{
             }
         }
         
-        parent::_after_select(&$resultSet,$options);
+        parent::_after_select($resultSet,$options);
     }
     
     /*
