@@ -80,6 +80,10 @@ function img($str, $alt='', $attr=array()){
 	return '<img src="'.__APP__.'/Public/img/'.$str.'" alt="'.$alt.'"'.$extra_attr.'/>';
 }
 
+function link_static($str){
+    return __APP__.'/Public'.$str;
+}
+
 // insert url of uploaded image or thumbnail
 function thumb($str, $thumb_level = -1){
 	if(is_array($str)){

@@ -87,7 +87,7 @@
 					<li class="board-story">
 						<div class="story-map" longitute="" latitude=""></div>
 						<div class="story-img-box">
-							<a href="{$news.url}" target="_blank"><img src="{:upimage($news['image'])}" width="160"/></a>
+							<a href="{$news.url}" target="_blank"><img class="lazy" src="{:link_static('/img/grey.png')}" data-original="{:upimage($news['image'])}" width="160" height="160"/></a>
 						</div>
 						<h3><a href="{$news.url}" target="_blank">{$news.name}</a></h3>
 					</li>
@@ -105,6 +105,7 @@
 	</div> <!-- master-box -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+{:js('jquery.lazyload.min')}
 {:css('index-base')}
 {:js('jsrender')}
 {:js('knockout-2.2.1')}
@@ -123,8 +124,10 @@ function googleTranslateElementInit() {
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F872dddf0962c4b1a38db3a043b36affc' type='text/javascript'%3E%3C/script%3E"));
+
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F872dddf0962c4b1a38db3a043b36affc' type='text/javascript'%3E%3C/script%3E"));
+
 </script>
 
 

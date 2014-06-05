@@ -14,6 +14,12 @@ $.fn.buttongroup = function(callback){
 	});
 }
 
+$(function() {
+    $("img.lazy").lazyload({
+        event : "sporty"
+    });
+});
+
 
 
 $('.main-nav-filter').hover(function(){
@@ -637,7 +643,7 @@ var story_board = {
         self.story_board_expanded = true;
       }
       e.stopPropagation();
-      
+      $("img.lazy").trigger("sporty");
     });
   }
 };
