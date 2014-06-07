@@ -404,13 +404,17 @@ img.weibo-img {
 }
 
 #about-us-link, #beian-link{
-    color: #999999;
+    
     font-size: 14px;
     position: absolute;
     top: 10px;
     left: 10px;
     text-decoration: none;
     text-decoration: none;
+}
+
+#about-us-link a{
+    color: #999999;
 }
 
 #beian-link{
