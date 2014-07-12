@@ -31,7 +31,7 @@
             <div class="form-field">
                 <span class="title"><span class="required">*</span> {:L('电子邮箱')}</span>
                 <span>{$user.email}</span>
-                <a href="">{:L('修改密码')}</a>
+                <a href="javascript:void(0);" onclick="$('.section-tab-password').click();">{:L('修改密码')}</a>
             </div>
             <div class="form-field">
                 <?php if($user['type'] == 'ngo'): ?>
@@ -126,24 +126,18 @@
                     <span class="progress-number">{$complete_100}%</span>
                 </span>
             </div>
-            <div class="form-field photo-field">
-                <?php if($user['type'] != 'ind'): ?>
-                <span class="title except except-ind">{:L('机构标志')}</span>
-                <?php else: ?>
-                <span class="title only ind-only">{:L('头像')}</span>
-                <?php endif; ?>
-                <input id="photo-field" type="hidden" name="photo" value="{$user.photo}">
-                <div class="photo">
-                    <?php if($user['image']): ?>
-                        <img id="photo-image" src="__APP__/Public/Uploadedthumb/{$user.image}" alt="" height="66"/>
-                        <?php else: ?>
-                        <img id="photo-image" src="__APP__/Public/Img/no-image-mid.gif" alt="" height="66"/>
-                    <?php endif; ?> 
+            <div class="form-field">
+                <span class="title except except-ind">机构标志</span>
+                <!-- <input type="file" name="image_uploader" value="浏览" accept="image/*"/> -->
+                <div id="avatar-component">
+                    <div id="avatar-preview-div" <?php if(empty($user['image'])){ ?> style="display:none;" <?php } ?>>
+                        <img src="{:upimage($user['image'])}" width="100" height="100" id="avatar-preview-img"/>
+                    </div>
+                    <a class="action-button" href="javascript:void(0);" id="upload-avatar-button">上传头像</a>
                 </div>
-                <div class="photo-uploader">
-                    <span id="upload-image-button">{:L('本地图片')}</span>
-                    <p>{:L('仅支持jpg、png、gif图片文件，且文件小于5M')}</p>
-                </div>
+                <input type="hidden" name="image" id="avatar-hidden" value="{$user.image}"/>
+
+                <div class="clearfix"></div>
             </div>
             <div class="form-field">
                 <span class="title">{:L('机构使命')}</span>
@@ -204,7 +198,7 @@
             <?php if(!user('is_admin') && !(user('password') == ngo20_md5(''))): ?>
             <div class="form-field">
                 <span class="title">{:L('当前密码')}</span>
-                <input type="text" name="prepass" class="validate[required]" value=""/>
+                <input type="password" name="prepass" class="validate[required]" value=""/>
             </div>
             <?php endif; ?>
             <div class="form-field new-password-field">
@@ -260,6 +254,9 @@
     
 </div>
 
+<include file="Public:image-cropper"/>
+
+
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 {:css('pikaday')}
 {:css('validationEngine.jquery')}
@@ -286,6 +283,14 @@ default_county = '{$user.county}';
 {:js('event-edit')}
 
 <script langage="text/javascript">
+    $('#upload-avatar-button').click(function(){
+        init_cropper(100, 100, function(img){
+            $('#avatar-preview-img').attr('src', app_path+'/Public/Uploadedthumb/'+img);
+            $('#avatar-preview-div').show();
+            $('#avatar-hidden').val(img);
+        });
+    });   
+    
     $('.section-tab').click(function(e){
         var o = $(e.currentTarget);
         $('.hideable-section').hide();
@@ -313,7 +318,7 @@ default_county = '{$user.county}';
     addPointMarker(new BMap.Point({$user.longitude},{$user.latitude}));
 
     new AjaxUpload('upload-image-button', {
-        action: app_path+'/Event/upload_image',
+        action: app_path+'/Media/upload_image',
         onComplete: function(file, response) {
             $('#photo-field').val(response);
             $('#photo-image').attr('src', app_path+'/Public/Uploadedthumb/thumbl_'+response);

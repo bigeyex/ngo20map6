@@ -13,6 +13,10 @@ function T($name='', $tablePrefix='',$connection='') {
     return $_model[$guid];
 }
 
+function O($name='', $tablePrefix='',$connection='') {
+    T($name, $tablePrefix, $connection);
+}
+
 function extract_field($arr, $field){
     $ret = array();
     foreach($arr as $result){

@@ -51,9 +51,10 @@ class UserAction extends Action {
                 $id = $user_record['account_id'];
             }
         }else{
-            $id = $_SESSION['login_user']['account_id'];        
-            if(md5($_POST['prepass']) != $_SESSION['login_user']['password']) {
-                setflash('请确认提供了正确的登录密码', 'error');
+            $id = $_SESSION['login_user']['account_id'];   
+            $account_record = M('Accounts')->find($id);
+            if(md5($_POST['prepass']) != $account_record['password']) {
+                flash('请确认提供了正确的登录密码', 'error');
                 redirect($_SERVER['HTTP_REFERER']);
             }
         }

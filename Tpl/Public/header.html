@@ -46,6 +46,21 @@
             }).blur(function(){
                 $('#search-box').removeClass('focus');
             });
+            
+            $('.login-submit').click(function(){
+                $.post(app_path+'/Account/login', {
+                    email: $('#login-email').val(),
+                    password: $('#login-password').val(),
+                    remember: $('#remember-box').val()
+                }, function(result){
+                    if(result == 'ok'){
+                        window.location = app_path+'/User/home';
+                    }
+                    else{
+                        $('#login-error-message').text(result);
+                    }
+                });
+            });
 		});
 		
 	</script>
@@ -198,8 +213,9 @@
 				<label for="remember-box"><span>记住我</span></label>
 				<a href="{:U('User/forget_password')}" id="forget-password-link">忘记密码?</a>
 			</div>
+			<div id="login-error-message"></div>
 			<div id="login-action">
-				<input class="action-button" type="submit" value="登 录"/>
+				<input class="action-button login-submit" type="button" value="登 录"/>
 				<a class="action-button" href="{:U('User/register')}">注 册</a>
 			</div>
 			<div id="api-login-links">

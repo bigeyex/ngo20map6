@@ -88,7 +88,20 @@
                     {$row.province}
                 </td>
                 <?php if($params['type'] == 'ngo' && $params['model'] == 'users'): ?>
-                <?php $medals = explode(',', $row['medals']) ?>
+                <?php
+                 $medals_org = explode(',', $row['medals']);
+                 // sort the medals !!HACK - bad practice
+                 $medals = array();
+                 if(in_array('ngo20-training',$medals_org)){
+                    $medals[] = 'ngo20-training';
+                 }
+                 if(in_array('self-eval',$medals_org)){
+                    $medals[] = 'self-eval';
+                 }
+                 if(in_array('onsite-eval',$medals_org)){
+                    $medals[] = 'onsite-eval';
+                 }
+                ?>
                 <td>
                     <?php foreach($medals as $medal): ?>
                     <span class="medal-{$medal} medal-icon" style="background-image:url(<?php echo __APP__; ?>/Public/img/medals/{$medal}.png);" data-toggle="tooltip" title="{$medal_map[$medal]['description']}"></span>

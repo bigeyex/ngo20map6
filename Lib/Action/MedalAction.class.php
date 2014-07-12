@@ -135,6 +135,7 @@ class MedalAction extends Action{
 		$medal_map_model->medal_id = $_GET['id'];
 		$medal_map_model->user_id = $_GET['uid'];
 		if($medal_map_model->add()){
+			$this->refresh_user_medals($_GET['uid']);
 			echo "ok";
 		}
 		else{
@@ -145,8 +146,28 @@ class MedalAction extends Action{
 	public function ungrant(){
 		$medal_map_model = M('Medalmap');
 		$medal_map_model->where(array('user_id'=>$_GET['uid'], 'medal_id'=>$_GET['id']))->delete();
+		$this->refresh_user_medals($_GET['uid']);
 		echo 'ok';
 	}
+	
+	private function refresh_user_medals($user_id){
+        if(empty($user_id)){
+            echo 'error';
+        }
+        $medals = M('Medalmap')->where(array('user_id'=>$user_id))->select();
+        $all_medals = M('Medal')->select();
+        foreach($all_medals as $medal){
+            $medal_maps[$medal['id']] = $medal['code_name'];
+        }
+        $medal_names = array();
+        foreach($medals as $medal){
+            $medal_names[] = $medal_maps[$medal['medal_id']];
+        }
+        $new_medals = implode(',', $medal_names);
+        $user = M('Users')->find($user_id);
+        $user['medals'] = $new_medals;
+        M('Users')->save($user);
+    }
 	
 }
 ?>
