@@ -202,11 +202,11 @@ a.filter-menu-button, .goog-te-menu-value span:first-child, #register-buttons a 
     background-position: 0px -592px;
 }
 
-#register-buttons{
+#register-buttons, .register-buttons{
     margin-right: 15px;
 }
 
-#register-buttons{
+#register-buttons, .register-buttons{
     float: right;
 }
     

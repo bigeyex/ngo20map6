@@ -47,6 +47,7 @@
                 $('#search-box').removeClass('focus');
             });
             
+            
             $('.login-submit').click(function(){
                 $.post(app_path+'/Account/login', {
                     email: $('#login-email').val(),
@@ -55,6 +56,9 @@
                 }, function(result){
                     if(result == 'ok'){
                         window.location = app_path+'/User/home';
+                    }
+                    else if(result == 'admin'){
+                        window.location = app_path+'/Admin/users';
                     }
                     else{
                         $('#login-error-message').text(result);
@@ -137,11 +141,11 @@
                     <?php if(user()): ?>
                         <span id="login-menu-zone">
                             <?php if(user('is_admin')): ?>
-                            <a href="{:U('Admin/users')}" id="register-buttons" class="masthead-button">
+                            <a href="{:U('Admin/users')}" class="register-buttons masthead-button">
                                 管理
                             </a>
                             <?php else: ?>
-                            <a href="{:U('User/home')}" id="register-buttons" class="masthead-button">
+                            <a href="{:U('User/home')}" class="register-buttons masthead-button">
                                 我的页面
                             </a>	
                             <?php endif; ?>
@@ -215,7 +219,7 @@
 			</div>
 			<div id="login-error-message"></div>
 			<div id="login-action">
-				<input class="action-button login-submit" type="button" value="登 录"/>
+				<input class="action-button login-submit " type="button" value="登 录"/>
 				<a class="action-button" href="{:U('User/register')}">注 册</a>
 			</div>
 			<div id="api-login-links">

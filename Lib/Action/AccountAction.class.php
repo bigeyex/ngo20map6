@@ -16,20 +16,22 @@ class AccountAction extends Action {
             	setcookie("ngo20_login_token", $login_token, time()+3600*24*14);
             }
             
-            echo 'ok';return;
+            
             if(user('is_admin')){
-                $this->redirect('Admin/users/');
+//                $this->redirect('Admin/users/');
+                echo 'admin';
             }
             else{
-                $this->redirect('User/home/');
+//                $this->redirect('User/home/');
+                echo 'ok';
             }
-            
+//            
         }
 		else{
 			//login failed
-			echo '用户名或密码不正确';return;
-			flash('用户名或密码不正确');
-            $this->redirect('Index/index/');
+			echo '用户名或密码不正确';
+//			flash('用户名或密码不正确');
+//            $this->redirect('Index/index/');
 		}
 	}
 
