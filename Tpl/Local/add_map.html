@@ -30,7 +30,7 @@ $(document).ready(function(){
 				<div class="control-group">
 					<label class="control-label" for="input02">{:L('管理员')}</label>
 					<div class="controls">
-						<input type="text" name="admin_id" class="input-large" id="related-org" value="{$news.admin_id}" username="{$local_map.user_name}">
+						<input type="text" name="admin_id" class="input-large" id="related-org" initval="{$local_map.admin_id}" username="{$local_map.user_name}">
 						<p class="help-block" id="org-validate"></p>
 					</div>
 				</div>
@@ -85,11 +85,11 @@ $('#related-org').select2({
                 results: function (data, page) { 
                     return {results: data};
                 }
-            },
-    initSelection : function (element, callback) {
-        callback({id: element.val(), text: element.attr('username')});
-    }
+            }
 });
+
+var related_org = $('#related-org');
+related_org.select2('data', {id: related_org.attr('initval'), text: related_org.attr('username')})
 
 function formatResult(item) {
         return item['text'];
