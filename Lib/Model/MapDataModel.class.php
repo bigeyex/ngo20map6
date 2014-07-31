@@ -245,6 +245,10 @@ class MapDataModel extends Model{
             $order = ' order by '.$param['order'];
         }
 
+        if(isset($param['expert_mode'])){
+            $order = ' order by is_checked, create_time desc';
+        }
+
         $limit = "";
         if(!empty($param['limit'])){
             $limit = ' limit '.$param['limit'];

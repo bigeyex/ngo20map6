@@ -140,7 +140,7 @@
                     <?php else: // for events ?>
                     <td colspan="3">
                         请在核实后
-                        <a href="javascript:void(0);" class="btn btn-mini"  onclick="approve_event(event)">审核通过</a>
+                        <a href="javascript:void(0);" class="btn btn-mini" event-id="{$row.id}"  onclick="approve_event(event)">审核通过</a>
                     </td>
                     <?php endif; ?>
                 <?php else: // a checked row ?>

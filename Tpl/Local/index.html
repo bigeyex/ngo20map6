@@ -19,7 +19,7 @@
                     <?php endforeach; ?>
                 </select>
             </label>
-            <a class="shaded-button" href="{:U('Index/list_index')}">查看名录</a>
+            <a class="shaded-button" href="{:U('Index/list_index')}/type/ngo/model/users/province/{$local_map.province}">查看名录</a>
             <ul data-bind="foreach: ngo_list">
                 <li data-bind='attr: {"data_id": id, "data_type": type}'><a class="list-item" data-bind='text: t_text, attr: {"class": class_id, "className": class_id, "href": href}' target="_blank"></a></li>
             </ul>

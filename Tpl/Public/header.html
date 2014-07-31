@@ -2,7 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="google-translate-customization" content="44d41f0d07cd23db-706a5687f4b69682-g76a6e16d360e3d07-11"></meta>
+    <meta name="google-translate-customization" content="44d41f0d07cd23db-706a5687f4b69682-g76a6e16d360e3d07-11">
+    <meta name="description" content="公益地图旨在建立草根公益组织与企业、公益人之间信息对接的平台。在这里，您可以找到全国各地的公益组织，也可以找到企业的CSR项目。"/>
+<meta name="keywords" content="中国公益组织,公益机构,名录,地图,公益项目,企业CSR报告,对接案例,新闻"/>
+<meta name="author" content="NGO20-中国公益2.0项目"/>
+<meta name="other" content="中国都由哪些草根公益组织？中国所有的公益组织网站,微博,微信"/>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?872dddf0962c4b1a38db3a043b36affc";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
     <?php 
     
@@ -73,7 +86,7 @@
 	<div id="master-box">
 		<div id="masthead">
 			<div id="main-nav">
-				<a href="{:U('Index/index')}"><div id="logo">公益地图</div></a>
+				<a href="{:U('Index/index')}"><div id="logo">公益地图<div style="width:0;height:0;overflow:hidden;"><img src="/Public/img/ngo-logo.png" style="width:0;height:0;" title="公益地图-NGO20" alt=""></div></div></a>
 				<?php if(MODULE_NAME == 'Index' && ACTION_NAME == 'index'): ?>
 				<a href="{:U('Index/list_index')}" id="list-view-link" class="masthead-button"><div class="inner-chrome">名录</div></a>
 				<?php endif; ?>
@@ -155,6 +168,7 @@
                                 <ul id="login-menu-list">
                                     <?php foreach(user('local_map') as $local_map): ?>
                                         <li><a href="{:U('Local/index')}/name/{$local_map.identifier}">{$local_map.name}</a></li>
+                                        <li><a href="{:U('Index/list_index')}/type/ngo/model/users/province/{$local_map.province}">审核{$local_map.province}</a></li>
                                     <?php endforeach; ?>
                                     <?php if(user('is_admin')): ?>
                                         <li><a href="{:U('Event/add')}/type/csr">发布CSR新闻</a></li>
