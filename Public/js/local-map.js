@@ -64,7 +64,7 @@ var mapdata = {
 	province : '',
 	key: '',
 	rec_field : '',
-	model : '',
+	model : 'users',
 	type : 'exngo',
 	medal : '',
 
