@@ -138,7 +138,7 @@ class LocalAction extends Action{
     
     function post_insert(){
         $local_content_model = new LocalContentModel();
-        if(is_local_admin()){
+        if($this->has_right_to_admin($_POST['local_id'])){
             $is_checked = 1;
         }
         else{
@@ -264,13 +264,23 @@ class LocalAction extends Action{
     }
     
     public function act_module_save($id, $name, $type){
-        $this->need_right_to_admin($local_id);
+        $module = T('local_modules')->find($id);
+        $this->need_right_to_admin($module['local_id']);
         
         T('local_modules')->with('id', $id)->save(array(
             'id' => $id,
             'name' => $name,
             'type' => $type,
         ));
+        
+        echo 'ok';
+    }
+
+    public function act_module_delete($id){
+        $module = T('local_modules')->find($id);
+        $this->need_right_to_admin($module['local_id']);
+        
+        T('local_modules')->with('id', $id)->delete();
         
         echo 'ok';
     }
@@ -299,6 +309,7 @@ class LocalAction extends Action{
         $results = $local_content_model->where(array(
             'local_id'=>$local_id,
             'key'=>$module_info['id'],
+            'is_checked'=>1,
         ))->limit(C('RECORD_PER_POST_WIDGET'))->select();
         
         $this->assign('local_id', $local_id);

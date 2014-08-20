@@ -36,7 +36,8 @@
                     <td>
 <!--                        <a href="{:U('Local/iframe_link')}/module_id/{$module.id}" class="btn-edit btn btn-mini">嵌入</a>-->
                         <a href="javascript:void(0);" onclick="edit_module(event)" class="btn-edit btn btn-mini">编辑</a>
-                        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger">删除</a>
+                        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger" onclick="pre_delete(event)">删除</a>
+                        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger" style="display:none;" onclick="delete_module(event)">确认删除</a>
                         
                     </td>
                 </tr>
@@ -93,7 +94,8 @@
     <td>
         <a href="" class="btn-edit btn btn-mini iframe-link">嵌入</a>
         <a href="javascript:void(0);" class="btn-edit btn btn-mini" onclick="edit_module(event)">编辑</a>
-        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger">删除</a>
+        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger" onclick="pre_delete(event)">删除</a>
+        <a href="javascript:void(0);" class="btn-delete btn btn-mini btn-danger" style="display:none;" onclick="delete_module(event)">确认删除</a>
     </td>
 </tr>
 </table>
@@ -143,6 +145,29 @@
             editor_tr.find('.module-type').val(module_type);
             
             tr.replaceWith(editor_tr);
+       }
+
+       function pre_delete(e){
+            var dom = $(e.currentTarget);
+            dom.next().show();
+            dom.hide();
+            setTimeout(function(){
+                if(dom){
+                    dom.show();
+                    dom.next().hide();
+                }
+            }, 2000);
+       }
+
+       function delete_module(e){
+            var parent_dom = $(e.currentTarget).parent().parent();
+            var id = parent_dom.attr('module-id');
+            $.get(app_path+'/Local/act_module_delete/id/'+id, function(result){
+                if(result == 'ok'){
+                    parent_dom.remove();
+                }
+            })
+            
        }
        
        function cancel_action(e){
