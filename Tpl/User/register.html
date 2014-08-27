@@ -34,7 +34,7 @@
             </li>
         </ul>
     </div>
-    <div class="form-section" id="main-content" style="display:none;">
+    <div class="form-section" id="main-content">
         <h3 style="padding-left:15px;"> 请填写以下资料完成注册  <span class="ordinary">(<span class="required">*</span>  必須填写项)</span></h3>
         <p class="after-title">以下信息将显示在机构资料页，方便大家了解你，完成度越高，你就可以执行更多的任务操作。</p>
         <div class="form-field">
@@ -56,13 +56,13 @@
         <?php endif; ?>
         <div class="form-field">
             <span class="title except except-ind"><span class="required">*</span> 机构全称</span>
-            <span class="title only ind-only"><span class="required">*</span> 用户名</span>
+            <span class="title only ind-only" style="display:none;"><span class="required">*</span> 用户名</span>
             <input type="text" id="name" name="name" value="{$user.name}" class="validate[required,ajax[ajaxUniqueName]]"/>
             <span>(不能与系统中已有的名字相同，可以使用中英文)</span>
         </div>
         <div class="form-field">
             <span class="title except except-ind"><span class="required">*</span> 机构简介</span>
-            <span class="title only ind-only"><span class="required">*</span> 简介</span>
+            <span class="title only ind-only" style="display:none;"><span class="required">*</span> 简介</span>
             <textarea name="introduction" id="introduction" cols="35" rows="7" class="validate[required]">{$user.introduction}</textarea>
         </div>
         <div class="form-field">
@@ -87,7 +87,7 @@
         </div>
         <div class="form-field">
             <span class="title except except-ind">机构标志</span>
-            <span class="title only ind-only">头像</span>
+            <span class="title only ind-only" style="display:none;">头像</span>
             <!-- <input type="file" name="image_uploader" value="浏览" accept="image/*"/> -->
             <div id="avatar-component">
                 <div id="avatar-preview-div" style="display:none;">
